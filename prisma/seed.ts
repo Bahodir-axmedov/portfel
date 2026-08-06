@@ -85,7 +85,7 @@ async function seedProfile() {
 }
 
 async function seedExpertise() {
-	const { skills, languages, services } = expertiseData as Record<string, any[]>
+	const { skills, languages, services } = expertiseData as Record<string, any>
 
 	for (const skill of skills) {
 		const existing = await prisma.skill.findFirst({
@@ -163,7 +163,7 @@ async function seedExpertise() {
 
 async function seedCareer() {
 	const { experiences, education, certificates, achievements, timeline } =
-		careerData as Record<string, any[]>
+		careerData as Record<string, any>
 
 	for (const item of experiences) {
 		const existing = await prisma.experience.findFirst({
@@ -304,7 +304,7 @@ async function seedCareer() {
 }
 
 async function seedProjects() {
-	const { technologies, projects } = projectsData as Record<string, any[]>
+	const { technologies, projects } = projectsData as Record<string, any>
 
 	for (const tech of technologies) {
 		await prisma.technology.upsert({
@@ -399,7 +399,7 @@ async function seedProjects() {
 }
 
 async function seedSite() {
-	const site = siteData as Record<string, any[]>
+	const site = siteData as Record<string, any>
 
 	for (const stat of site.stats) {
 		const data = {
