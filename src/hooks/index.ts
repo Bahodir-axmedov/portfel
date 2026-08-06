@@ -73,7 +73,7 @@ export function useCounter(
 ): number {
 	const [value, setValue] = useState(0)
 	const animate = useAnimationEnabled()
-	const frame = useRef<number>()
+	const frame = useRef<number | null>(null)
 
 	useEffect(() => {
 		if (!active) return
