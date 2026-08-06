@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation"
 import {
 	type AnchorHTMLAttributes,
 	type ButtonHTMLAttributes,
+	type ComponentProps,
 	type InputHTMLAttributes,
 	type ReactNode,
 	type TextareaHTMLAttributes,
@@ -106,8 +107,24 @@ export function LinkButton({
 		)
 	}
 
+	/*
+	 * next-intl's Link is type-checked against its own resolved copy of
+	 * @types/react. When the dependency tree contains two copies, DOM
+	 * attribute unions differ between them (for example `popover`, which
+	 * gained the "hint" value in newer typings) and the spread is rejected
+	 * even though every value is identical at runtime.
+	 *
+	 * These props are plain anchor attributes in both worlds, so they are
+	 * re-typed against Link's own prop shape. Dropping the spread instead
+	 * would silently discard onClick / aria-* / target from callers.
+	 */
+	const linkProps = props as unknown as Omit<
+		ComponentProps<typeof Link>,
+		"href" | "className"
+	>
+
 	return (
-		<Link href={href} className={classes} {...props}>
+		<Link href={href} className={classes} {...linkProps}>
 			{children}
 		</Link>
 	)
