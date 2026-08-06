@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Bahodir.dev — Design tokens
+   Single source of truth for colors, radii, motion. Never hardcode brand
+   colors in components; use these variables or the Tailwind tokens.
+   ========================================================================== */
+@layer base {
+	:root {
+		--bg: 10 10 11;
+		--bg-soft: 14 14 17;
+		--brand: 59 130 246;
+		--accent: 6 182 212;
+		--ink: 245 245 247;
+
+		--surface: rgba(255, 255, 255, 0.032);
+		--surface-hover: rgba(255, 255, 255, 0.055);
+		--border: rgba(255, 255, 255, 0.085);
+		--border-strong: rgba(255, 255, 255, 0.14);
+
+		--brand-gradient: linear-gradient(135deg, #3b82f6 0%, #22a6e8 50%, #06b6d4 100%);
+		--ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+		--nav-height: 76px;
+	}
+
+	/* Light theme is opt-in via <html class="light"> (dynamic theme switch). */
+	.light {
+		--bg: 250 250 252;
+		--bg-soft: 255 255 255;
+		--ink: 16 16 20;
+		--surface: rgba(10, 10, 11, 0.028);
+		--surface-hover: rgba(10, 10, 11, 0.05);
+		--border: rgba(10, 10, 11, 0.09);
+		--border-strong: rgba(10, 10, 11, 0.16);
+	}
+
+	* {
+		@apply border-line;
+	}
+
+	html {
+		-webkit-tap-highlight-color: transparent;
+		scroll-behavior: smooth;
+	}
+
+	/* Lenis controls scrolling; disable native smooth scroll when active. */
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+	.lenis.lenis-smooth {
+		scroll-behavior: auto !important;
+	}
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+
+	body {
+		background-color: rgb(var(--bg));
+		color: rgb(var(--ink));
+		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+		letter-spacing: -0.011em;
+		@apply overflow-x-hidden font-sans text-base leading-relaxed antialiased;
+	}
+
+	::selection {
+		background: rgba(59, 130, 246, 0.32);
+		color: #fff;
+	}
+
+	/* Custom scrollbar (desktop only) */
+	@media (pointer: fine) {
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+		::-webkit-scrollbar-track {
+			background: rgb(var(--bg));
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.12);
+			border: 3px solid rgb(var(--bg));
+			border-radius: 999px;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.22);
+		}
+	}
+
+	:focus-visible {
+		outline: 2px solid #06b6d4;
+		outline-offset: 3px;
+		border-radius: 6px;
+	}
+}
+
+/* ==========================================================================
+   Component primitives
+   ========================================================================== */
+@layer components {
+	.glass {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		-webkit-backdrop-filter: blur(18px) saturate(160%);
+		backdrop-filter: blur(18px) saturate(160%);
+	}
+
+	.glass-strong {
+		background: rgba(10, 10, 11, 0.62);
+		border: 1px solid var(--border);
+		-webkit-backdrop-filter: blur(18px) saturate(160%);
+		backdrop-filter: blur(18px) saturate(160%);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.04),
+			0 10px 40px rgba(0, 0, 0, 0.45);
+	}
+
+	.gradient-text {
+		@apply bg-brand-gradient bg-clip-text text-transparent;
+	}
+
+	.card-surface {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		@apply rounded-lg transition-all duration-300;
+	}
+	.card-surface:hover {
+		background: var(--surface-hover);
+		border-color: var(--border-strong);
+	}
+
+	/* 1px gradient hairline border via mask — used on featured cards */
+	.gradient-border {
+		position: relative;
+	}
+	.gradient-border::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: var(--brand-gradient);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		opacity: 0.45;
+		pointer-events: none;
+	}
+
+	.section-padding {
+		@apply py-20 md:py-[104px];
+	}
+
+	.eyebrow {
+		@apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-accent;
+	}
+	.eyebrow::before {
+		content: "";
+		@apply h-px w-[22px] bg-gradient-to-r from-accent to-transparent;
+	}
+
+	.ambient-grid {
+		background-image: var(--tw-gradient-stops, none), theme("backgroundImage.grid");
+		background-size: 72px 72px;
+		-webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+		mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+	}
+
+	.noise-overlay {
+		opacity: 0.035;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	/* Skeleton shimmer for lazy-loaded media */
+	.skeleton {
+		@apply relative overflow-hidden bg-white/[0.04];
+	}
+	.skeleton::after {
+		content: "";
+		@apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/[0.06] to-transparent;
+	}
+}
+
+@layer utilities {
+	.text-balance {
+		text-wrap: balance;
+	}
+	.text-pretty {
+		text-wrap: pretty;
+	}
+	.mask-fade-b {
+		-webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+	}
+	.will-animate {
+		will-change: transform, opacity;
+	}
+}
+
+/* ==========================================================================
+   Accessibility — respect reduced motion (animation level degrades to 0)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* Print styles — clean output when the page is printed */
+@media print {
+	.no-print {
+		display: none !important;
+	}
+	body {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

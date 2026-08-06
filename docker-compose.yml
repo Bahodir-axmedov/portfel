@@ -1,0 +1,46 @@
+# Local production-parity stack.
+#
+# This mirrors what Railway runs: the same Dockerfile, the same entrypoint and
+# a persistent volume mounted at /data. Testing here first is what catches
+# volume-permission and schema-push failures before they reach production.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bahodir-dev-portfolio:local
+    container_name: bahodir-dev-portfolio
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+      DATABASE_URL: "file:/data/portfolio.db"
+      UPLOAD_DIR: "/data/uploads"
+      # Required. `:?` makes compose fail fast with a readable message instead
+      # of booting a container that cannot authenticate anyone.
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:?NEXT_PUBLIC_SITE_URL kerak}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?ADMIN_EMAIL kerak}
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH:?ADMIN_PASSWORD_HASH kerak}
+      AUTH_SECRET: ${AUTH_SECRET:?AUTH_SECRET kerak}
+      # Optional.
+      AUTH_SESSION_HOURS: ${AUTH_SESSION_HOURS:-12}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-8}
+      NEXT_PUBLIC_GA_ID: ${NEXT_PUBLIC_GA_ID:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      IMAGE_ALLOWED_HOSTS: ${IMAGE_ALLOWED_HOSTS:-}
+    volumes:
+      - portfolio-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
+volumes:
+  portfolio-data:
