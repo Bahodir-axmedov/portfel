@@ -9,7 +9,6 @@ import { Magnetic, TypingText } from "@/components/ui/interactive"
 import { buttonClass, StatusDot } from "@/components/ui/primitives"
 import { EASE } from "@/components/ui/motion"
 import { useHeavyAnimationEnabled, useMousePosition } from "@/hooks"
-import { cn } from "@/lib/utils"
 
 export type HeroSocial = {
 	platform: string

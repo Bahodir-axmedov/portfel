@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { mkdir, writeFile } from "node:fs/promises"
 import { join, resolve, sep } from "node:path"
 import { AuthError, requireSession } from "@/lib/auth"
-import { clientIp, rateLimit } from "@/lib/rate-limit"
+import { rateLimit } from "@/lib/rate-limit"
 import { slugify } from "@/lib/utils"
 import { isProduction } from "@/lib/env"
 import {

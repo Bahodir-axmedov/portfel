@@ -12,7 +12,7 @@
   "socialLinks": [
     { "platform": "telegram", "label": "Telegram", "url": "https://t.me/Th0masc", "handle": "@Th0masc", "icon": "SiTelegram", "showInHero": true, "order": 1 },
     { "platform": "github", "label": "GitHub", "url": "https://github.com/Bahodir-axmedov", "handle": "Bahodir-axmedov", "icon": "SiGithub", "showInHero": true, "order": 2 },
-    { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/bahodir-axmedov-a52911342", "handle": "bahodir-axmedov", "icon": "SiLinkedin", "showInHero": true, "order": 3 },
+    { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/bahodir-axmedov-a52911342", "handle": "bahodir-axmedov", "icon": "Linkedin", "showInHero": true, "order": 3 },
     { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/axmedov1122__/", "handle": "@axmedov1122__", "icon": "SiInstagram", "showInHero": true, "order": 4 },
     { "platform": "youtube", "label": "YouTube", "url": "https://www.youtube.com/@B_Axmedov", "handle": "@B_Axmedov", "icon": "SiYoutube", "showInHero": false, "order": 5 },
     { "platform": "facebook", "label": "Facebook", "url": "https://www.facebook.com/share/196CkGDWr4/", "handle": "Bahodir Axmedov", "icon": "SiFacebook", "showInHero": false, "order": 6 }

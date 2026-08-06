@@ -299,7 +299,7 @@ export function ResourceForm({ config, initial, id }: Props) {
 						className="ml-auto inline-flex h-11 items-center gap-2 rounded-md px-4 text-sm text-ink-faint transition hover:text-danger disabled:opacity-60"
 					>
 						<Icon name="X" className="h-4 w-4" />
-						O'chirish
+						O&apos;chirish
 					</button>
 				) : null}
 			</div>

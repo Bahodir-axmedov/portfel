@@ -23,13 +23,6 @@ export const contactSchema = z.object({
 export type ContactInput = z.infer<typeof contactSchema>
 
 const optionalString = z.string().trim().optional().nullable()
-const optionalUrl = z
-	.string()
-	.trim()
-	.url("URL noto'g'ri")
-	.optional()
-	.nullable()
-	.or(z.literal(""))
 const stringList = z.array(z.string()).optional().nullable()
 
 export const projectSchema = z.object({

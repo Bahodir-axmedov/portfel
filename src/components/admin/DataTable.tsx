@@ -352,7 +352,7 @@ export function DataTable(props: Props) {
 							onClick={() => runBulk("delete")}
 							className="h-8 rounded-md border border-danger/40 bg-danger/10 px-3 text-xs text-danger transition hover:bg-danger/20 disabled:opacity-50"
 						>
-							O'chirish
+							O&apos;chirish
 						</button>
 						<button
 							type="button"
