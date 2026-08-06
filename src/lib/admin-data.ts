@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client"
 import { prisma } from "@/lib/prisma"
 import {
 	arrayFields,
@@ -16,16 +17,23 @@ import type { AdminListQuery, AdminResourceConfig } from "@/types"
  * routes never hard-code a model name or a column list.
  */
 
+/**
+ * Prisma delegate methods return `Prisma.PrismaPromise`, not a plain
+ * `Promise`. The distinction matters: `prisma.$transaction([...])` only
+ * accepts the branded type, so declaring these as `Promise` forces call sites
+ * into casts that silently strip the brand and break the production build.
+ * `PrismaPromise<T>` extends `Promise<T>`, so every `await` keeps working.
+ */
 type Delegate = {
-	findMany: (args?: any) => Promise<any[]>
-	findUnique: (args: any) => Promise<any>
-	findFirst: (args: any) => Promise<any>
-	create: (args: any) => Promise<any>
-	update: (args: any) => Promise<any>
-	updateMany: (args: any) => Promise<{ count: number }>
-	delete: (args: any) => Promise<any>
-	deleteMany: (args: any) => Promise<{ count: number }>
-	count: (args?: any) => Promise<number>
+	findMany: (args?: any) => Prisma.PrismaPromise<any[]>
+	findUnique: (args: any) => Prisma.PrismaPromise<any>
+	findFirst: (args: any) => Prisma.PrismaPromise<any>
+	create: (args: any) => Prisma.PrismaPromise<any>
+	update: (args: any) => Prisma.PrismaPromise<any>
+	updateMany: (args: any) => Prisma.PrismaPromise<{ count: number }>
+	delete: (args: any) => Prisma.PrismaPromise<any>
+	deleteMany: (args: any) => Prisma.PrismaPromise<{ count: number }>
+	count: (args?: any) => Prisma.PrismaPromise<number>
 }
 
 /** Resolves the Prisma delegate declared by a resource config. */

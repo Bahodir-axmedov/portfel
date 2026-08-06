@@ -117,15 +117,24 @@ const nextConfig: NextConfig = {
 			{
 				source: "/uploads/:path*",
 				headers: [
-					{ key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+					{
+						key: "Cache-Control",
+						value: "public, max-age=31536000, immutable",
+					},
 					{ key: "X-Content-Type-Options", value: "nosniff" },
-					{ key: "Content-Security-Policy", value: "default-src 'none'; sandbox" },
+					{
+						key: "Content-Security-Policy",
+						value: "default-src 'none'; sandbox",
+					},
 				],
 			},
 			{
 				source: "/resume/:path*",
 				headers: [
-					{ key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
+					{
+						key: "Cache-Control",
+						value: "public, max-age=86400, must-revalidate",
+					},
 				],
 			},
 			{

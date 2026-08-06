@@ -72,7 +72,10 @@ export function stringifyArray(value: string[] | null | undefined): string {
  * Full years elapsed since a year (2020), an ISO date, or a Date.
  * Used for the auto-updating "years of experience" stat and for the age.
  */
-export function yearsSince(from: string | number | Date, to: Date = new Date()): number {
+export function yearsSince(
+	from: string | number | Date,
+	to: Date = new Date(),
+): number {
 	let start: Date
 	if (from instanceof Date) start = from
 	else if (typeof from === "number") start = new Date(from, 0, 1)
@@ -91,7 +94,10 @@ export function yearsSince(from: string | number | Date, to: Date = new Date()):
 }
 
 /** Age from a birth date — never hardcoded, always computed at render time. */
-export function calculateAge(birthDate: string | Date, to: Date = new Date()): number {
+export function calculateAge(
+	birthDate: string | Date,
+	to: Date = new Date(),
+): number {
 	return yearsSince(birthDate, to)
 }
 
@@ -155,7 +161,9 @@ export function initials(name: string): string {
 
 /** Builds an absolute URL from NEXT_PUBLIC_SITE_URL — needed for SEO tags. */
 export function absoluteUrl(path = "/"): string {
-	const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/+$/, "")
+	const base = (
+		process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+	).replace(/\/+$/, "")
 	const suffix = path.startsWith("/") ? path : `/${path}`
 	return `${base}${suffix}`
 }

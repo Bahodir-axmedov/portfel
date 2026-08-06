@@ -273,7 +273,10 @@ export function MessageList({
 
 							{message.subject ? (
 								<p className="mt-3 flex items-center gap-2 text-sm text-ink">
-									<Icon name="MessagesSquare" className="h-4 w-4 text-accent-400" />
+									<Icon
+										name="MessagesSquare"
+										className="h-4 w-4 text-accent-400"
+									/>
 									{message.subject}
 								</p>
 							) : null}

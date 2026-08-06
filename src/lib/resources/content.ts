@@ -202,7 +202,13 @@ export const languagesResource: AdminResourceConfig = {
 			options: options(LANGUAGE_LEVELS, levelLabels),
 			required: true,
 		},
-		{ name: "speaking", label: "Gapirish (%)", type: "number", min: 0, max: 100 },
+		{
+			name: "speaking",
+			label: "Gapirish (%)",
+			type: "number",
+			min: 0,
+			max: 100,
+		},
 		{ name: "writing", label: "Yozish (%)", type: "number", min: 0, max: 100 },
 		{ name: "reading", label: "O'qish (%)", type: "number", min: 0, max: 100 },
 		{

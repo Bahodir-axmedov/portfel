@@ -2,10 +2,7 @@ import "server-only"
 import { NextResponse } from "next/server"
 import { AuthError } from "./auth"
 import { isProduction } from "./env"
-import {
-	ADMIN_MAX_PAGE_SIZE,
-	ADMIN_PAGE_SIZE,
-} from "@/constants"
+import { ADMIN_MAX_PAGE_SIZE, ADMIN_PAGE_SIZE } from "@/constants"
 import type { AdminListQuery, AdminResourceConfig, FieldError } from "@/types"
 
 /**
@@ -25,7 +22,11 @@ export function ok<T extends Record<string, unknown>>(
 	return NextResponse.json({ ok: true, ...data }, init)
 }
 
-export function fail(error: string, status: number, extra?: Record<string, unknown>) {
+export function fail(
+	error: string,
+	status: number,
+	extra?: Record<string, unknown>,
+) {
 	return NextResponse.json({ ok: false, error, ...extra }, { status })
 }
 
@@ -50,7 +51,9 @@ export function unauthorized(message = "Unauthorized") {
  */
 export async function readJson(
 	request: Request,
-): Promise<{ ok: true; body: unknown } | { ok: false; response: NextResponse }> {
+): Promise<
+	{ ok: true; body: unknown } | { ok: false; response: NextResponse }
+> {
 	try {
 		const body = await request.json()
 		if (body === null || typeof body !== "object" || Array.isArray(body)) {
@@ -129,10 +132,7 @@ export function handleApiError(error: unknown, scope: string): NextResponse {
 	if (mapped) return mapped
 
 	console.error(`[${scope}]`, error)
-	return fail(
-		isProduction ? "Serverda xatolik yuz berdi" : message,
-		500,
-	)
+	return fail(isProduction ? "Serverda xatolik yuz berdi" : message, 500)
 }
 
 function toInt(raw: string | null, fallback: number): number {

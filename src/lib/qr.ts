@@ -50,12 +50,18 @@ function resolveOptions(options: QrOptions = {}) {
 }
 
 /** Returns a `data:image/png;base64,...` string, ready for an img src. */
-export async function qrDataUrl(value: string, options?: QrOptions): Promise<string> {
+export async function qrDataUrl(
+	value: string,
+	options?: QrOptions,
+): Promise<string> {
 	return QRCode.toDataURL(value, resolveOptions(options))
 }
 
 /** Returns raw SVG markup — crisp at any size, preferred in the UI. */
-export async function qrSvg(value: string, options?: QrOptions): Promise<string> {
+export async function qrSvg(
+	value: string,
+	options?: QrOptions,
+): Promise<string> {
 	const config = resolveOptions(options)
 	return QRCode.toString(value, { ...config, type: "svg" })
 }
@@ -65,7 +71,11 @@ export async function qrSvg(value: string, options?: QrOptions): Promise<string>
  * The admin can simply type `+998701225052` and the phone QR still becomes a
  * proper `tel:` link.
  */
-export function normalizeQrValue(key: string, raw: string, siteUrl?: string): string {
+export function normalizeQrValue(
+	key: string,
+	raw: string,
+	siteUrl?: string,
+): string {
 	const value = (raw ?? "").trim()
 	if (!value) return siteUrl ?? ""
 	const isAbsolute = value.startsWith("http")
@@ -74,7 +84,9 @@ export function normalizeQrValue(key: string, raw: string, siteUrl?: string): st
 		case "email":
 			return value.startsWith("mailto:") ? value : `mailto:${value}`
 		case "phone":
-			return value.startsWith("tel:") ? value : `tel:${value.replace(/[^\d+]/g, "")}`
+			return value.startsWith("tel:")
+				? value
+				: `tel:${value.replace(/[^\d+]/g, "")}`
 		case "whatsapp":
 			return isAbsolute ? value : whatsappLink(value)
 		case "telegram":
@@ -126,20 +138,28 @@ export function buildVCard(profile: VCardInput): string {
 	]
 
 	if (profile.title) lines.push(`TITLE:${escapeVCard(profile.title)}`)
-	if (profile.organization) lines.push(`ORG:${escapeVCard(profile.organization)}`)
-	if (profile.email) lines.push(`EMAIL;TYPE=INTERNET,PREF:${profile.email.trim()}`)
-	if (profile.phone) lines.push(`TEL;TYPE=CELL,VOICE:${profile.phone.replace(/[^\d+]/g, "")}`)
+	if (profile.organization)
+		lines.push(`ORG:${escapeVCard(profile.organization)}`)
+	if (profile.email)
+		lines.push(`EMAIL;TYPE=INTERNET,PREF:${profile.email.trim()}`)
+	if (profile.phone)
+		lines.push(`TEL;TYPE=CELL,VOICE:${profile.phone.replace(/[^\d+]/g, "")}`)
 	if (profile.website) lines.push(`URL:${profile.website.trim()}`)
 	if (profile.photoUrl) lines.push(`PHOTO;VALUE=URI:${profile.photoUrl.trim()}`)
-	if (profile.location) lines.push(`ADR;TYPE=WORK:;;${escapeVCard(profile.location)};;;;`)
+	if (profile.location)
+		lines.push(`ADR;TYPE=WORK:;;${escapeVCard(profile.location)};;;;`)
 
 	if (profile.telegram) {
-		lines.push(`X-SOCIALPROFILE;TYPE=telegram:${telegramLink(profile.telegram)}`)
+		lines.push(
+			`X-SOCIALPROFILE;TYPE=telegram:${telegramLink(profile.telegram)}`,
+		)
 	}
 
 	for (const social of profile.socials ?? []) {
 		if (!social || !social.url) continue
-		lines.push(`X-SOCIALPROFILE;TYPE=${social.platform.toLowerCase()}:${social.url.trim()}`)
+		lines.push(
+			`X-SOCIALPROFILE;TYPE=${social.platform.toLowerCase()}:${social.url.trim()}`,
+		)
 	}
 
 	if (profile.note) lines.push(`NOTE:${escapeVCard(profile.note)}`)

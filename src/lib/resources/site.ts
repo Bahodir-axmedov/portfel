@@ -31,7 +31,12 @@ export const statsResource: AdminResourceConfig = {
 		},
 		...translated("label", "Nomi", "text", { required: true }),
 		{ name: "value", label: "Qiymati", type: "number", min: 0, required: true },
-		{ name: "suffix", label: "Qo'shimcha belgi", type: "text", help: "+, k, %" },
+		{
+			name: "suffix",
+			label: "Qo'shimcha belgi",
+			type: "text",
+			help: "+, k, %",
+		},
 		iconField,
 		{
 			name: "computed",
@@ -219,7 +224,12 @@ export const postsResource: AdminResourceConfig = {
 		...translated("content", "Matn", "richtext", { rows: 14, required: true }),
 		{ name: "coverImage", label: "Muqova rasmi", type: "image" },
 		{ name: "tags", label: "Teglar", type: "tags" },
-		{ name: "readMinutes", label: "O'qish vaqti (daq.)", type: "number", min: 1 },
+		{
+			name: "readMinutes",
+			label: "O'qish vaqti (daq.)",
+			type: "number",
+			min: 1,
+		},
 		{ name: "publishedAt", label: "Chop etilgan sana", type: "date" },
 		{ name: "published", label: "Chop etilsin", type: "checkbox" },
 	],

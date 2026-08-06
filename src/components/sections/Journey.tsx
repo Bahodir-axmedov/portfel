@@ -51,7 +51,10 @@ function Bullets({ items }: { items: string[] }) {
 	return (
 		<ul className="mt-3 space-y-1.5">
 			{items.map((line) => (
-				<li key={line} className="flex gap-2 text-sm leading-relaxed text-ink-muted">
+				<li
+					key={line}
+					className="flex gap-2 text-sm leading-relaxed text-ink-muted"
+				>
 					<span className="mt-[8px] h-1 w-1 shrink-0 rounded-full bg-accent-500" />
 					<span>{line}</span>
 				</li>
@@ -127,7 +130,9 @@ export async function Journey({
 
 													<div className="mt-3.5 flex flex-wrap gap-1.5">
 														<Badge tone="brand">
-															{t(`employment.${String(item.employment ?? "full_time")}`)}
+															{t(
+																`employment.${String(item.employment ?? "full_time")}`,
+															)}
 														</Badge>
 														<Badge tone="muted">
 															{t(
@@ -135,7 +140,9 @@ export async function Journey({
 															)}
 														</Badge>
 														{item.location ? (
-															<Badge tone="neutral">{String(item.location)}</Badge>
+															<Badge tone="neutral">
+																{String(item.location)}
+															</Badge>
 														) : null}
 													</div>
 

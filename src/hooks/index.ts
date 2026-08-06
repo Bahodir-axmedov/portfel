@@ -66,7 +66,11 @@ const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
  * Counts from 0 to `target` once `active` becomes true.
  * Returns the target immediately when animations are disabled.
  */
-export function useCounter(target: number, active = true, duration = 1600): number {
+export function useCounter(
+	target: number,
+	active = true,
+	duration = 1600,
+): number {
 	const [value, setValue] = useState(0)
 	const animate = useAnimationEnabled()
 	const frame = useRef<number>()
@@ -112,10 +116,7 @@ export function useTyping(words: string[], options: TypingOptions = {}) {
 	const holdTime = options.holdTime ?? 1500
 	const loop = options.loop !== false
 
-	const list = useMemo(
-		() => (words.length > 0 ? words : [""]),
-		[words],
-	)
+	const list = useMemo(() => (words.length > 0 ? words : [""]), [words])
 
 	const animate = useAnimationEnabled()
 	const [index, setIndex] = useState(0)
@@ -145,13 +146,25 @@ export function useTyping(words: string[], options: TypingOptions = {}) {
 		const timer = setTimeout(
 			() => {
 				setText((prev) =>
-					deleting ? word.slice(0, prev.length - 1) : word.slice(0, prev.length + 1),
+					deleting
+						? word.slice(0, prev.length - 1)
+						: word.slice(0, prev.length + 1),
 				)
 			},
 			deleting ? deleteSpeed : typeSpeed,
 		)
 		return () => clearTimeout(timer)
-	}, [text, deleting, index, list, animate, typeSpeed, deleteSpeed, holdTime, loop])
+	}, [
+		text,
+		deleting,
+		index,
+		list,
+		animate,
+		typeSpeed,
+		deleteSpeed,
+		holdTime,
+		loop,
+	])
 
 	return { text, deleting, index }
 }
@@ -196,7 +209,8 @@ export function useScrollProgress(): number {
 
 	useEffect(() => {
 		const update = () => {
-			const scrollable = document.documentElement.scrollHeight - window.innerHeight
+			const scrollable =
+				document.documentElement.scrollHeight - window.innerHeight
 			setProgress(scrollable > 0 ? window.scrollY / scrollable : 0)
 		}
 		update()

@@ -186,11 +186,7 @@ export default async function ProjectDetailPage({
 								</LinkButton>
 							) : null}
 							{project.videoUrl ? (
-								<LinkButton
-									href={project.videoUrl}
-									variant="ghost"
-									size="sm"
-								>
+								<LinkButton href={project.videoUrl} variant="ghost" size="sm">
 									<Play className="h-4 w-4" strokeWidth={1.8} />
 									Video
 								</LinkButton>

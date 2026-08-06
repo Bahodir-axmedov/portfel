@@ -66,9 +66,11 @@ export async function generateMetadata({
 		locale,
 		path: "/",
 		title: pick(seo, "title", locale) || fallbackTitle,
-		description: pick(seo, "description", locale) || pick(profile, "shortBio", locale),
+		description:
+			pick(seo, "description", locale) || pick(profile, "shortBio", locale),
 		keywords: parseArray(seo?.keywords),
-		image: seo?.ogImage ?? (profile?.ogImage as string | null | undefined) ?? null,
+		image:
+			seo?.ogImage ?? (profile?.ogImage as string | null | undefined) ?? null,
 		noIndex: seo?.noIndex ?? false,
 		type: "profile",
 	})

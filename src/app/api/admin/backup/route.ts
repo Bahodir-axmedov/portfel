@@ -118,14 +118,11 @@ export async function POST(request: Request) {
 					row[column] = columnValue
 				}
 
-				const identifier =
-					config.model === "setting" ? row.key : row.id
+				const identifier = config.model === "setting" ? row.key : row.id
 				if (typeof identifier !== "string" || !identifier) continue
 
 				const where =
-					config.model === "setting"
-						? { key: identifier }
-						: { id: identifier }
+					config.model === "setting" ? { key: identifier } : { id: identifier }
 
 				// Upsert keeps the operation idempotent: re-importing the same file
 				// twice produces the same database instead of duplicate rows.

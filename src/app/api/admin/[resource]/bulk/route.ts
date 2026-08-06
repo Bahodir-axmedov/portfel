@@ -92,7 +92,7 @@ export async function POST(request: Request, { params }: Context) {
 						),
 					}
 				}
-				return delegate.create({ data }) as unknown as Promise<unknown>
+				return delegate.create({ data })
 			}),
 		)
 

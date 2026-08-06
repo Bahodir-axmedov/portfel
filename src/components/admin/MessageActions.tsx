@@ -35,17 +35,14 @@ export function MessageActions({
 
 	const busy = pending || isRefreshing
 
-	const send = async (
-		init: RequestInit,
-		successMessage: string,
-	) => {
+	const send = async (init: RequestInit, successMessage: string) => {
 		setPending(true)
 		try {
 			const response = await fetch(`/api/admin/messages/${id}`, init)
 			if (!response.ok) {
-				const payload = (await response.json().catch(() => null)) as
-					| { error?: string }
-					| null
+				const payload = (await response.json().catch(() => null)) as {
+					error?: string
+				} | null
 				notifyError(payload?.error ?? "Amalni bajarib bo'lmadi")
 				return
 			}

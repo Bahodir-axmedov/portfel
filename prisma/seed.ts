@@ -519,7 +519,11 @@ async function seedSite() {
 		await prisma.setting.upsert({
 			where: { key: setting.key },
 			create: setting,
-			update: { value: setting.value, group: setting.group, type: setting.type },
+			update: {
+				value: setting.value,
+				group: setting.group,
+				type: setting.type,
+			},
 		})
 	}
 	console.log(`  ✓ ${site.settings.length} settings`)

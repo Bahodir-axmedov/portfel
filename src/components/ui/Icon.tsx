@@ -210,11 +210,9 @@ export function getIcon(name?: string | null): LucideIcon {
 
 /**
  * `LucideProps` extends React's `SVGProps`, which already declares a
- * `name?: string` attribute. A plain intersection would intersect the two
- * declarations and collapse our `string | null` back down to
- * `string | undefined`, so the inherited `name` is removed first and then
- * redeclared. Database icon columns are nullable, and `Icon` already falls
- * back to a neutral glyph at runtime.
+ * `name?: string` attribute. A plain intersection would collapse our
+ * `string | null` back down to `string | undefined`, so the inherited
+ * `name` is removed first and then redeclared.
  */
 export type IconProps = Omit<LucideProps, "name"> & { name?: string | null }
 

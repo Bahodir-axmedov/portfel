@@ -86,10 +86,15 @@ export async function Testimonials({
 												{author}
 											</p>
 											{meta ? (
-												<p className="truncate text-xs text-ink-faint">{meta}</p>
+												<p className="truncate text-xs text-ink-faint">
+													{meta}
+												</p>
 											) : null}
 										</div>
-										<div className="flex shrink-0 gap-0.5" aria-label={`${rating}/5`}>
+										<div
+											className="flex shrink-0 gap-0.5"
+											aria-label={`${rating}/5`}
+										>
 											{Array.from({ length: rating }).map((_, star) => (
 												<Star
 													key={star}

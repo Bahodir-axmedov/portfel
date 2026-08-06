@@ -64,12 +64,11 @@ export async function POST(request: Request, { params }: Context) {
 
 		// A single transaction so the list can never be observed half-reordered.
 		await prisma.$transaction(
-			parsed.data.items.map(
-				(item) =>
-					delegate.update({
-						where: { [key]: item.id },
-						data: { order: item.order },
-					}) as unknown as Promise<unknown>,
+			parsed.data.items.map((item) =>
+				delegate.update({
+					where: { [key]: item.id },
+					data: { order: item.order },
+				}),
 			),
 		)
 

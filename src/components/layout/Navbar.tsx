@@ -86,7 +86,11 @@ export function Navbar({ resumeUrl }: { resumeUrl?: string | null }) {
 
 					{resumeUrl ? (
 						<Magnetic className="hidden lg:inline-flex">
-							<a href={resumeUrl} download className={buttonClass("primary", "sm")}>
+							<a
+								href={resumeUrl}
+								download
+								className={buttonClass("primary", "sm")}
+							>
 								<Download className="h-3.5 w-3.5" strokeWidth={1.9} />
 								{t("resume")}
 							</a>

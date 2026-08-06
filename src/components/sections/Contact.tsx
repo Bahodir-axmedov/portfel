@@ -1,5 +1,13 @@
 import { getTranslations } from "next-intl/server"
-import { Clock, Download, ExternalLink, Mail, MapPin, Phone, Send } from "lucide-react"
+import {
+	Clock,
+	Download,
+	ExternalLink,
+	Mail,
+	MapPin,
+	Phone,
+	Send,
+} from "lucide-react"
 import { Icon } from "@/components/ui/Icon"
 import { CopyButton } from "@/components/ui/CopyButton"
 import { GlassCard } from "@/components/ui/interactive"
@@ -144,8 +152,14 @@ export async function Contact({
 											{row.href ? (
 												<a
 													href={row.href}
-													target={row.href.startsWith("http") ? "_blank" : undefined}
-													rel={row.href.startsWith("http") ? "noreferrer" : undefined}
+													target={
+														row.href.startsWith("http") ? "_blank" : undefined
+													}
+													rel={
+														row.href.startsWith("http")
+															? "noreferrer"
+															: undefined
+													}
 													className="block truncate text-sm font-medium text-ink transition hover:text-brand-400"
 												>
 													{row.value}

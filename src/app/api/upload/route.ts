@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { mkdir, writeFile } from "node:fs/promises"
 import { join, resolve, sep } from "node:path"
+import { requireSameOrigin } from "@/lib/api"
 import { AuthError, requireSession } from "@/lib/auth"
 import { rateLimit } from "@/lib/rate-limit"
 import { slugify } from "@/lib/utils"
@@ -54,7 +55,8 @@ function sniffMime(buffer: Buffer): string | null {
 
 	if (buffer.length < 12) return null
 
-	if (startsWith(0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a)) return "image/png"
+	if (startsWith(0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a))
+		return "image/png"
 	if (startsWith(0xff, 0xd8, 0xff)) return "image/jpeg"
 	if (startsWith(0x47, 0x49, 0x46, 0x38)) return "image/gif"
 	if (startsWith(0x25, 0x50, 0x44, 0x46)) return "application/pdf"
@@ -78,6 +80,13 @@ function reject(error: string, status: number) {
 export async function POST(request: Request) {
 	try {
 		const session = await requireSession()
+
+		// The session cookie is SameSite=Lax, which still travels with a
+		// top-level cross-site form submission. Without an Origin check a third
+		// party page could make a logged-in admin's browser write files into the
+		// volume. Every other mutating endpoint already enforces this.
+		const crossOrigin = requireSameOrigin(request)
+		if (crossOrigin) return crossOrigin
 
 		// Even an authenticated admin should not be able to fill the volume by
 		// accident (or with a stolen cookie).
@@ -148,7 +157,10 @@ export async function POST(request: Request) {
 
 		// Defence in depth: `filename` is fully generated above, but a
 		// containment assert costs nothing and survives future refactors.
-		if (targetPath !== join(targetDir, filename) || !targetPath.startsWith(targetDir + sep)) {
+		if (
+			targetPath !== join(targetDir, filename) ||
+			!targetPath.startsWith(targetDir + sep)
+		) {
 			return reject("Yaroqsiz fayl nomi", 400)
 		}
 

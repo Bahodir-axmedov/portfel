@@ -28,7 +28,7 @@ export async function verifyCredentials(email: string, password: string) {
 
 	if (!adminEmail || !hash) {
 		throw new Error(
-			"ADMIN_EMAIL and ADMIN_PASSWORD_HASH must be set in .env. Generate a hash with: npm run hash -- \"your-password\"",
+			'ADMIN_EMAIL and ADMIN_PASSWORD_HASH must be set in .env. Generate a hash with: npm run hash -- "your-password"',
 		)
 	}
 

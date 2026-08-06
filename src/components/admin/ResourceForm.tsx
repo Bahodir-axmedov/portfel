@@ -26,7 +26,9 @@ function buildGroups(fields: AdminField[]): Group[] {
 	const groups: Group[] = []
 	for (const field of fields) {
 		if (field.translationOf) {
-			const parent = groups.find((group) => group.base.name === field.translationOf)
+			const parent = groups.find(
+				(group) => group.base.name === field.translationOf,
+			)
 			if (parent) parent.translations.push(field)
 			continue
 		}

@@ -34,10 +34,7 @@ export default async function HomePage({
 	const { locale: raw } = await params
 	const locale: Locale = isLocale(raw) ? raw : "uz"
 
-	const [t, data] = await Promise.all([
-		getTranslations("hero"),
-		getHomeData(),
-	])
+	const [t, data] = await Promise.all([getTranslations("hero"), getHomeData()])
 
 	const { profile } = data
 
@@ -64,7 +61,9 @@ export default async function HomePage({
 				headline={t("headline")}
 				subheadline={t("subheadline")}
 				roles={parseArray(profile?.typingRoles)}
-				photo={profile?.heroImage || profile?.avatarUrl || "/images/profile.png"}
+				photo={
+					profile?.heroImage || profile?.avatarUrl || "/images/profile.png"
+				}
 				location={pick(profile, "location", locale)}
 				openToWork={profile?.availability === "open_to_work"}
 				resumeUrl={resumeFor(profile, locale)}
@@ -76,11 +75,7 @@ export default async function HomePage({
 
 			<Services services={data.services} locale={locale} />
 
-			<Skills
-				skills={data.skills}
-				languages={data.languages}
-				locale={locale}
-			/>
+			<Skills skills={data.skills} languages={data.languages} locale={locale} />
 
 			<Projects projects={data.projects} locale={locale} limit={3} />
 

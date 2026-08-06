@@ -84,7 +84,9 @@ function Cell({ value, type }: { value: unknown; type?: AdminFieldType }) {
 					</span>
 				))}
 				{value.length > 3 ? (
-					<span className="text-[11px] text-ink-faint">+{value.length - 3}</span>
+					<span className="text-[11px] text-ink-faint">
+						+{value.length - 3}
+					</span>
 				) : null}
 			</span>
 		)
@@ -142,7 +144,9 @@ export function DataTable(props: Props) {
 
 			const qs = next.toString()
 			startTransition(() => {
-				router.push(qs ? `/admin/${resourceKey}?${qs}` : `/admin/${resourceKey}`)
+				router.push(
+					qs ? `/admin/${resourceKey}?${qs}` : `/admin/${resourceKey}`,
+				)
 			})
 		},
 		[resourceKey, router, searchParams],
@@ -473,7 +477,10 @@ export function DataTable(props: Props) {
 															type="button"
 															disabled={disabled}
 															onClick={() =>
-																runBulk(row.published ? "unpublish" : "publish", [id])
+																runBulk(
+																	row.published ? "unpublish" : "publish",
+																	[id],
+																)
 															}
 															aria-label={
 																row.published ? "Yashirish" : "Chop etish"
@@ -526,9 +533,7 @@ export function DataTable(props: Props) {
 			{/* ---------- pagination ---------- */}
 			<div className="flex flex-wrap items-center justify-between gap-3 text-xs text-ink-faint">
 				<p>
-					{total > 0
-						? `${from}–${to} / ${total} ta yozuv`
-						: "0 ta yozuv"}
+					{total > 0 ? `${from}–${to} / ${total} ta yozuv` : "0 ta yozuv"}
 					{hasOrder ? " · tartib bo'yicha saralangan" : ""}
 				</p>
 

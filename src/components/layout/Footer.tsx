@@ -118,7 +118,10 @@ export async function Footer({
 										href={`mailto:${email}`}
 										className="inline-flex items-center gap-2 break-all text-[13.5px] text-ink-muted transition-colors duration-200 hover:text-ink"
 									>
-										<Mail className="h-3.5 w-3.5 shrink-0 text-ink-faint" strokeWidth={1.7} />
+										<Mail
+											className="h-3.5 w-3.5 shrink-0 text-ink-faint"
+											strokeWidth={1.7}
+										/>
 										{email}
 									</a>
 								</li>
@@ -129,7 +132,10 @@ export async function Footer({
 										href={`tel:${phone.replace(/[^\d+]/g, "")}`}
 										className="inline-flex items-center gap-2 text-[13.5px] text-ink-muted transition-colors duration-200 hover:text-ink"
 									>
-										<Phone className="h-3.5 w-3.5 shrink-0 text-ink-faint" strokeWidth={1.7} />
+										<Phone
+											className="h-3.5 w-3.5 shrink-0 text-ink-faint"
+											strokeWidth={1.7}
+										/>
 										{phone}
 									</a>
 								</li>

@@ -4,7 +4,12 @@ import { useState, useTransition } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { Check, ChevronDown, Globe } from "lucide-react"
 import { usePathname, useRouter } from "@/i18n/navigation"
-import { locales, localeLabels, localeShortLabels, type Locale } from "@/i18n/routing"
+import {
+	locales,
+	localeLabels,
+	localeShortLabels,
+	type Locale,
+} from "@/i18n/routing"
 import { useClickOutside } from "@/hooks"
 import { cn } from "@/lib/utils"
 
@@ -75,7 +80,10 @@ export function LocaleSwitcher({ className }: { className?: string }) {
 							>
 								{localeLabels[locale]}
 								{locale === active ? (
-									<Check className="h-3.5 w-3.5 text-brand-400" strokeWidth={2} />
+									<Check
+										className="h-3.5 w-3.5 text-brand-400"
+										strokeWidth={2}
+									/>
 								) : (
 									<span className="text-[11px] text-ink-faint">
 										{localeShortLabels[locale]}

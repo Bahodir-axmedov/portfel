@@ -125,7 +125,10 @@ export function Hero({
 							{subheadline}
 						</motion.p>
 
-						<motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
+						<motion.div
+							variants={itemVariants}
+							className="flex flex-wrap items-center gap-3"
+						>
 							<Magnetic>
 								<a href="#projects" className={buttonClass("primary", "lg")}>
 									{t("ctaPrimary")}
@@ -157,7 +160,10 @@ export function Hero({
 								<MapPin className="h-3.5 w-3.5" strokeWidth={1.7} />
 								{location}
 							</span>
-							<span aria-hidden className="hidden h-4 w-px bg-white/10 sm:block" />
+							<span
+								aria-hidden
+								className="hidden h-4 w-px bg-white/10 sm:block"
+							/>
 							<ul className="flex flex-wrap items-center gap-2">
 								{socials.map((social) => (
 									<li key={social.platform}>
@@ -244,7 +250,10 @@ export function Hero({
 					className="mt-16 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.2em] text-ink-faint transition-colors duration-300 hover:text-ink-muted md:mt-20"
 				>
 					<span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-line">
-						<ArrowDown className="h-3.5 w-3.5 animate-float" strokeWidth={1.7} />
+						<ArrowDown
+							className="h-3.5 w-3.5 animate-float"
+							strokeWidth={1.7}
+						/>
 					</span>
 					{t("scroll")}
 				</motion.a>

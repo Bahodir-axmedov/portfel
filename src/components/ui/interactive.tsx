@@ -100,8 +100,14 @@ export function TiltCard({
 
 	const px = useMotionValue(0)
 	const py = useMotionValue(0)
-	const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [max, -max]), TILT_SPRING)
-	const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-max, max]), TILT_SPRING)
+	const rotateX = useSpring(
+		useTransform(py, [-0.5, 0.5], [max, -max]),
+		TILT_SPRING,
+	)
+	const rotateY = useSpring(
+		useTransform(px, [-0.5, 0.5], [-max, max]),
+		TILT_SPRING,
+	)
 	const style = { rotateX, rotateY, transformPerspective: 900 }
 
 	if (!enabled) {
@@ -215,7 +221,11 @@ export function Counter({
 	const display = compact ? compactNumber(current) : String(Math.round(current))
 
 	return (
-		<span ref={ref} className={className} aria-label={`${prefix}${value}${suffix}`}>
+		<span
+			ref={ref}
+			className={className}
+			aria-label={`${prefix}${value}${suffix}`}
+		>
 			{prefix}
 			{display}
 			{suffix}
@@ -299,9 +309,7 @@ export function ProgressBar({
 				animate={inView || !animate ? target : initial}
 				transition={transition}
 			/>
-			{showValue ? (
-				<span className="sr-only">{safe}%</span>
-			) : null}
+			{showValue ? <span className="sr-only">{safe}%</span> : null}
 		</div>
 	)
 }
@@ -335,7 +343,11 @@ export function Floating({
 	}
 
 	return (
-		<motion.div className={className} animate={floatAnimation} transition={floatTransition}>
+		<motion.div
+			className={className}
+			animate={floatAnimation}
+			transition={floatTransition}
+		>
 			{children}
 		</motion.div>
 	)

@@ -244,7 +244,10 @@ export function MediaLibrary({ maxUploadMb }: Props) {
 			) : (
 				<ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 					{files.map((file) => (
-						<li key={file.name} className="card-surface overflow-hidden rounded-lg">
+						<li
+							key={file.name}
+							className="card-surface overflow-hidden rounded-lg"
+						>
 							<div className="relative aspect-[4/3] bg-base-raised">
 								{file.kind === "image" ? (
 									<Image

@@ -71,7 +71,12 @@ export function ContactForm() {
 						/>
 					</Field>
 
-					<Field label={t("email")} htmlFor="email" required error={errors.email}>
+					<Field
+						label={t("email")}
+						htmlFor="email"
+						required
+						error={errors.email}
+					>
 						<Input
 							id="email"
 							name="email"
@@ -97,7 +102,12 @@ export function ContactForm() {
 					/>
 				</Field>
 
-				<Field label={t("message")} htmlFor="message" required error={errors.message}>
+				<Field
+					label={t("message")}
+					htmlFor="message"
+					required
+					error={errors.message}
+				>
 					<Textarea
 						id="message"
 						name="message"

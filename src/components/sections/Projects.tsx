@@ -62,7 +62,10 @@ export async function Projects({
 						description={t("subtitle")}
 						actions={
 							projects.length > 0 ? (
-								<Link href="/projects" className={buttonClass("secondary", "md")}>
+								<Link
+									href="/projects"
+									className={buttonClass("secondary", "md")}
+								>
 									{t("viewAll")}
 									<ArrowRight className="h-4 w-4" strokeWidth={1.8} />
 								</Link>

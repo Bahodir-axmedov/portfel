@@ -67,9 +67,7 @@ export default async function AdminMessagesPage({
 		<AdminShell
 			title="Xabarlar"
 			description={
-				unread
-					? `${unread} ta o'qilmagan xabar`
-					: "Barcha xabarlar o'qilgan"
+				unread ? `${unread} ta o'qilmagan xabar` : "Barcha xabarlar o'qilgan"
 			}
 		>
 			<MessageList

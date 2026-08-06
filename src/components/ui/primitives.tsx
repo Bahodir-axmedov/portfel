@@ -13,7 +13,8 @@ import { cn } from "@/lib/utils"
  * Button
  * ------------------------------------------------------------------ */
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "outline" | "danger"
+export type ButtonVariant =
+	"primary" | "secondary" | "ghost" | "outline" | "danger"
 export type ButtonSize = "sm" | "md" | "lg" | "icon"
 
 const BUTTON_BASE =
@@ -42,7 +43,12 @@ export function buttonClass(
 	size: ButtonSize = "md",
 	className?: string,
 ) {
-	return cn(BUTTON_BASE, BUTTON_VARIANTS[variant], BUTTON_SIZES[size], className)
+	return cn(
+		BUTTON_BASE,
+		BUTTON_VARIANTS[variant],
+		BUTTON_SIZES[size],
+		className,
+	)
 }
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -50,16 +56,22 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	size?: ButtonSize
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-	{ variant = "primary", size = "md", className, children, ...props },
-	ref,
-) {
-	return (
-		<button ref={ref} className={buttonClass(variant, size, className)} {...props}>
-			{children}
-		</button>
-	)
-})
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+	function Button(
+		{ variant = "primary", size = "md", className, children, ...props },
+		ref,
+	) {
+		return (
+			<button
+				ref={ref}
+				className={buttonClass(variant, size, className)}
+				{...props}
+			>
+				{children}
+			</button>
+		)
+	},
+)
 
 export type LinkButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
 	href: string
@@ -261,11 +273,14 @@ export function Divider({ className }: { className?: string }) {
 const FIELD_BASE =
 	"w-full rounded-md border border-line bg-white/[0.03] px-4 text-[15px] text-ink placeholder:text-ink-faint outline-none transition-colors duration-200 focus:border-brand-500/60 focus:bg-white/[0.05] disabled:opacity-60"
 
-export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-	function Input({ className, ...props }, ref) {
-		return <input ref={ref} className={cn(FIELD_BASE, "h-12", className)} {...props} />
-	},
-)
+export const Input = forwardRef<
+	HTMLInputElement,
+	InputHTMLAttributes<HTMLInputElement>
+>(function Input({ className, ...props }, ref) {
+	return (
+		<input ref={ref} className={cn(FIELD_BASE, "h-12", className)} {...props} />
+	)
+})
 
 export const Textarea = forwardRef<
 	HTMLTextAreaElement,
@@ -274,7 +289,11 @@ export const Textarea = forwardRef<
 	return (
 		<textarea
 			ref={ref}
-			className={cn(FIELD_BASE, "min-h-[132px] resize-y py-3 leading-relaxed", className)}
+			className={cn(
+				FIELD_BASE,
+				"min-h-[132px] resize-y py-3 leading-relaxed",
+				className,
+			)}
 			{...props}
 		/>
 	)

@@ -22,7 +22,10 @@ const logoSvg = await readFile(path.join(pub, "logo-mark.svg"))
 /** Renders the logo at `size` px on the dark brand background. */
 async function icon(size, outFile) {
 	const logo = await sharp(logoSvg, { density: 512 })
-		.resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+		.resize(size, size, {
+			fit: "contain",
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		})
 		.png()
 		.toBuffer()
 
@@ -83,7 +86,10 @@ async function buildOg() {
 		.png()
 		.toBuffer()
 
-	const logo = await sharp(logoSvg, { density: 512 }).resize(132, 132).png().toBuffer()
+	const logo = await sharp(logoSvg, { density: 512 })
+		.resize(132, 132)
+		.png()
+		.toBuffer()
 
 	await sharp(base)
 		.composite([{ input: logo, top: 76, left: 80 }])

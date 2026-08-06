@@ -49,7 +49,8 @@ export function SkillsBoard({
 	const [filter, setFilter] = useState("all")
 
 	const visible = useMemo(
-		() => (filter === "all" ? skills : skills.filter((s) => s.category === filter)),
+		() =>
+			filter === "all" ? skills : skills.filter((s) => s.category === filter),
 		[filter, skills],
 	)
 

@@ -91,7 +91,9 @@ export function GalleryGrid({
 								{photo.title}
 							</span>
 							{photo.category ? (
-								<span className="text-[11px] text-ink-muted">{photo.category}</span>
+								<span className="text-[11px] text-ink-muted">
+									{photo.category}
+								</span>
 							) : null}
 						</span>
 					</button>

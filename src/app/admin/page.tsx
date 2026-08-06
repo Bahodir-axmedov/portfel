@@ -223,7 +223,9 @@ export default async function AdminDashboard() {
 					<div className="flex flex-wrap items-center gap-3 rounded-lg border border-warning/30 bg-warning/10 px-4 py-3 text-sm">
 						<Icon name="CircleDot" className="h-4 w-4 shrink-0 text-warning" />
 						<p className="text-ink-muted">
-							<span className="font-medium text-ink">{totalDrafts} ta yozuv</span>{" "}
+							<span className="font-medium text-ink">
+								{totalDrafts} ta yozuv
+							</span>{" "}
 							hali chop etilmagan — ular saytda ko&apos;rinmaydi.
 						</p>
 						<div className="ml-auto flex flex-wrap gap-2">
@@ -267,7 +269,9 @@ export default async function AdminDashboard() {
 					</div>
 					<div className="mt-2 flex justify-between font-mono text-[10px] text-ink-faint">
 						<span>{analytics.daily[0]?.date ?? ""}</span>
-						<span>{analytics.daily[analytics.daily.length - 1]?.date ?? ""}</span>
+						<span>
+							{analytics.daily[analytics.daily.length - 1]?.date ?? ""}
+						</span>
 					</div>
 				</Panel>
 
@@ -313,7 +317,9 @@ export default async function AdminDashboard() {
 						}
 					>
 						{recentMessages.length === 0 ? (
-							<p className="text-xs text-ink-faint">Hozircha xabar yo&apos;q.</p>
+							<p className="text-xs text-ink-faint">
+								Hozircha xabar yo&apos;q.
+							</p>
 						) : (
 							<ul className="space-y-2.5">
 								{recentMessages.map((message) => (
@@ -359,7 +365,9 @@ export default async function AdminDashboard() {
 						}
 					>
 						{latestProjects.length === 0 ? (
-							<p className="text-xs text-ink-faint">Loyiha qo&apos;shilmagan.</p>
+							<p className="text-xs text-ink-faint">
+								Loyiha qo&apos;shilmagan.
+							</p>
 						) : (
 							<ul className="space-y-2.5">
 								{latestProjects.map((project) => (
@@ -398,7 +406,9 @@ export default async function AdminDashboard() {
 								className="flex items-center gap-3 rounded-md border border-line px-3 py-2.5 transition hover:border-line-strong hover:bg-glass"
 							>
 								<Icon name={item.icon} className="h-4 w-4 text-brand-300" />
-								<span className="min-w-0 flex-1 truncate text-xs">{item.label}</span>
+								<span className="min-w-0 flex-1 truncate text-xs">
+									{item.label}
+								</span>
 								<span className="font-mono text-xs tabular-nums text-ink-faint">
 									{item.total}
 								</span>

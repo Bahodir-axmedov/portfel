@@ -10,7 +10,11 @@ import { cn } from "@/lib/utils"
 
 const primary = [
 	{ href: "/admin", label: "Boshqaruv paneli", icon: "Gauge" },
-	{ href: "/admin/profile", label: profileResource.label, icon: profileResource.icon },
+	{
+		href: "/admin/profile",
+		label: profileResource.label,
+		icon: profileResource.icon,
+	},
 	{ href: "/admin/messages", label: "Xabarlar", icon: "Mail" },
 ]
 

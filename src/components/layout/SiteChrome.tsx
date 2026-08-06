@@ -231,7 +231,10 @@ export function LoadingScreen() {
 
 export function AmbientBackground() {
 	return (
-		<div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+		<div
+			aria-hidden
+			className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+		>
 			<div className="absolute left-1/2 top-[-18%] h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-brand-500/[0.13] blur-[130px]" />
 			<div className="absolute right-[-12%] top-[36%] h-[420px] w-[520px] rounded-full bg-accent-500/[0.10] blur-[140px]" />
 			<div className="absolute bottom-[-14%] left-[-10%] h-[420px] w-[560px] rounded-full bg-brand-600/[0.09] blur-[150px]" />

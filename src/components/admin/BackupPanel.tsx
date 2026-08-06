@@ -110,9 +110,9 @@ export function BackupPanel() {
 					<h2 className="text-sm font-semibold">Zaxira nusxa olish</h2>
 				</div>
 				<p className="mt-2 text-xs leading-relaxed text-ink-muted">
-					Barcha bo&apos;limlar, profil va xabarlar bitta JSON faylga
-					eksport qilinadi. Faylni xavfsiz joyda saqlang — Railway volume
-					yo&apos;qolsa, ma&apos;lumotni faqat shu fayldan tiklash mumkin.
+					Barcha bo&apos;limlar, profil va xabarlar bitta JSON faylga eksport
+					qilinadi. Faylni xavfsiz joyda saqlang — Railway volume yo&apos;qolsa,
+					ma&apos;lumotni faqat shu fayldan tiklash mumkin.
 				</p>
 				<button
 					type="button"
@@ -132,8 +132,8 @@ export function BackupPanel() {
 				</div>
 				<p className="mt-2 text-xs leading-relaxed text-ink-muted">
 					Eksport qilingan JSON faylni tanlang. Bir xil ID&apos;li yozuvlar
-					yangilanadi, yangilari qo&apos;shiladi. Bog&apos;liq jadvallar
-					(loyiha rasmlari, texnologiyalar) tiklanmaydi.
+					yangilanadi, yangilari qo&apos;shiladi. Bog&apos;liq jadvallar (loyiha
+					rasmlari, texnologiyalar) tiklanmaydi.
 				</p>
 				<input
 					ref={inputRef}

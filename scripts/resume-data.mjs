@@ -238,10 +238,6 @@ export const resumes = {
 				period: "2024 — 2028",
 			},
 		],
-		languages: [
-			"Uzbek — native",
-			"Russian — advanced",
-			"English — advanced",
-		],
+		languages: ["Uzbek — native", "Russian — advanced", "English — advanced"],
 	},
 }

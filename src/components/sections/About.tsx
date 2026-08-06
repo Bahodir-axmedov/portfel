@@ -1,8 +1,20 @@
 import { getTranslations } from "next-intl/server"
-import { CalendarDays, Clock, Compass, MapPin, Quote, Sparkles } from "lucide-react"
+import {
+	CalendarDays,
+	Clock,
+	Compass,
+	MapPin,
+	Quote,
+	Sparkles,
+} from "lucide-react"
 import { GlassCard } from "@/components/ui/interactive"
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/ui/motion"
-import { Badge, Container, Section, SectionHeading } from "@/components/ui/primitives"
+import {
+	Badge,
+	Container,
+	Section,
+	SectionHeading,
+} from "@/components/ui/primitives"
 import { pick, pickArray } from "@/lib/i18n-content"
 import { calculateAge, yearsSince } from "@/lib/utils"
 import type { Locale } from "@/i18n/routing"
@@ -35,7 +47,9 @@ export async function About({
 	const motto = pick(profile, "motto", locale)
 	const interests = pickArray(profile, "interests", locale)
 
-	const age = profile.birthDate ? calculateAge(profile.birthDate as string | Date) : null
+	const age = profile.birthDate
+		? calculateAge(profile.birthDate as string | Date)
+		: null
 	const years = profile.codingSince ? yearsSince(profile.codingSince) : null
 
 	const facts = [
@@ -158,7 +172,9 @@ export async function About({
 
 							<div className="mt-5 flex flex-wrap gap-2 border-t border-white/[0.06] pt-5">
 								<Badge tone="success">{t("openToWork")}</Badge>
-								{profile.remoteOk ? <Badge tone="brand">{t("remote")}</Badge> : null}
+								{profile.remoteOk ? (
+									<Badge tone="brand">{t("remote")}</Badge>
+								) : null}
 							</div>
 						</GlassCard>
 

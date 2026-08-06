@@ -27,10 +27,10 @@ const messagePatchSchema = z
 		read: z.boolean().optional(),
 		archived: z.boolean().optional(),
 	})
-	.refine(
-		(value) => value.read !== undefined || value.archived !== undefined,
-		{ message: "read yoki archived maydoni kerak", path: ["read"] },
-	)
+	.refine((value) => value.read !== undefined || value.archived !== undefined, {
+		message: "read yoki archived maydoni kerak",
+		path: ["read"],
+	})
 
 /** Toggles the read / archived flags on a contact message. */
 export async function PATCH(request: Request, { params }: Context) {
