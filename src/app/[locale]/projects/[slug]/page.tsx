@@ -383,7 +383,7 @@ export default async function ProjectDetailPage({
 														className="inline-flex items-center gap-1.5 rounded-md border border-line bg-glass px-2.5 py-1.5 text-xs text-ink-muted"
 													>
 														<Icon
-															name={tech.icon}
+										name={tech.icon ?? undefined}
 															className="h-3.5 w-3.5"
 															strokeWidth={1.8}
 														/>
