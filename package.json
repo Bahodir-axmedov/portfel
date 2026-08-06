@@ -39,7 +39,7 @@
     "jose": "^5.9.6",
     "lenis": "^1.1.18",
     "lucide-react": "^0.469.0",
-    "next": "15.1.6",
+    "next": "^15.5.22",
     "next-intl": "^3.26.3",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
@@ -67,5 +67,15 @@
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "esbuild@0.24.2": true,
+    "esbuild@0.28.1": true,
+    "sharp@0.34.5": true,
+    "sharp@0.33.5": true,
+    "prisma@6.19.3": true,
+    "unrs-resolver@1.12.2": true
   }
 }
