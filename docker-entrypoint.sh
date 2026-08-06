@@ -29,8 +29,17 @@ else
 fi
 
 # Creates / migrates the SQLite file that lives on the Railway volume.
+# The CLI lives in its own tree (/app/cli/node_modules) so Node resolves its
+# full dependency closure — @prisma/config, effect and friends — instead of the
+# partial copy that used to crash the container with MODULE_NOT_FOUND.
+PRISMA_CLI="./cli/node_modules/prisma/build/index.js"
+if [ ! -f "$PRISMA_CLI" ]; then
+	echo "[boot] FATAL: Prisma CLI not found at $PRISMA_CLI" >&2
+	exit 1
+fi
+
 echo "[boot] syncing database schema..."
-$RUN_AS node ./node_modules/prisma/build/index.js db push --skip-generate
+$RUN_AS node "$PRISMA_CLI" db push --skip-generate --schema=./prisma/schema.prisma
 
 # A fresh Railway volume produces an empty database, and nothing in the app
 # falls back to the /content JSON files, so the site would render every section

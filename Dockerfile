@@ -39,6 +39,27 @@ RUN npx esbuild prisma/seed.ts \
 	--loader:.json=json \
 	--log-level=warning
 
+# ---------- prisma cli ----------
+# The runtime image needs the Prisma CLI to push the schema onto the Railway
+# volume on first boot. Copying a few folders out of the build tree is not
+# enough: `prisma/build/index.js` loads `@prisma/config`, which in turn loads
+# `effect`, and that chain keeps growing between Prisma releases. Installing
+# the CLI into its own isolated tree copies the *complete* dependency closure
+# instead of a hand-picked subset, so a Prisma upgrade can never reintroduce a
+# MODULE_NOT_FOUND at boot.
+#
+# Install scripts are intentionally NOT skipped here so @prisma/engines places
+# the schema engine binary next to the CLI. The version is read from
+# package.json so the CLI can never drift away from @prisma/client.
+FROM node:20-alpine AS prismacli
+RUN apk add --no-cache libc6-compat openssl
+WORKDIR /cli
+COPY package.json /tmp/app-package.json
+RUN PRISMA_VERSION="$(node -p "require('/tmp/app-package.json').devDependencies.prisma")" \
+	&& echo '{"name":"prisma-cli-only","private":true}' > package.json \
+	&& npm install --no-audit --no-fund "prisma@$PRISMA_VERSION" \
+	&& node ./node_modules/prisma/build/index.js --version
+
 # ---------- runtime ----------
 FROM node:20-alpine AS runner
 # su-exec lets the entrypoint drop root *after* fixing volume ownership.
@@ -60,12 +81,16 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Prisma CLI + schema so the container can push the schema on boot
+# Schema + seed bundle + the generated client the app and the seed run against.
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/content ./content
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+
+# Self-contained Prisma CLI (see the prismacli stage above). It lives outside
+# ./node_modules so Node resolves its dependencies from /app/cli/node_modules
+# and never mixes with the Next.js standalone tree.
+COPY --from=prismacli /cli/node_modules ./cli/node_modules
 
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
 RUN chmod +x ./docker-entrypoint.sh && mkdir -p /data/uploads && chown -R nextjs:nodejs /data /app
