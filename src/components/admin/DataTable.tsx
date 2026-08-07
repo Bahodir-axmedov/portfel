@@ -124,6 +124,27 @@ export function DataTable(props: Props) {
 	const [busy, setBusy] = useState(false)
 	const [isPending, startTransition] = useTransition()
 
+	/*
+	 * Drag ordering keeps its own copy of the rows so a dropped row moves
+	 * immediately; waiting for the server round trip makes the table feel
+	 * broken. The copy is rebuilt whenever the server sends a different row
+	 * set, which is React's documented way to reset state from props without
+	 * an effect.
+	 */
+	const signature = useMemo(
+		() => rows.map((row) => String(row[idKey] ?? "")).join("|"),
+		[rows, idKey],
+	)
+	const [localRows, setLocalRows] = useState(rows)
+	const [localSignature, setLocalSignature] = useState(signature)
+	if (localSignature !== signature) {
+		setLocalSignature(signature)
+		setLocalRows(rows)
+	}
+
+	const [dragId, setDragId] = useState<string | null>(null)
+	const [overId, setOverId] = useState<string | null>(null)
+
 	const ids = useMemo(
 		() => rows.map((row) => String(row[idKey] ?? "")).filter(Boolean),
 		[rows, idKey],
@@ -222,6 +243,75 @@ export function DataTable(props: Props) {
 			}
 		},
 		[notifyError, resourceKey, router, selected, success],
+	)
+
+	const persistOrder = useCallback(
+		async (next: Row[]) => {
+			const items = next
+				.map((row, index) => ({
+					id: String(row[idKey] ?? ""),
+					// Offset by the current page so ordering stays global instead of
+					// restarting at zero on every page.
+					order: (page - 1) * pageSize + index,
+				}))
+				.filter((item) => item.id)
+
+			if (items.length === 0) return
+
+			setBusy(true)
+			try {
+				const response = await fetch(`/api/admin/${resourceKey}/reorder`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ items }),
+				})
+				const payload = (await response.json()) as {
+					ok?: boolean
+					error?: string
+				}
+
+				if (!response.ok || !payload.ok) {
+					notifyError(payload.error ?? "Tartibni saqlab bo'lmadi")
+					// Roll the view back to what the database actually holds, so the
+					// screen never shows an order that was rejected.
+					setLocalRows(rows)
+					return
+				}
+
+				success("Tartib saqlandi")
+				startTransition(() => router.refresh())
+			} catch {
+				notifyError("Tarmoq xatosi. Qaytadan urinib ko'ring.")
+				setLocalRows(rows)
+			} finally {
+				setBusy(false)
+			}
+		},
+		[idKey, notifyError, page, pageSize, resourceKey, rows, router, success],
+	)
+
+	const handleDrop = useCallback(
+		(targetId: string) => {
+			const sourceId = dragId
+			setOverId(null)
+			setDragId(null)
+			if (!sourceId || sourceId === targetId) return
+
+			const current = [...localRows]
+			const from = current.findIndex(
+				(row) => String(row[idKey] ?? "") === sourceId,
+			)
+			const to = current.findIndex(
+				(row) => String(row[idKey] ?? "") === targetId,
+			)
+			if (from < 0 || to < 0) return
+
+			const [moved] = current.splice(from, 1)
+			current.splice(to, 0, moved)
+			setLocalRows(current)
+			void persistOrder(current)
+		},
+		[dragId, idKey, localRows, persistOrder],
 	)
 
 	const disabled = busy || isPending
@@ -447,25 +537,53 @@ export function DataTable(props: Props) {
 								</tr>
 							</thead>
 							<tbody>
-								{rows.map((row, index) => {
+								{localRows.map((row, index) => {
 									const id = String(row[idKey] ?? index)
 									const isSelected = selected.has(id)
 									return (
 										<tr
 											key={id}
+											draggable={hasOrder && !disabled}
+											onDragStart={() => setDragId(id)}
+											onDragOver={(event) => {
+												if (!hasOrder || !dragId) return
+												// Without preventDefault the browser refuses the drop.
+												event.preventDefault()
+												if (overId !== id) setOverId(id)
+											}}
+											onDrop={() => handleDrop(id)}
+											onDragEnd={() => {
+												setDragId(null)
+												setOverId(null)
+											}}
 											className={cn(
 												"border-b border-line/60 transition last:border-0 hover:bg-glass",
 												isSelected && "bg-brand-500/5",
+												dragId === id && "opacity-40",
+												overId === id &&
+													dragId !== id &&
+													"border-t-2 border-t-brand-500",
 											)}
 										>
 											<td className="px-4 py-3">
-												<input
-													type="checkbox"
-													checked={isSelected}
-													onChange={() => toggleRow(id)}
-													aria-label={`${singular} tanlash`}
-													className="size-4 accent-brand-500"
-												/>
+												<div className="flex items-center gap-2">
+													{hasOrder ? (
+														<span
+															aria-hidden
+															title="Tartibni o'zgartirish uchun torting"
+															className="cursor-grab text-ink-faint transition hover:text-ink active:cursor-grabbing"
+														>
+															<Icon name="Menu" className="h-3.5 w-3.5" />
+														</span>
+													) : null}
+													<input
+														type="checkbox"
+														checked={isSelected}
+														onChange={() => toggleRow(id)}
+														aria-label={`${singular} tanlash`}
+														className="size-4 accent-brand-500"
+													/>
+												</div>
 											</td>
 											{columns.map((column) => (
 												<td

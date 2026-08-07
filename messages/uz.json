@@ -213,5 +213,20 @@
 		"notFoundTitle": "Sahifa topilmadi",
 		"notFoundText": "Siz qidirgan sahifa mavjud emas yoki ko'chirilgan.",
 		"goHome": "Bosh sahifaga qaytish"
+	},
+	"blog": {
+		"eyebrow": "Blog",
+		"title": "Maqolalar va yozuvlar",
+		"subtitle": "Dasturlash, avtomatlashtirish va sun'iy intellekt bo'yicha shaxsiy tajribam.",
+		"search": "Maqola qidirish...",
+		"all": "Barchasi",
+		"empty": "Hozircha maqola chop etilmagan.",
+		"noResults": "Hech narsa topilmadi.",
+		"clear": "Tozalash",
+		"count": "%count% ta maqola",
+		"read": "O'qish",
+		"minutesShort": "daq.",
+		"back": "Blogga qaytish",
+		"more": "Boshqa maqolalar"
 	}
 }

@@ -1,4 +1,5 @@
 import { requireSession } from "@/lib/auth"
+import { logActivity, rowId, rowLabel } from "@/lib/activity"
 import {
 	delegateFor,
 	includeFor,
@@ -79,7 +80,7 @@ export async function GET(request: Request, { params }: Context) {
 /** Creates a new row. */
 export async function POST(request: Request, { params }: Context) {
 	try {
-		await requireSession()
+		const session = await requireSession()
 		const crossOrigin = requireSameOrigin(request)
 		if (crossOrigin) return crossOrigin
 
@@ -102,6 +103,17 @@ export async function POST(request: Request, { params }: Context) {
 		}
 
 		const created = await delegateFor(config).create({ data })
+
+		// Not awaited: the audit write must not add latency to the save, and
+		// `logActivity` already swallows its own failures.
+		void logActivity({
+			action: "create",
+			resource,
+			entityId: rowId(created),
+			label: rowLabel(created),
+			actor: session.email,
+			headers: request.headers,
+		})
 
 		return ok({ row: toFormValues(config, created) }, { status: 201 })
 	} catch (error) {

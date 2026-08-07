@@ -18,6 +18,7 @@ const primary = [
 		icon: profileResource.icon,
 	},
 	{ href: "/admin/messages", label: "Xabarlar", icon: "Mail" },
+	{ href: "/admin/activity", label: "Faoliyat jurnali", icon: "Activity" },
 ]
 
 /**

@@ -1,4 +1,5 @@
 import { requireSession } from "@/lib/auth"
+import { logActivity, rowId, rowLabel } from "@/lib/activity"
 import {
 	delegateFor,
 	idWhere,
@@ -49,7 +50,7 @@ export async function GET(_request: Request, { params }: Context) {
 /** Updates an existing row. */
 export async function PATCH(request: Request, { params }: Context) {
 	try {
-		await requireSession()
+		const session = await requireSession()
 		const crossOrigin = requireSameOrigin(request)
 		if (crossOrigin) return crossOrigin
 
@@ -77,6 +78,15 @@ export async function PATCH(request: Request, { params }: Context) {
 			data,
 		})
 
+		void logActivity({
+			action: "update",
+			resource,
+			entityId: rowId(updated) ?? id,
+			label: rowLabel(updated),
+			actor: session.email,
+			headers: request.headers,
+		})
+
 		return ok({ row: toFormValues(config, updated) })
 	} catch (error) {
 		return handleApiError(error, "api/admin/update")
@@ -86,7 +96,7 @@ export async function PATCH(request: Request, { params }: Context) {
 /** Deletes a row. */
 export async function DELETE(request: Request, { params }: Context) {
 	try {
-		await requireSession()
+		const session = await requireSession()
 		const crossOrigin = requireSameOrigin(request)
 		if (crossOrigin) return crossOrigin
 
@@ -95,7 +105,25 @@ export async function DELETE(request: Request, { params }: Context) {
 		if (!config) return notFound()
 		if (!id) return fail("ID ko'rsatilmagan", 400)
 
+		// The row is read before deleting for two reasons: the audit entry needs a
+		// label that will not exist a moment later, and deleting a missing id used
+		// to surface as a Prisma P2025 crash handled as a 500 instead of a 404.
+		const existing = await delegateFor(config).findUnique({
+			where: idWhere(config, id),
+		})
+		if (!existing) return notFound()
+
 		await delegateFor(config).delete({ where: idWhere(config, id) })
+
+		void logActivity({
+			action: "delete",
+			resource,
+			entityId: id,
+			label: rowLabel(existing),
+			actor: session.email,
+			headers: request.headers,
+		})
+
 		return ok({ id })
 	} catch (error) {
 		return handleApiError(error, "api/admin/delete")

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { getProjectSlugs } from "@/lib/queries"
+import { getPostSlugs, getProjectSlugs } from "@/lib/queries"
 import { absolute, localePath } from "@/lib/seo"
 import { locales } from "@/i18n/routing"
 
@@ -10,10 +10,16 @@ export const dynamic = "force-dynamic"
 const STATIC_ROUTES = [
 	{ path: "/", priority: 1, changeFrequency: "weekly" as const },
 	{ path: "/projects", priority: 0.9, changeFrequency: "weekly" as const },
+	{ path: "/blog", priority: 0.8, changeFrequency: "weekly" as const },
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	const projects = await getProjectSlugs()
+	// Both lists are independent reads; sequencing them would double the
+	// latency of a route crawlers hit regularly.
+	const [projects, posts] = await Promise.all([
+		getProjectSlugs(),
+		getPostSlugs(),
+	])
 	const now = new Date()
 	const entries: MetadataRoute.Sitemap = []
 
@@ -35,6 +41,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 				lastModified: project.updatedAt ?? now,
 				changeFrequency: "monthly",
 				priority: locale === "uz" ? 0.8 : 0.7,
+			})
+		}
+	}
+
+	for (const post of posts) {
+		for (const locale of locales) {
+			entries.push({
+				url: absolute(localePath(locale, `/blog/${post.slug}`)),
+				lastModified: post.updatedAt ?? now,
+				changeFrequency: "monthly",
+				priority: locale === "uz" ? 0.7 : 0.6,
 			})
 		}
 	}

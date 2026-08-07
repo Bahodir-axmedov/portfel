@@ -182,9 +182,42 @@ export const getSeoForRoute = cache(async (route: string) => {
 export const getPosts = cache(async () => {
 	return prisma.post.findMany({
 		where: { published: true },
-		orderBy: { publishedAt: "desc" },
+		// `publishedAt` is nullable, and SQLite sorts NULL first on DESC. A post
+		// the author published without setting a date would therefore jump above
+		// everything, so `createdAt` is the tie-breaker that keeps ordering sane.
+		orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
 	})
 })
+
+export const getPostBySlug = cache(async (slug: string) => {
+	return prisma.post.findFirst({ where: { slug, published: true } })
+})
+
+export const getPostSlugs = cache(async () => {
+	return prisma.post.findMany({
+		where: { published: true },
+		select: { slug: true, updatedAt: true },
+	})
+})
+
+/**
+ * Increments the view counter for a post.
+ *
+ * Deliberately not wrapped in React `cache`: caching a write would swallow
+ * every call after the first within a request. Failures are swallowed on
+ * purpose -- a locked SQLite file must never turn a readable article into an
+ * error page, and the counter is soft data.
+ */
+export async function incrementPostViews(id: string): Promise<void> {
+	try {
+		await prisma.post.update({
+			where: { id },
+			data: { views: { increment: 1 } },
+		})
+	} catch {
+		// ignored on purpose
+	}
+}
 
 /** Everything the landing page needs, fetched in parallel. */
 export const getHomeData = cache(async () => {

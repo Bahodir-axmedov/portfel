@@ -536,3 +536,29 @@ model PageView {
   @@index([path, createdAt])
   @@index([createdAt])
 }
+
+/// Audit trail for admin mutations. Written by src/lib/activity.ts.
+model ActivityLog {
+  id String @id @default(cuid())
+
+  /// create | update | delete | login | logout | upload | restore
+  action String
+
+  /// Resource key such as "projects", or "auth" for session events.
+  resource String
+
+  /// Row id the action touched. Null for events with no single row.
+  entityId String?
+
+  /// Human readable label captured at write time. Kept as a plain string on
+  /// purpose: if the row is later deleted the log must still make sense, and a
+  /// relation would either block the delete or cascade the history away.
+  label String?
+
+  actor     String
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([resource, createdAt])
+}

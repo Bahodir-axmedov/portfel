@@ -4,6 +4,8 @@ import { useRef, useState } from "react"
 import Image from "next/image"
 import { Field, Input, Textarea } from "@/components/ui/primitives"
 import { Icon } from "@/components/ui/Icon"
+import { MarkdownEditor } from "@/components/admin/MarkdownEditor"
+import { ImageCropper } from "@/components/admin/ImageCropper"
 import type { AdminField } from "@/types"
 
 type Props = {
@@ -46,11 +48,11 @@ function MediaField({ field, value, onChange, disabled, error }: Props) {
 	const inputRef = useRef<HTMLInputElement>(null)
 	const [busy, setBusy] = useState(false)
 	const [uploadError, setUploadError] = useState("")
+	const [pending, setPending] = useState<File | null>(null)
 	const current = typeof value === "string" ? value : ""
 	const isImage = field.type === "image"
 
-	const pick = async (file?: File) => {
-		if (!file) return
+	const send = async (file: File) => {
 		setBusy(true)
 		setUploadError("")
 		try {
@@ -63,6 +65,16 @@ function MediaField({ field, value, onChange, disabled, error }: Props) {
 		} finally {
 			setBusy(false)
 		}
+	}
+
+	const pick = (file?: File) => {
+		if (!file) return
+		// Images go through the cropper first. Everything else uploads as picked.
+		if (isImage) {
+			setPending(file)
+			return
+		}
+		void send(file)
 	}
 
 	return (
@@ -116,7 +128,12 @@ function MediaField({ field, value, onChange, disabled, error }: Props) {
 					type="file"
 					hidden
 					accept={isImage ? "image/*" : "application/pdf,video/*"}
-					onChange={(event) => pick(event.target.files?.[0])}
+					onChange={(event) => {
+						pick(event.target.files?.[0])
+						// Cleared so that cancelling the cropper and picking the very
+						// same file again still fires a change event.
+						event.target.value = ""
+					}}
 				/>
 
 				<Input
@@ -126,6 +143,18 @@ function MediaField({ field, value, onChange, disabled, error }: Props) {
 					onChange={(event) => onChange(field.name, event.target.value)}
 					disabled={disabled || busy}
 				/>
+
+				{pending ? (
+					<ImageCropper
+						file={pending}
+						busy={busy}
+						onCancel={() => setPending(null)}
+						onConfirm={(cropped) => {
+							setPending(null)
+							void send(cropped)
+						}}
+					/>
+				) : null}
 			</div>
 		</Field>
 	)
@@ -207,7 +236,22 @@ export function FieldInput(props: Props) {
 		)
 	}
 
-	if (field.type === "textarea" || field.type === "richtext") {
+	if (field.type === "richtext") {
+		return (
+			<Field {...common}>
+				<MarkdownEditor
+					id={field.name}
+					value={typeof value === "string" ? value : ""}
+					rows={field.rows ?? 14}
+					placeholder={field.placeholder}
+					disabled={disabled}
+					onChange={(next) => onChange(field.name, next)}
+				/>
+			</Field>
+		)
+	}
+
+	if (field.type === "textarea") {
 		return (
 			<Field {...common}>
 				<Textarea

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { createSession, verifyCredentials } from "@/lib/auth"
+import { logActivity } from "@/lib/activity"
 import { clientIp, rateLimit, resetRateLimit } from "@/lib/rate-limit"
 import { formatZodError, loginSchema } from "@/lib/validators"
 import { LOGIN_RATE_LIMIT } from "@/constants"
@@ -60,6 +61,15 @@ export async function POST(request: Request) {
 
 		await createSession(parsed.data.email)
 		resetRateLimit(key)
+
+		// Only successful logins are recorded. Logging failures here would let an
+		// attacker fill the table with rows containing attacker-controlled text.
+		void logActivity({
+			action: "login",
+			resource: "auth",
+			actor: parsed.data.email,
+			headers: request.headers,
+		})
 
 		return NextResponse.json({ ok: true })
 	} catch (error) {

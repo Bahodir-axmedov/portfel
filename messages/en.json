@@ -213,5 +213,20 @@
 		"notFoundTitle": "Page not found",
 		"notFoundText": "The page you are looking for does not exist or has been moved.",
 		"goHome": "Back to home"
+	},
+	"blog": {
+		"eyebrow": "Blog",
+		"title": "Articles & notes",
+		"subtitle": "Personal notes on development, automation and artificial intelligence.",
+		"search": "Search articles...",
+		"all": "All",
+		"empty": "No articles published yet.",
+		"noResults": "Nothing found.",
+		"clear": "Clear",
+		"count": "%count% articles",
+		"read": "Read",
+		"minutesShort": "min",
+		"back": "Back to blog",
+		"more": "More articles"
 	}
 }
