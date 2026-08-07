@@ -1,0 +1,358 @@
+{
+	"_comment": "Ko'nikmalar, tillar va xizmatlar. level = 0-100.",
+
+	"skills": [
+		{
+			"name": "Power BI",
+			"category": "data",
+			"level": 90,
+			"years": 3,
+			"icon": "BarChart3",
+			"featured": true,
+			"order": 1,
+			"description": "Dashboardlar, DAX, ma'lumotlar modeli va biznes hisobotlari.",
+			"descriptionRu": "Дашборды, DAX, модель данных и бизнес-отчётность.",
+			"descriptionEn": "Dashboards, DAX, data modelling and business reporting."
+		},
+		{
+			"name": "Git & GitHub",
+			"category": "devops",
+			"level": 85,
+			"years": 4,
+			"icon": "GitBranch",
+			"featured": true,
+			"order": 2,
+			"description": "Branching strategiyalari, pull requestlar, CI/CD asoslari.",
+			"descriptionRu": "Стратегии ветвления, pull request, основы CI/CD.",
+			"descriptionEn": "Branching strategies, pull requests, CI/CD basics."
+		},
+		{
+			"name": "Cisco Networking",
+			"category": "network",
+			"level": 80,
+			"years": 2,
+			"icon": "Network",
+			"featured": true,
+			"order": 3,
+			"description": "Routing, switching, VLAN va tarmoq administratsiyasi.",
+			"descriptionRu": "Маршрутизация, коммутация, VLAN и администрирование сети.",
+			"descriptionEn": "Routing, switching, VLANs and network administration."
+		},
+		{
+			"name": "SQL",
+			"category": "database",
+			"level": 75,
+			"years": 4,
+			"icon": "Database",
+			"featured": true,
+			"order": 4,
+			"description": "MS SQL Server, PostgreSQL, SQLite: query optimizatsiya va sxema dizayni.",
+			"descriptionRu": "MS SQL Server, PostgreSQL, SQLite: оптимизация запросов и проектирование схем.",
+			"descriptionEn": "MS SQL Server, PostgreSQL, SQLite: query optimisation and schema design."
+		},
+		{
+			"name": "Python",
+			"category": "backend",
+			"level": 65,
+			"years": 5,
+			"icon": "Code2",
+			"featured": true,
+			"order": 5,
+			"description": "aiogram, FastAPI, avtomatlashtirish skriptlari va data pipeline'lar.",
+			"descriptionRu": "aiogram, FastAPI, скрипты автоматизации и дата-пайплайны.",
+			"descriptionEn": "aiogram, FastAPI, automation scripts and data pipelines."
+		},
+		{
+			"name": "JavaScript",
+			"category": "frontend",
+			"level": 60,
+			"years": 3,
+			"icon": "Braces",
+			"order": 6,
+			"description": "ES2023, DOM, async pattern'lar va brauzer API'lari.",
+			"descriptionRu": "ES2023, DOM, асинхронные паттерны и браузерные API.",
+			"descriptionEn": "ES2023, DOM, async patterns and browser APIs."
+		},
+		{
+			"name": "PHP",
+			"category": "backend",
+			"level": 60,
+			"years": 2,
+			"icon": "FileCode",
+			"order": 7,
+			"description": "Server tomon skriptlari va an'anaviy web backend.",
+			"descriptionRu": "Серверные скрипты и классический веб-бэкенд.",
+			"descriptionEn": "Server-side scripting and traditional web backends."
+		},
+		{
+			"name": "C++",
+			"category": "fundamentals",
+			"level": 60,
+			"years": 2,
+			"icon": "Cpu",
+			"order": 8,
+			"description": "Algoritmlar, ma'lumotlar tuzilmasi va OOP asoslari.",
+			"descriptionRu": "Алгоритмы, структуры данных и основы ООП.",
+			"descriptionEn": "Algorithms, data structures and OOP fundamentals."
+		},
+		{
+			"name": "React",
+			"category": "frontend",
+			"level": 50,
+			"years": 2,
+			"icon": "Atom",
+			"order": 9,
+			"description": "Komponent arxitekturasi, hooks va holat boshqaruvi.",
+			"descriptionRu": "Компонентная архитектура, hooks и управление состоянием.",
+			"descriptionEn": "Component architecture, hooks and state management."
+		},
+		{
+			"name": "Next.js",
+			"category": "fullstack",
+			"level": 50,
+			"years": 1.5,
+			"icon": "Layers",
+			"order": 10,
+			"description": "App Router, server komponentlar, SSR va SEO.",
+			"descriptionRu": "App Router, серверные компоненты, SSR и SEO.",
+			"descriptionEn": "App Router, server components, SSR and SEO."
+		},
+		{
+			"name": "Node.js",
+			"category": "backend",
+			"level": 50,
+			"years": 2,
+			"icon": "Hexagon",
+			"order": 11,
+			"description": "REST API'lar, fayl bilan ishlash va integratsiyalar.",
+			"descriptionRu": "REST API, работа с файлами и интеграции.",
+			"descriptionEn": "REST APIs, file handling and integrations."
+		}
+	],
+
+	"skillCategories": [
+		{
+			"key": "backend",
+			"label": "Backend",
+			"labelRu": "Backend",
+			"labelEn": "Backend"
+		},
+		{
+			"key": "frontend",
+			"label": "Frontend",
+			"labelRu": "Frontend",
+			"labelEn": "Frontend"
+		},
+		{
+			"key": "fullstack",
+			"label": "Full Stack",
+			"labelRu": "Full Stack",
+			"labelEn": "Full Stack"
+		},
+		{
+			"key": "database",
+			"label": "Ma'lumotlar bazasi",
+			"labelRu": "Базы данных",
+			"labelEn": "Databases"
+		},
+		{
+			"key": "data",
+			"label": "Data & BI",
+			"labelRu": "Data & BI",
+			"labelEn": "Data & BI"
+		},
+		{
+			"key": "devops",
+			"label": "DevOps",
+			"labelRu": "DevOps",
+			"labelEn": "DevOps"
+		},
+		{
+			"key": "network",
+			"label": "Tarmoq",
+			"labelRu": "Сети",
+			"labelEn": "Networking"
+		},
+		{
+			"key": "fundamentals",
+			"label": "Asoslar",
+			"labelRu": "Основы",
+			"labelEn": "Fundamentals"
+		}
+	],
+
+	"languages": [
+		{
+			"name": "O'zbek",
+			"nameRu": "Узбекский",
+			"nameEn": "Uzbek",
+			"code": "uz",
+			"flag": "🇺🇿",
+			"level": "native",
+			"speaking": 100,
+			"writing": 100,
+			"reading": 100,
+			"listening": 100,
+			"order": 1
+		},
+		{
+			"name": "Rus tili",
+			"nameRu": "Русский",
+			"nameEn": "Russian",
+			"code": "ru",
+			"flag": "🇷🇺",
+			"level": "advanced",
+			"speaking": 70,
+			"writing": 80,
+			"reading": 100,
+			"listening": 100,
+			"order": 2
+		},
+		{
+			"name": "Ingliz tili",
+			"nameRu": "Английский",
+			"nameEn": "English",
+			"code": "en",
+			"flag": "🇬🇧",
+			"level": "advanced",
+			"speaking": 70,
+			"writing": 80,
+			"reading": 100,
+			"listening": 100,
+			"order": 3
+		}
+	],
+
+	"services": [
+		{
+			"title": "Telegram Bot Development",
+			"titleRu": "Разработка Telegram-ботов",
+			"titleEn": "Telegram Bot Development",
+			"icon": "Bot",
+			"order": 1,
+			"description": "aiogram 3 asosida to'liq funksional botlar: admin panel, to'lovlar, ma'lumotlar bazasi va statistika.",
+			"descriptionRu": "Полнофункциональные боты на aiogram 3: админ-панель, платежи, база данных и статистика.",
+			"descriptionEn": "Full-featured bots built on aiogram 3: admin panel, payments, database and analytics.",
+			"bullets": [
+				"Admin panel",
+				"Database integratsiya",
+				"To'lov tizimlari",
+				"Statistika"
+			]
+		},
+		{
+			"title": "Full Stack Web Development",
+			"titleRu": "Full Stack веб-разработка",
+			"titleEn": "Full Stack Web Development",
+			"icon": "Globe",
+			"order": 2,
+			"description": "Next.js va React asosida tez, SEO-ga mos va responsive web ilovalar.",
+			"descriptionRu": "Быстрые, SEO-дружественные и адаптивные веб-приложения на Next.js и React.",
+			"descriptionEn": "Fast, SEO-friendly and responsive web applications with Next.js and React.",
+			"bullets": ["SSR & SEO", "Responsive UI", "Admin panel", "Deploy"]
+		},
+		{
+			"title": "API Development va integratsiya",
+			"titleRu": "Разработка и интеграция API",
+			"titleEn": "API Development & Integration",
+			"icon": "Link2",
+			"order": 3,
+			"description": "REST API loyihalash, hujjatlashtirish va tashqi xizmatlar bilan integratsiya.",
+			"descriptionRu": "Проектирование REST API, документация и интеграция со сторонними сервисами.",
+			"descriptionEn": "REST API design, documentation and third-party service integration.",
+			"bullets": ["REST API", "Webhook", "Auth", "Rate limiting"]
+		},
+		{
+			"title": "AI Integration",
+			"titleRu": "AI-интеграция",
+			"titleEn": "AI Integration",
+			"icon": "BrainCircuit",
+			"order": 4,
+			"description": "Mahsulotga sun'iy intellekt qo'shish: matn tahlili, chat interfeyslari va avtomatik qarorlar.",
+			"descriptionRu": "Внедрение ИИ в продукт: анализ текста, чат-интерфейсы и автоматические решения.",
+			"descriptionEn": "Bringing AI into products: text analysis, chat interfaces and automated decisions.",
+			"bullets": [
+				"LLM API",
+				"Chat interfeys",
+				"Prompt dizayn",
+				"Avtomatik tahlil"
+			]
+		},
+		{
+			"title": "Business Process Automation",
+			"titleRu": "Автоматизация бизнес-процессов",
+			"titleEn": "Business Process Automation",
+			"icon": "Workflow",
+			"order": 5,
+			"description": "Qo'lda bajariladigan takroriy ishlarni skript va botlar bilan avtomatlashtirish.",
+			"descriptionRu": "Автоматизация рутинных ручных операций с помощью скриптов и ботов.",
+			"descriptionEn": "Automating repetitive manual work with scripts and bots.",
+			"bullets": [
+				"Skriptlar",
+				"Rejalashtirilgan vazifalar",
+				"Hisobotlar",
+				"Integratsiya"
+			]
+		},
+		{
+			"title": "Database Design va Management",
+			"titleRu": "Проектирование и管理 баз данных",
+			"titleEn": "Database Design & Management",
+			"icon": "Database",
+			"order": 6,
+			"description": "Sxema dizayni, migratsiya, indekslash va query optimizatsiyasi.",
+			"descriptionRu": "Проектирование схем, миграции, индексация и оптимизация запросов.",
+			"descriptionEn": "Schema design, migrations, indexing and query optimisation.",
+			"bullets": ["Sxema dizayni", "Migratsiya", "Indekslar", "Backup"]
+		},
+		{
+			"title": "Data Analysis (Power BI)",
+			"titleRu": "Анализ данных (Power BI)",
+			"titleEn": "Data Analysis (Power BI)",
+			"icon": "LineChart",
+			"order": 7,
+			"description": "Interaktiv dashboardlar, KPI monitoring va boshqaruv hisobotlari.",
+			"descriptionRu": "Интерактивные дашборды, мониторинг KPI и управленческая отчётность.",
+			"descriptionEn": "Interactive dashboards, KPI monitoring and management reporting.",
+			"bullets": ["Dashboard", "DAX", "KPI", "Data model"]
+		},
+		{
+			"title": "Existing System Optimization",
+			"titleRu": "Оптимизация существующих систем",
+			"titleEn": "Existing System Optimisation",
+			"icon": "Gauge",
+			"order": 8,
+			"description": "Mavjud tizimlarning tezligi, xavfsizligi va kod sifatini yaxshilash.",
+			"descriptionRu": "Повышение скорости, безопасности и качества кода существующих систем.",
+			"descriptionEn": "Improving the speed, security and code quality of existing systems.",
+			"bullets": [
+				"Performance audit",
+				"Refactoring",
+				"Xavfsizlik",
+				"Monitoring"
+			]
+		},
+		{
+			"title": "Cisco Network Administration",
+			"titleRu": "Администрирование сетей Cisco",
+			"titleEn": "Cisco Network Administration",
+			"icon": "Network",
+			"order": 9,
+			"description": "Tarmoq sozlash, routing/switching va diagnostika.",
+			"descriptionRu": "Настройка сети, маршрутизация/коммутация и диагностика.",
+			"descriptionEn": "Network configuration, routing/switching and diagnostics.",
+			"bullets": ["Routing", "Switching", "VLAN", "Diagnostika"]
+		},
+		{
+			"title": "Technical Consulting",
+			"titleRu": "Технический консалтинг",
+			"titleEn": "Technical Consulting",
+			"icon": "MessagesSquare",
+			"order": 10,
+			"description": "Texnologiya tanlash, arxitektura va loyiha rejasi bo'yicha maslahat.",
+			"descriptionRu": "Консультации по выбору технологий, архитектуре и плану проекта.",
+			"descriptionEn": "Advice on technology choices, architecture and project planning.",
+			"bullets": ["Texnologiya tanlash", "Arxitektura", "Baholash", "Roadmap"]
+		}
+	]
+}

@@ -1,0 +1,1272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Bahodir.dev — Design tokens
+   Single source of truth for colors, radii, motion. Never hardcode brand
+   colors in components; use these variables or the Tailwind tokens.
+   ========================================================================== */
+@layer base {
+	:root {
+		--bg: 10 10 11;
+		--bg-soft: 14 14 17;
+		--brand: 59 130 246;
+		--accent: 6 182 212;
+		--ink: 245 245 247;
+
+		--surface: rgba(255, 255, 255, 0.032);
+		--surface-hover: rgba(255, 255, 255, 0.055);
+		--border: rgba(255, 255, 255, 0.085);
+		--border-strong: rgba(255, 255, 255, 0.14);
+
+		--brand-gradient: linear-gradient(
+			135deg,
+			#3b82f6 0%,
+			#22a6e8 50%,
+			#06b6d4 100%
+		);
+		--ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+		--nav-height: 76px;
+	}
+
+	/* Light theme is opt-in via <html class="light"> (dynamic theme switch). */
+	.light {
+		--bg: 250 250 252;
+		--bg-soft: 255 255 255;
+		--ink: 16 16 20;
+		--surface: rgba(10, 10, 11, 0.028);
+		--surface-hover: rgba(10, 10, 11, 0.05);
+		--border: rgba(10, 10, 11, 0.09);
+		--border-strong: rgba(10, 10, 11, 0.16);
+	}
+
+	* {
+		@apply border-line;
+	}
+
+	html {
+		-webkit-tap-highlight-color: transparent;
+		scroll-behavior: smooth;
+	}
+
+	/* Lenis controls scrolling; disable native smooth scroll when active. */
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+	.lenis.lenis-smooth {
+		scroll-behavior: auto !important;
+	}
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+
+	body {
+		background-color: rgb(var(--bg));
+		color: rgb(var(--ink));
+		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+		letter-spacing: -0.011em;
+		@apply overflow-x-hidden font-sans text-base leading-relaxed antialiased;
+	}
+
+	::selection {
+		background: rgba(59, 130, 246, 0.32);
+		color: #fff;
+	}
+
+	/* Custom scrollbar (desktop only) */
+	@media (pointer: fine) {
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+		::-webkit-scrollbar-track {
+			background: rgb(var(--bg));
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.12);
+			border: 3px solid rgb(var(--bg));
+			border-radius: 999px;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.22);
+		}
+	}
+
+	:focus-visible {
+		outline: 2px solid #06b6d4;
+		outline-offset: 3px;
+		border-radius: 6px;
+	}
+}
+
+/* ==========================================================================
+   Component primitives
+   ========================================================================== */
+@layer components {
+	.glass {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		-webkit-backdrop-filter: blur(18px) saturate(160%);
+		backdrop-filter: blur(18px) saturate(160%);
+	}
+
+	.glass-strong {
+		background: rgba(10, 10, 11, 0.62);
+		border: 1px solid var(--border);
+		-webkit-backdrop-filter: blur(18px) saturate(160%);
+		backdrop-filter: blur(18px) saturate(160%);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.04),
+			0 10px 40px rgba(0, 0, 0, 0.45);
+	}
+
+	.gradient-text {
+		@apply bg-brand-gradient bg-clip-text text-transparent;
+	}
+
+	.card-surface {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		@apply rounded-lg transition-all duration-300;
+	}
+	.card-surface:hover {
+		background: var(--surface-hover);
+		border-color: var(--border-strong);
+	}
+
+	/* 1px gradient hairline border via mask — used on featured cards */
+	.gradient-border {
+		position: relative;
+	}
+	.gradient-border::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: var(--brand-gradient);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		opacity: 0.45;
+		pointer-events: none;
+	}
+
+	.section-padding {
+		@apply py-20 md:py-[104px];
+	}
+
+	.eyebrow {
+		@apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-accent;
+	}
+	.eyebrow::before {
+		content: "";
+		@apply h-px w-[22px] bg-gradient-to-r from-accent to-transparent;
+	}
+
+	.ambient-grid {
+		background-image:
+			var(--tw-gradient-stops, none), theme("backgroundImage.grid");
+		background-size: 72px 72px;
+		-webkit-mask-image: radial-gradient(
+			ellipse 80% 60% at 50% 0%,
+			#000 40%,
+			transparent 100%
+		);
+		mask-image: radial-gradient(
+			ellipse 80% 60% at 50% 0%,
+			#000 40%,
+			transparent 100%
+		);
+	}
+
+	.noise-overlay {
+		opacity: 0.035;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	/* Skeleton shimmer for lazy-loaded media */
+	.skeleton {
+		@apply relative overflow-hidden bg-white/[0.04];
+	}
+	.skeleton::after {
+		content: "";
+		@apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/[0.06] to-transparent;
+	}
+}
+
+@layer utilities {
+	.text-balance {
+		text-wrap: balance;
+	}
+	.text-pretty {
+		text-wrap: pretty;
+	}
+	.mask-fade-b {
+		-webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+	}
+	.will-animate {
+		will-change: transform, opacity;
+	}
+}
+
+/* ==========================================================================
+   Cosmic ambient layer — stars, aurora, nebula, shooting stars, mouse light
+
+   Performance contract: every animation below drives ONLY `transform`,
+   `opacity` or `filter`. No layout-triggering properties (top/left/width) are
+   animated, so the compositor handles each layer on the GPU and the main
+   thread stays free. Layers are `will-change`-hinted and pointer-events:none.
+   ========================================================================== */
+@layer components {
+	/* ---------- Star layers ----------
+	   Each layer is 200% tall with a repeating dot pattern and scrolls upward
+	   by exactly 50%, so the tile wraps seamlessly and loops forever. Three
+	   layers at different speeds/sizes create real parallax depth. */
+	.star-layer {
+		position: absolute;
+		inset: 0;
+		height: 200%;
+		width: 100%;
+		background-repeat: repeat;
+		will-change: transform;
+		backface-visibility: hidden;
+	}
+
+	.star-layer-sm {
+		background-image:
+			radial-gradient(
+				1px 1px at 18% 12%,
+				rgba(255, 255, 255, 0.85),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 62% 28%,
+				rgba(255, 255, 255, 0.6),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 84% 8%,
+				rgba(186, 220, 255, 0.75),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 32% 54%,
+				rgba(255, 255, 255, 0.5),
+				transparent
+			),
+			radial-gradient(1px 1px at 8% 76%, rgba(255, 255, 255, 0.7), transparent),
+			radial-gradient(
+				1px 1px at 71% 66%,
+				rgba(160, 210, 255, 0.65),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 46% 88%,
+				rgba(255, 255, 255, 0.55),
+				transparent
+			),
+			radial-gradient(1px 1px at 93% 44%, rgba(255, 255, 255, 0.6), transparent);
+		background-size: 320px 320px;
+		animation: star-drift 140s linear infinite;
+	}
+
+	.star-layer-md {
+		background-image:
+			radial-gradient(
+				1.6px 1.6px at 25% 20%,
+				rgba(255, 255, 255, 0.9),
+				transparent
+			),
+			radial-gradient(
+				1.6px 1.6px at 78% 42%,
+				rgba(186, 220, 255, 0.8),
+				transparent
+			),
+			radial-gradient(
+				1.4px 1.4px at 52% 74%,
+				rgba(255, 255, 255, 0.7),
+				transparent
+			),
+			radial-gradient(
+				1.6px 1.6px at 12% 60%,
+				rgba(140, 200, 255, 0.72),
+				transparent
+			);
+		background-size: 480px 480px;
+		animation: star-drift 90s linear infinite;
+		opacity: 0.9;
+	}
+
+	.star-layer-lg {
+		background-image:
+			radial-gradient(
+				2.4px 2.4px at 40% 30%,
+				rgba(255, 255, 255, 1),
+				transparent
+			),
+			radial-gradient(
+				2.2px 2.2px at 88% 70%,
+				rgba(120, 190, 255, 0.9),
+				transparent
+			),
+			radial-gradient(
+				2px 2px at 15% 85%,
+				rgba(255, 255, 255, 0.85),
+				transparent
+			);
+		background-size: 760px 760px;
+		animation: star-drift 58s linear infinite;
+	}
+
+	/* Twinkle is a separate opacity pulse so it never fights the drift. */
+	.star-twinkle {
+		animation:
+			star-drift 110s linear infinite,
+			twinkle 5.5s ease-in-out infinite;
+	}
+
+	/* ---------- Aurora ribbons ---------- */
+	.aurora {
+		position: absolute;
+		border-radius: 9999px;
+		filter: blur(90px);
+		will-change: transform, opacity;
+		mix-blend-mode: screen;
+	}
+	.aurora-a {
+		top: -22%;
+		left: 50%;
+		height: 560px;
+		width: 900px;
+		margin-left: -450px;
+		background: conic-gradient(
+			from 160deg at 50% 50%,
+			rgba(59, 130, 246, 0.34),
+			rgba(139, 92, 246, 0.3),
+			rgba(6, 182, 212, 0.26),
+			rgba(124, 58, 237, 0.28),
+			rgba(59, 130, 246, 0.34)
+		);
+		animation: aurora-a 26s ease-in-out infinite;
+	}
+	.aurora-b {
+		top: 28%;
+		right: -16%;
+		height: 460px;
+		width: 620px;
+		background: radial-gradient(
+			ellipse at 40% 40%,
+			rgba(6, 182, 212, 0.28),
+			transparent 70%
+		);
+		animation: aurora-b 32s ease-in-out infinite;
+	}
+	/* Third ribbon, violet. Placed low-left so the three ribbons form a
+	   triangle rather than a horizontal band — a band reads as a stock
+	   "gradient blob" template, a triangle reads as deliberate lighting. */
+	.aurora-c {
+		bottom: 4%;
+		left: -10%;
+		height: 400px;
+		width: 560px;
+		background: radial-gradient(
+			ellipse at 55% 45%,
+			rgba(139, 92, 246, 0.26),
+			transparent 68%
+		);
+		animation: aurora-b 38s ease-in-out infinite reverse;
+	}
+
+	/* ---------- Slow nebula ---------- */
+	.nebula {
+		position: absolute;
+		border-radius: 9999px;
+		filter: blur(120px);
+		will-change: transform;
+		mix-blend-mode: screen;
+	}
+	.nebula-a {
+		bottom: -18%;
+		left: -12%;
+		height: 520px;
+		width: 680px;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(37, 99, 235, 0.24),
+			transparent 68%
+		);
+		animation: nebula-drift 44s ease-in-out infinite;
+	}
+	.nebula-b {
+		top: 52%;
+		left: 24%;
+		height: 420px;
+		width: 520px;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(139, 92, 246, 0.18),
+			transparent 70%
+		);
+		animation: nebula-drift 60s ease-in-out infinite reverse;
+	}
+
+	/* ---------- Meteors ----------
+	   Distinct from `.shooting-star`: a meteor is longer, slower, dimmer and
+	   travels a shallower angle. Running both gives the sky two depth planes
+	   instead of one repeating streak. */
+	.meteor {
+		position: absolute;
+		height: 1px;
+		width: 220px;
+		transform-origin: right center;
+		rotate: 24deg;
+		background: linear-gradient(
+			270deg,
+			rgba(190, 215, 255, 0.85),
+			rgba(139, 92, 246, 0.35) 40%,
+			transparent
+		);
+		opacity: 0;
+		will-change: transform, opacity;
+		animation: meteor 11s linear infinite;
+	}
+	.meteor-1 {
+		top: 6%;
+		left: 72%;
+		animation-delay: -2s;
+	}
+	.meteor-2 {
+		top: 34%;
+		left: 92%;
+		animation-duration: 15s;
+		animation-delay: -9s;
+	}
+
+	/* ---------- Neomorphism surfaces ----------
+	   Used for the floating social rail, the mobile dock and skill dials. The
+	   pressed variant is applied on :active only, never on hover, so the
+	   affordance matches a real physical button. */
+	.neo-surface {
+		background: linear-gradient(
+			145deg,
+			rgba(255, 255, 255, 0.05),
+			rgba(255, 255, 255, 0.012)
+		);
+		box-shadow:
+			-6px -6px 16px rgba(255, 255, 255, 0.028),
+			8px 10px 24px rgba(0, 0, 0, 0.55),
+			inset 0 1px 0 rgba(255, 255, 255, 0.05);
+	}
+	.neo-surface:active {
+		box-shadow:
+			inset -4px -4px 10px rgba(255, 255, 255, 0.022),
+			inset 5px 6px 14px rgba(0, 0, 0, 0.55);
+	}
+
+	/* ---------- Neon rim ----------
+	   A conic gradient ring drawn with an xor mask so only the 1px rim paints.
+	   Cheaper than an SVG stroke and it inherits border-radius automatically. */
+	.neon-rim {
+		position: relative;
+		isolation: isolate;
+	}
+	.neon-rim::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: conic-gradient(
+			from var(--rim-from, 0deg),
+			rgba(59, 130, 246, 0.9),
+			rgba(139, 92, 246, 0.9),
+			rgba(6, 182, 212, 0.9),
+			rgba(59, 130, 246, 0.9)
+		);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		opacity: 0;
+		transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+		pointer-events: none;
+	}
+	.neon-rim:hover::before,
+	.neon-rim:focus-visible::before {
+		opacity: 1;
+	}
+
+	/* ---------- Floating rails ----------
+	   The rail is fixed, so its hover glow must not trigger layout. The glow is
+	   a sibling pseudo-element scaled with transform, never width/height. */
+	.rail-item::after {
+		content: "";
+		position: absolute;
+		inset: -6px;
+		border-radius: 9999px;
+		background: radial-gradient(
+			circle,
+			rgba(59, 130, 246, 0.35),
+			transparent 70%
+		);
+		opacity: 0;
+		transform: scale(0.6);
+		transition:
+			opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+		pointer-events: none;
+		z-index: -1;
+	}
+	.rail-item:hover::after,
+	.rail-item:focus-visible::after {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	/* ---------- Shooting stars ----------
+	   A hairline with a fading tail, flying diagonally. Long negative delays
+	   stagger them so they never appear in sync. */
+	.shooting-star {
+		position: absolute;
+		height: 1.5px;
+		width: 170px;
+		border-radius: 9999px;
+		background: linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(190, 225, 255, 0.9) 60%,
+			#ffffff 100%
+		);
+		opacity: 0;
+		will-change: transform, opacity;
+		animation: shooting-star 9s ease-in infinite;
+	}
+	.shooting-star::after {
+		content: "";
+		position: absolute;
+		right: -2px;
+		top: -1.5px;
+		height: 4.5px;
+		width: 4.5px;
+		border-radius: 9999px;
+		background: #ffffff;
+		box-shadow: 0 0 10px 2px rgba(160, 210, 255, 0.9);
+	}
+	.shooting-star-1 {
+		top: 12%;
+		left: -12%;
+		animation-delay: -1s;
+	}
+	.shooting-star-2 {
+		top: 34%;
+		left: -18%;
+		animation-duration: 13s;
+		animation-delay: -6s;
+	}
+	.shooting-star-3 {
+		top: 6%;
+		left: 14%;
+		animation-duration: 17s;
+		animation-delay: -11s;
+	}
+
+	/* ---------- Apple-style mouse spotlight ----------
+	   `--mx` / `--my` are written by a rAF loop in <MouseLight>. Using CSS vars
+	   inside a transform keeps the work on the compositor. */
+	.mouse-light {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 620px;
+		width: 620px;
+		margin: -310px 0 0 -310px;
+		border-radius: 9999px;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(59, 130, 246, 0.16) 0%,
+			rgba(6, 182, 212, 0.09) 38%,
+			transparent 68%
+		);
+		transform: translate3d(var(--mx, 50vw), var(--my, 40vh), 0);
+		will-change: transform;
+		opacity: 0;
+		transition: opacity 600ms ease-out;
+	}
+	.mouse-light[data-active="true"] {
+		opacity: 1;
+	}
+
+	/* ---------- Floating particles ---------- */
+	.particle {
+		position: absolute;
+		border-radius: 9999px;
+		background: rgba(140, 200, 255, 0.55);
+		will-change: transform, opacity;
+		animation: particle-rise linear infinite;
+	}
+
+	/* ---------- Gradient border + glow for the hero portrait ---------- */
+	.photo-frame {
+		position: relative;
+		border-radius: 28px;
+		/* Neon border. The gradient is drawn at 220% of the box and slid back
+		   and forth; animating background-position stays on the compositor,
+		   whereas animating the colour stops would repaint every frame. */
+		background: linear-gradient(
+			145deg,
+			rgba(59, 130, 246, 0.8),
+			rgba(139, 92, 246, 0.62) 30%,
+			rgba(255, 255, 255, 0.1) 52%,
+			rgba(6, 182, 212, 0.75)
+		);
+		background-size: 220% 220%;
+		animation: photo-border-flow 14s ease-in-out infinite;
+		padding: 1.75px;
+		box-shadow:
+			0 24px 70px -20px rgba(6, 182, 212, 0.35),
+			0 10px 40px -12px rgba(59, 130, 246, 0.3);
+		transition:
+			box-shadow 500ms var(--ease-premium),
+			transform 500ms var(--ease-premium);
+	}
+	.photo-frame:hover {
+		box-shadow:
+			0 34px 90px -18px rgba(6, 182, 212, 0.5),
+			0 14px 50px -10px rgba(59, 130, 246, 0.42);
+	}
+	/* Rotating conic sheen riding the frame edge. */
+	.photo-frame::before {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		background: conic-gradient(
+			from 0deg,
+			transparent 0deg,
+			rgba(255, 255, 255, 0.55) 28deg,
+			transparent 70deg,
+			transparent 360deg
+		);
+		opacity: 0.5;
+		animation: frame-sheen 7s linear infinite;
+		pointer-events: none;
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+	}
+
+	/* Light reflection crossing the portrait glass every few seconds. Lives
+	   inside the image clip, so it never bleeds over the badges. */
+	.photo-sheen {
+		position: absolute;
+		top: -20%;
+		left: -70%;
+		width: 42%;
+		height: 140%;
+		pointer-events: none;
+		background: linear-gradient(
+			100deg,
+			transparent 0%,
+			rgba(255, 255, 255, 0.05) 35%,
+			rgba(255, 255, 255, 0.24) 50%,
+			rgba(255, 255, 255, 0.05) 65%,
+			transparent 100%
+		);
+		will-change: transform, opacity;
+		animation: photo-sheen-move 9s var(--ease-premium) infinite;
+	}
+
+	/* QR hover scan line. Idle it is invisible and static; the sweep only runs
+	   while the tile is hovered, so nothing animates in the background. */
+	.qr-scan {
+		position: absolute;
+		left: 10px;
+		right: 10px;
+		top: 0;
+		height: 20%;
+		border-radius: 999px;
+		pointer-events: none;
+		opacity: 0;
+		background: linear-gradient(
+			180deg,
+			transparent,
+			rgba(59, 130, 246, 0.45),
+			transparent
+		);
+	}
+	.group:hover .qr-scan {
+		animation: qr-scan-move 1.7s var(--ease-premium) infinite;
+	}
+
+	/* ---------- Button light sweep + ripple ---------- */
+	.btn-sweep {
+		position: relative;
+		overflow: hidden;
+		isolation: isolate;
+	}
+	.btn-sweep::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		transform: translateX(-120%) skewX(-18deg);
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255, 255, 255, 0.32),
+			transparent
+		);
+		pointer-events: none;
+	}
+	.btn-sweep:hover::before {
+		animation: light-sweep 800ms var(--ease-premium);
+	}
+	.ripple {
+		position: absolute;
+		border-radius: 9999px;
+		background: rgba(255, 255, 255, 0.42);
+		transform: scale(0);
+		animation: ripple 620ms var(--ease-premium) forwards;
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	/* ---------- Navbar liquid pill ---------- */
+	.nav-pill {
+		background: linear-gradient(
+			135deg,
+			rgba(59, 130, 246, 0.22),
+			rgba(6, 182, 212, 0.16)
+		);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+	}
+}
+
+@keyframes star-drift {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		transform: translate3d(0, -50%, 0);
+	}
+}
+
+@keyframes twinkle {
+	0%,
+	100% {
+		opacity: 0.35;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+
+@keyframes aurora-a {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+		opacity: 0.75;
+	}
+	50% {
+		transform: translate3d(-40px, 26px, 0) rotate(16deg) scale(1.12);
+		opacity: 1;
+	}
+}
+
+@keyframes aurora-b {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) scale(1);
+		opacity: 0.6;
+	}
+	50% {
+		transform: translate3d(-56px, -34px, 0) scale(1.18);
+		opacity: 0.95;
+	}
+}
+
+@keyframes nebula-drift {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+	50% {
+		transform: translate3d(60px, -40px, 0) scale(1.14);
+	}
+}
+
+@keyframes shooting-star {
+	0% {
+		transform: translate3d(0, 0, 0) rotate(18deg);
+		opacity: 0;
+	}
+	4% {
+		opacity: 1;
+	}
+	18% {
+		transform: translate3d(120vw, 42vh, 0) rotate(18deg);
+		opacity: 0;
+	}
+	100% {
+		transform: translate3d(120vw, 42vh, 0) rotate(18deg);
+		opacity: 0;
+	}
+}
+
+/* Meteor: enters from off-screen right, exits bottom-left. `translate3d`
+   only, so it composites on the GPU and never triggers layout. The long
+   invisible tail (58%..100%) is the gap between passes. */
+@keyframes meteor {
+	0% {
+		transform: translate3d(0, 0, 0);
+		opacity: 0;
+	}
+	6% {
+		opacity: 0.9;
+	}
+	52% {
+		opacity: 0;
+	}
+	58%,
+	100% {
+		transform: translate3d(-130vw, 58vh, 0);
+		opacity: 0;
+	}
+}
+
+@keyframes particle-rise {
+	0% {
+		transform: translate3d(0, 0, 0) scale(1);
+		opacity: 0;
+	}
+	12% {
+		opacity: 0.8;
+	}
+	88% {
+		opacity: 0.5;
+	}
+	100% {
+		transform: translate3d(18px, -320px, 0) scale(0.5);
+		opacity: 0;
+	}
+}
+
+@keyframes frame-sheen {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes qr-scan-move {
+	0% {
+		transform: translateY(0);
+		opacity: 0;
+	}
+	18% {
+		opacity: 1;
+	}
+	82% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(390%);
+		opacity: 0;
+	}
+}
+
+@keyframes photo-border-flow {
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+@keyframes photo-sheen-move {
+	0%,
+	58% {
+		transform: translateX(0) skewX(-14deg);
+		opacity: 0;
+	}
+	64% {
+		opacity: 1;
+	}
+	96%,
+	100% {
+		transform: translateX(460%) skewX(-14deg);
+		opacity: 0;
+	}
+}
+
+@keyframes light-sweep {
+	to {
+		transform: translateX(120%) skewX(-18deg);
+	}
+}
+
+@keyframes ripple {
+	to {
+		transform: scale(2.6);
+		opacity: 0;
+	}
+}
+
+/* Swipeable chip rail (phone hero). The scrollbar is hidden because the rail
+   sits directly under the portrait and a visible bar would read as a seam;
+   the partially visible last chip is what signals that it scrolls. */
+.chip-rail {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
+}
+
+.chip-rail::-webkit-scrollbar {
+	display: none;
+}
+
+/* Phones: drop the most expensive layers (large blurs) but keep the stars. */
+@media (max-width: 767px) {
+	.aurora-b,
+	.aurora-c,
+	.meteor-2,
+	.nebula-b,
+	.shooting-star-3,
+	.star-layer-lg,
+	.mouse-light {
+		display: none;
+	}
+	.aurora,
+	.nebula {
+		filter: blur(70px);
+	}
+}
+
+/* ==========================================================================
+   Accessibility — respect reduced motion (animation level degrades to 0)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* Print styles — clean output when the page is printed */
+@media print {
+	.no-print {
+		display: none !important;
+	}
+	body {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}
+
+/* ==========================================================================
+   Hero planet + orbiting technology chips
+   --------------------------------------------------------------------------
+   Everything below animates `transform` and `opacity` only, so the browser
+   keeps these layers on the compositor and the hero stays at 60fps while the
+   page scrolls. No `filter`, `width`, `top` or `background-position` is ever
+   animated — those force a repaint on every frame.
+   ========================================================================== */
+@layer components {
+	.planet-stage {
+		position: absolute;
+		aspect-ratio: 1 / 1;
+		pointer-events: none;
+		z-index: -1;
+		contain: layout paint;
+	}
+
+	/* Atmospheric bloom. Blurred once at paint time, then only scaled. */
+	.planet-halo {
+		position: absolute;
+		inset: -13%;
+		border-radius: 9999px;
+		background: radial-gradient(
+			circle,
+			rgba(59, 130, 246, 0.34) 0%,
+			rgba(139, 92, 246, 0.2) 40%,
+			rgba(6, 182, 212, 0.12) 58%,
+			transparent 72%
+		);
+		filter: blur(48px);
+		animation: planet-breathe 14s ease-in-out infinite;
+		will-change: transform, opacity;
+	}
+
+	.planet-body {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
+		overflow: hidden;
+		background: radial-gradient(
+			circle at 30% 26%,
+			#1d4ed8 0%,
+			#143a86 26%,
+			#0b1f4b 52%,
+			#05102a 78%,
+			#02060f 100%
+		);
+		box-shadow:
+			inset -26px -18px 72px rgba(0, 0, 0, 0.78),
+			inset 18px 14px 48px rgba(96, 165, 250, 0.16),
+			0 0 90px rgba(37, 99, 235, 0.26);
+	}
+
+	/* Land band. 200% wide with a tile sized at exactly 50%, so a -50%
+	   translation lands on an identical pixel column and the loop is seamless. */
+	.planet-surface {
+		position: absolute;
+		top: -6%;
+		left: 0;
+		height: 112%;
+		width: 200%;
+		opacity: 0.6;
+		background-repeat: repeat-x;
+		background-size: 50% 100%;
+		background-image:
+			radial-gradient(
+				ellipse 16% 22% at 18% 34%,
+				rgba(45, 212, 191, 0.5),
+				transparent 70%
+			),
+			radial-gradient(
+				ellipse 12% 16% at 31% 62%,
+				rgba(34, 197, 194, 0.42),
+				transparent 70%
+			),
+			radial-gradient(
+				ellipse 20% 14% at 46% 24%,
+				rgba(56, 189, 248, 0.34),
+				transparent 72%
+			),
+			radial-gradient(
+				ellipse 14% 26% at 62% 56%,
+				rgba(45, 212, 191, 0.4),
+				transparent 70%
+			),
+			radial-gradient(
+				ellipse 10% 12% at 78% 30%,
+				rgba(94, 234, 212, 0.36),
+				transparent 70%
+			),
+			radial-gradient(
+				ellipse 16% 18% at 88% 68%,
+				rgba(37, 99, 235, 0.4),
+				transparent 72%
+			);
+		animation: planet-roll 170s linear infinite;
+		will-change: transform;
+	}
+
+	/* Second band, faster and softer: the sphere gets parallax of its own. */
+	.planet-clouds {
+		position: absolute;
+		top: -8%;
+		left: 0;
+		height: 116%;
+		width: 200%;
+		opacity: 0.22;
+		background-repeat: repeat-x;
+		background-size: 50% 100%;
+		background-image:
+			radial-gradient(
+				ellipse 22% 9% at 24% 28%,
+				rgba(255, 255, 255, 0.75),
+				transparent 70%
+			),
+			radial-gradient(
+				ellipse 18% 7% at 52% 48%,
+				rgba(255, 255, 255, 0.6),
+				transparent 70%
+			),
+			radial-gradient(
+				ellipse 26% 8% at 74% 70%,
+				rgba(255, 255, 255, 0.55),
+				transparent 72%
+			);
+		animation: planet-roll 104s linear infinite;
+		will-change: transform;
+	}
+
+	/* Day/night shading. Without this the planet reads as a flat disc. */
+	.planet-terminator {
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(
+				circle at 28% 22%,
+				rgba(191, 219, 254, 0.16) 0%,
+				transparent 34%
+			),
+			linear-gradient(
+				118deg,
+				rgba(0, 0, 0, 0) 26%,
+				rgba(1, 4, 12, 0.5) 58%,
+				rgba(1, 3, 8, 0.9) 100%
+			);
+	}
+
+	.planet-rim {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
+		box-shadow:
+			inset 0 0 0 1px rgba(147, 197, 253, 0.26),
+			inset 0 0 26px rgba(125, 211, 252, 0.2);
+	}
+
+	/* Hairline atmosphere arc just outside the sphere. */
+	.planet-arc {
+		position: absolute;
+		inset: -3%;
+		border-radius: 9999px;
+		border: 1px solid rgba(125, 211, 252, 0.22);
+		box-shadow: 0 0 34px rgba(56, 189, 248, 0.16);
+		opacity: 0.75;
+	}
+
+	/* Placement inside the hero. Deliberately cropped by the section so the
+	   planet reads as enormous rather than as a decorative circle. */
+	.hero-planet {
+		width: min(128vw, 620px);
+		right: -42%;
+		bottom: -26%;
+		opacity: 0.9;
+	}
+
+	@media (min-width: 768px) {
+		.hero-planet {
+			width: min(70vw, 760px);
+			right: -20%;
+			bottom: -40%;
+			opacity: 1;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.hero-planet {
+			width: min(52vw, 880px);
+			right: -14%;
+			bottom: -46%;
+		}
+	}
+
+	/* ---------- Orbiting technology chips ---------- */
+	.orbit-field {
+		position: absolute;
+		inset: -14%;
+		pointer-events: none;
+	}
+
+	.orbit-path {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
+		border: 1px dashed rgba(255, 255, 255, 0.06);
+	}
+
+	.orbit-spin {
+		position: absolute;
+		inset: 0;
+		animation: orbit-spin 54s linear infinite;
+		will-change: transform;
+	}
+
+	.orbit-slot {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+	}
+
+	/* Counter-rotation at the same duration keeps every chip upright while its
+	   parent ring turns. Two opposite transforms, zero JavaScript. */
+	.orbit-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		animation: orbit-counter 54s linear infinite;
+		will-change: transform;
+	}
+
+	.orbit-chip:hover {
+		animation-play-state: paused;
+	}
+}
+
+@keyframes planet-roll {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		transform: translate3d(-50%, 0, 0);
+	}
+}
+
+@keyframes planet-breathe {
+	0%,
+	100% {
+		opacity: 0.75;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+}
+
+@keyframes orbit-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes orbit-counter {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+/* Phones keep the planet — it is the signature of the hero — but the orbit
+   ring is dropped: at phone width the chips would overlap the portrait and
+   the copy, and an effect that covers content is worse than no effect. */
+@media (max-width: 767px) {
+	.orbit-field {
+		display: none;
+	}
+	.planet-halo {
+		filter: blur(34px);
+	}
+}

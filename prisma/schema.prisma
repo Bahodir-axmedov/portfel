@@ -1,0 +1,564 @@
+// ---------------------------------------------------------------------------
+// Bahodir.dev — portfolio database schema
+//
+// SQLite keeps the whole site in a single file, which is exactly what Railway
+// volumes are good at. There are no native arrays in SQLite, so every list is
+// stored as a JSON-encoded string and read back through `parseArray()`.
+//
+// Translations follow one convention everywhere:
+//   <field>    -> Uzbek (base, always present)
+//   <field>Ru  -> Russian  (optional)
+//   <field>En  -> English  (optional)
+// `pick(row, field, locale)` resolves the right one and falls back to the base
+// value, so a missing translation never renders an empty section.
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Profile — single row, id is always "main"
+// ---------------------------------------------------------------------------
+model Profile {
+  id String @id @default("main")
+
+  fullName  String
+  brandName String
+
+  jobTitle   String
+  jobTitleRu String?
+  jobTitleEn String?
+
+  /// JSON array of strings driving the hero typing effect
+  typingRoles String @default("[]")
+
+  shortBio   String
+  shortBioRu String?
+  shortBioEn String?
+
+  midBio   String?
+  midBioRu String?
+  midBioEn String?
+
+  /// Long biography; paragraphs are separated by blank lines
+  fullBio   String?
+  fullBioRu String?
+  fullBioEn String?
+
+  philosophy   String?
+  philosophyRu String?
+  philosophyEn String?
+
+  goals   String?
+  goalsRu String?
+  goalsEn String?
+
+  motto   String?
+  mottoRu String?
+  mottoEn String?
+
+  birthDate    DateTime?
+  birthPlace   String?
+  birthPlaceRu String?
+  birthPlaceEn String?
+
+  location   String?
+  locationRu String?
+  locationEn String?
+  timezone   String  @default("Asia/Tashkent")
+
+  email    String
+  phone    String?
+  telegram String?
+  mapUrl   String?
+
+  /// "open_to_work" | "open_to_offers" | "unavailable"
+  availability String  @default("open_to_work")
+  remoteOk     Boolean @default(true)
+
+  /// First year of writing code — drives the auto-computed experience counter
+  codingSince Int @default(2020)
+
+  avatarUrl String?
+  heroImage String?
+  ogImage   String?
+
+  resumeUz String?
+  resumeRu String?
+  resumeEn String?
+
+  /// JSON array of interest strings
+  interests String?
+
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Skills, languages, services
+// ---------------------------------------------------------------------------
+model Skill {
+  id            String   @id @default(cuid())
+  name          String
+  category      String
+  level         Int      @default(50)
+  years         Int?
+  icon          String?
+  color         String?
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+  featured      Boolean  @default(false)
+  order         Int      @default(0)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([category, order])
+}
+
+model Language {
+  id        String   @id @default(cuid())
+  name      String
+  nameRu    String?
+  nameEn    String?
+  code      String
+  flag      String?
+  level     String
+  speaking  Int      @default(0)
+  writing   Int      @default(0)
+  reading   Int      @default(0)
+  listening Int      @default(0)
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id            String   @id @default(cuid())
+  title         String
+  titleRu       String?
+  titleEn       String?
+  description   String
+  descriptionRu String?
+  descriptionEn String?
+  icon          String   @default("Sparkles")
+  /// JSON array of bullet strings
+  bullets       String?
+  featured      Boolean  @default(false)
+  order         Int      @default(0)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Experience, education, certificates, achievements
+// ---------------------------------------------------------------------------
+model Experience {
+  id            String    @id @default(cuid())
+  company       String
+  companyUrl    String?
+  role          String
+  roleRu        String?
+  roleEn        String?
+  /// full_time | part_time | freelance | contract | internship
+  employment    String    @default("full_time")
+  location      String?
+  /// onsite | hybrid | remote
+  locationType  String    @default("onsite")
+  startDate     DateTime
+  endDate       DateTime?
+  current       Boolean   @default(false)
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+  /// JSON array of bullet strings
+  highlights    String?
+  highlightsRu  String?
+  highlightsEn  String?
+  /// JSON array of technology names
+  stack         String?
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([current, startDate])
+}
+
+model Education {
+  id            String   @id @default(cuid())
+  school        String
+  schoolRu      String?
+  schoolEn      String?
+  degree        String?
+  degreeRu      String?
+  degreeEn      String?
+  field         String?
+  fieldRu       String?
+  fieldEn       String?
+  startYear     Int
+  endYear       Int?
+  current       Boolean  @default(false)
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+  order         Int      @default(0)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Certificate {
+  id            String    @id @default(cuid())
+  title         String
+  titleRu       String?
+  titleEn       String?
+  issuer        String
+  issueDate     DateTime?
+  expiryDate    DateTime?
+  credentialId  String?
+  credentialUrl String?
+  imageUrl      String?
+  description   String?
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Achievement {
+  id            String    @id @default(cuid())
+  title         String
+  titleRu       String?
+  titleEn       String?
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+  date          DateTime?
+  icon          String    @default("Trophy")
+  url           String?
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Projects — the CMS core
+// ---------------------------------------------------------------------------
+model Project {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  title     String
+  tagline   String?
+  taglineRu String?
+  taglineEn String?
+
+  /// Card-level summary
+  summary   String
+  summaryRu String?
+  summaryEn String?
+
+  /// Long-form text shown on the detail page
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+
+  /// JSON arrays of strings
+  features   String?
+  featuresRu String?
+  featuresEn String?
+  roadmap    String?
+  roadmapRu  String?
+  roadmapEn  String?
+
+  architecture   String?
+  architectureRu String?
+  architectureEn String?
+
+  /// telegram_bot | fintech | web | automation | ai | data | other
+  category String @default("other")
+  /// active | completed | demo | paused | planned
+  status   String @default("active")
+
+  role    String?
+  client  String?
+  version String?
+
+  yearStart Int?
+  yearEnd   Int?
+
+  coverImage  String?
+  videoUrl    String?
+  demoUrl     String?
+  githubUrl   String?
+  botUsername String?
+  users       Int?
+
+  featured  Boolean @default(false)
+  pinned    Boolean @default(false)
+  published Boolean @default(true)
+  /// Marks details that still need to be confirmed by the author
+  isDraftInfo Boolean @default(false)
+  order     Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images       ProjectImage[]
+  technologies Technology[]   @relation("ProjectTechnologies")
+
+  @@index([published, pinned, order])
+  @@index([category])
+}
+
+model ProjectImage {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+  alt       String?
+  caption   String?
+  /// screenshot | mockup | diagram | gif
+  type      String   @default("screenshot")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, order])
+}
+
+model Technology {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  String   @default("other")
+  icon      String?
+  color     String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  projects Project[] @relation("ProjectTechnologies")
+}
+
+// ---------------------------------------------------------------------------
+// Timeline, statistics, gallery, testimonials
+// ---------------------------------------------------------------------------
+model TimelineEvent {
+  id            String   @id @default(cuid())
+  year          Int
+  title         String
+  titleRu       String?
+  titleEn       String?
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+  /// JSON array of bullet strings
+  bullets       String?
+  bulletsRu     String?
+  bulletsEn     String?
+  icon          String   @default("Milestone")
+  /// milestone | education | work | project | launch
+  type          String   @default("milestone")
+  order         Int      @default(0)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([year, order])
+}
+
+model Stat {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  label     String
+  labelRu   String?
+  labelEn   String?
+  value     Int      @default(0)
+  suffix    String   @default("+")
+  icon      String   @default("Activity")
+  /// Optional expression resolved at read time, e.g. "yearsSince:2020"
+  computed  String?
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String?
+  titleRu   String?
+  titleEn   String?
+  url       String
+  thumbUrl  String?
+  category  String   @default("work")
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id            String   @id @default(cuid())
+  author        String
+  role          String?
+  company       String?
+  avatarUrl     String?
+  quote         String
+  quoteRu       String?
+  quoteEn       String?
+  rating        Int      @default(5)
+  /// Seeded examples so the section is never broken; replaced by real ones
+  isPlaceholder Boolean  @default(false)
+  order         Int      @default(0)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Social links + QR codes
+// ---------------------------------------------------------------------------
+model SocialLink {
+  id         String   @id @default(cuid())
+  platform   String   @unique
+  label      String
+  url        String
+  handle     String?
+  icon       String   @default("Link2")
+  showInHero Boolean  @default(true)
+  order      Int      @default(0)
+  published  Boolean  @default(true)
+  updatedAt  DateTime @updatedAt
+}
+
+model QrCode {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  label     String
+  labelRu   String?
+  labelEn   String?
+  /// Raw value; normalised into a scannable payload at render time
+  value     String
+  icon      String   @default("QrCode")
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Blog
+// ---------------------------------------------------------------------------
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  titleRu     String?
+  titleEn     String?
+  excerpt     String?
+  excerptRu   String?
+  excerptEn   String?
+  content     String
+  contentRu   String?
+  contentEn   String?
+  coverImage  String?
+  /// JSON array of tag strings
+  tags        String?
+  readMinutes Int       @default(3)
+  views       Int       @default(0)
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published, publishedAt])
+}
+
+// ---------------------------------------------------------------------------
+// SEO, settings, inbox, lightweight analytics
+// ---------------------------------------------------------------------------
+model SeoSetting {
+  id            String   @id @default(cuid())
+  route         String   @unique
+  title         String?
+  titleRu       String?
+  titleEn       String?
+  description   String?
+  descriptionRu String?
+  descriptionEn String?
+  /// JSON array of keyword strings
+  keywords      String?
+  ogImage       String?
+  noIndex       Boolean  @default(false)
+  updatedAt     DateTime @updatedAt
+}
+
+model Setting {
+  key       String   @id
+  value     String
+  group     String   @default("general")
+  /// text | number | boolean | color | url
+  type      String   @default("text")
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  locale    String   @default("uz")
+  ip        String?
+  read      Boolean  @default(false)
+  archived  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  locale    String?
+  referrer  String?
+  userAgent String?
+  country   String?
+  createdAt DateTime @default(now())
+
+  @@index([path, createdAt])
+  @@index([createdAt])
+}
+
+/// Audit trail for admin mutations. Written by src/lib/activity.ts.
+model ActivityLog {
+  id String @id @default(cuid())
+
+  /// create | update | delete | login | logout | upload | restore
+  action String
+
+  /// Resource key such as "projects", or "auth" for session events.
+  resource String
+
+  /// Row id the action touched. Null for events with no single row.
+  entityId String?
+
+  /// Human readable label captured at write time. Kept as a plain string on
+  /// purpose: if the row is later deleted the log must still make sense, and a
+  /// relation would either block the delete or cascade the history away.
+  label String?
+
+  actor     String
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([resource, createdAt])
+}
