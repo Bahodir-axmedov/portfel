@@ -10,6 +10,7 @@ import { Journey } from "@/components/sections/Journey"
 import { Gallery } from "@/components/sections/Gallery"
 import { Testimonials } from "@/components/sections/Testimonials"
 import { Contact } from "@/components/sections/Contact"
+import { SectionBoundary } from "@/components/ui/SectionBoundary"
 import { pick } from "@/lib/i18n-content"
 import { getHomeData } from "@/lib/queries"
 import { parseArray } from "@/lib/utils"
@@ -154,32 +155,39 @@ export default async function HomePage({
 		),
 	])
 
+	/* Each section is additionally wrapped in a client error boundary. The
+	   `section()` helper above only sees failures inside the async Server
+	   Component bodies; anything that throws while React renders the client
+	   components to HTML (Hero, SkillsBoard, GalleryGrid, ContactForm and the
+	   motion primitives) surfaces here instead of taking down the whole route. */
 	return (
 		<>
-			<Hero
-				fullName={profile?.fullName ?? ""}
-				headline={t("headline")}
-				subheadline={t("subheadline")}
-				roles={parseArray(profile?.typingRoles)}
-				photo={
-					profile?.heroImage || profile?.avatarUrl || "/images/profile.png"
-				}
-				location={pick(profile, "location", locale)}
-				openToWork={profile?.availability === "open_to_work"}
-				resumeUrl={resumeFor(profile, locale)}
-				socials={heroSocials}
-				highlights={highlights}
-			/>
+			<SectionBoundary name="Hero">
+				<Hero
+					fullName={profile?.fullName ?? ""}
+					headline={t("headline")}
+					subheadline={t("subheadline")}
+					roles={parseArray(profile?.typingRoles)}
+					photo={
+						profile?.heroImage || profile?.avatarUrl || "/images/profile.png"
+					}
+					location={pick(profile, "location", locale)}
+					openToWork={profile?.availability === "open_to_work"}
+					resumeUrl={resumeFor(profile, locale)}
+					socials={heroSocials}
+					highlights={highlights}
+				/>
+			</SectionBoundary>
 
-			{aboutNode}
-			{servicesNode}
-			{skillsNode}
-			{projectsNode}
-			{statsNode}
-			{journeyNode}
-			{galleryNode}
-			{testimonialsNode}
-			{contactNode}
+			<SectionBoundary name="About">{aboutNode}</SectionBoundary>
+			<SectionBoundary name="Services">{servicesNode}</SectionBoundary>
+			<SectionBoundary name="Skills">{skillsNode}</SectionBoundary>
+			<SectionBoundary name="Projects">{projectsNode}</SectionBoundary>
+			<SectionBoundary name="Stats">{statsNode}</SectionBoundary>
+			<SectionBoundary name="Journey">{journeyNode}</SectionBoundary>
+			<SectionBoundary name="Gallery">{galleryNode}</SectionBoundary>
+			<SectionBoundary name="Testimonials">{testimonialsNode}</SectionBoundary>
+			<SectionBoundary name="Contact">{contactNode}</SectionBoundary>
 		</>
 	)
 }
