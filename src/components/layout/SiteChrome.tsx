@@ -226,18 +226,186 @@ export function LoadingScreen() {
 }
 
 /* ------------------------------------------------------------------ *
+ * Click ripple
+ * ------------------------------------------------------------------ */
+
+/**
+ * Material-style click ripple for every button and link-button.
+ *
+ * Implemented as ONE delegated `pointerdown` listener on the document rather
+ * than per-button React state. That keeps `ui/primitives.tsx` a server
+ * component (its `buttonClass` is called from server sections, so it must not
+ * gain a "use client" directive) and costs a single listener for the whole
+ * page no matter how many buttons render.
+ *
+ * The ripple node removes itself on `animationend`, so nothing accumulates in
+ * the DOM.
+ */
+export function RippleEffect() {
+	const enabled = useAnimationEnabled()
+
+	useEffect(() => {
+		if (!enabled) return
+
+		const onPointerDown = (event: PointerEvent) => {
+			const target = event.target as HTMLElement | null
+			const host = target?.closest<HTMLElement>(".btn-sweep")
+			if (!host) return
+
+			const rect = host.getBoundingClientRect()
+			// Diameter must cover the farthest corner from the click point.
+			const size = Math.max(rect.width, rect.height)
+			const ripple = document.createElement("span")
+			ripple.className = "ripple"
+			ripple.style.width = `${size}px`
+			ripple.style.height = `${size}px`
+			ripple.style.left = `${event.clientX - rect.left - size / 2}px`
+			ripple.style.top = `${event.clientY - rect.top - size / 2}px`
+			ripple.addEventListener("animationend", () => ripple.remove(), {
+				once: true,
+			})
+			host.appendChild(ripple)
+		}
+
+		document.addEventListener("pointerdown", onPointerDown)
+		return () => document.removeEventListener("pointerdown", onPointerDown)
+	}, [enabled])
+
+	return null
+}
+
+/* ------------------------------------------------------------------ *
  * Ambient background
  * ------------------------------------------------------------------ */
 
+/**
+ * Apple-style spotlight that trails the pointer.
+ *
+ * The rAF loop writes two CSS custom properties instead of calling React
+ * state, so a pointer move costs one style write and zero re-renders. The
+ * easing factor (0.08) makes the light lag slightly behind the cursor, which
+ * is what sells the "liquid glass" feel.
+ *
+ * Desktop only: `useHeavyAnimationEnabled` is false on touch devices and for
+ * `prefers-reduced-motion`, where the component renders nothing at all.
+ */
+export function MouseLight() {
+	const enabled = useHeavyAnimationEnabled()
+	const ref = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		if (!enabled) return
+		const node = ref.current
+		if (!node) return
+
+		const pointer = { x: window.innerWidth / 2, y: window.innerHeight * 0.4 }
+		const eased = { x: pointer.x, y: pointer.y }
+		let frame = 0
+
+		const onMove = (event: MouseEvent) => {
+			pointer.x = event.clientX
+			pointer.y = event.clientY
+			node.dataset.active = "true"
+		}
+		const onLeave = () => {
+			node.dataset.active = "false"
+		}
+
+		const render = () => {
+			eased.x += (pointer.x - eased.x) * 0.08
+			eased.y += (pointer.y - eased.y) * 0.08
+			node.style.setProperty("--mx", `${eased.x.toFixed(1)}px`)
+			node.style.setProperty("--my", `${eased.y.toFixed(1)}px`)
+			frame = requestAnimationFrame(render)
+		}
+
+		window.addEventListener("mousemove", onMove, { passive: true })
+		document.addEventListener("mouseleave", onLeave)
+		frame = requestAnimationFrame(render)
+
+		return () => {
+			cancelAnimationFrame(frame)
+			window.removeEventListener("mousemove", onMove)
+			document.removeEventListener("mouseleave", onLeave)
+		}
+	}, [enabled])
+
+	if (!enabled) return null
+	return <div ref={ref} aria-hidden className="mouse-light" />
+}
+
+/**
+ * Particle positions are a hardcoded table rather than `Math.random()`.
+ * Random values would differ between the server render and the client
+ * hydration pass and produce a hydration mismatch, so the "randomness" is
+ * baked in at authoring time instead.
+ */
+const PARTICLES = [
+	{ left: "8%", top: "78%", size: 2, duration: 17, delay: 0 },
+	{ left: "21%", top: "88%", size: 3, duration: 23, delay: 3 },
+	{ left: "34%", top: "72%", size: 2, duration: 19, delay: 7 },
+	{ left: "47%", top: "92%", size: 2.5, duration: 26, delay: 1 },
+	{ left: "59%", top: "80%", size: 2, duration: 21, delay: 9 },
+	{ left: "68%", top: "95%", size: 3, duration: 29, delay: 5 },
+	{ left: "79%", top: "74%", size: 2, duration: 18, delay: 12 },
+	{ left: "91%", top: "86%", size: 2.5, duration: 24, delay: 2 },
+] as const
+
+/**
+ * Ambient background: grid + aurora + nebula + three parallax star layers +
+ * shooting stars + floating particles + the pointer spotlight.
+ *
+ * Layer order (back to front) matters: nebula and aurora sit behind the stars
+ * so the stars read as foreground, and the grid sits on top of everything
+ * with a radial mask so it fades out below the hero.
+ */
 export function AmbientBackground() {
 	return (
 		<div
 			aria-hidden
 			className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
 		>
-			<div className="absolute left-1/2 top-[-18%] h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-brand-500/[0.13] blur-[130px]" />
-			<div className="absolute right-[-12%] top-[36%] h-[420px] w-[520px] rounded-full bg-accent-500/[0.10] blur-[140px]" />
-			<div className="absolute bottom-[-14%] left-[-10%] h-[420px] w-[560px] rounded-full bg-brand-600/[0.09] blur-[150px]" />
+			{/* Deep space base tint */}
+			<div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,rgba(23,37,84,0.55),transparent_65%)]" />
+
+			{/* Slow nebula clouds */}
+			<div className="nebula nebula-a" />
+			<div className="nebula nebula-b" />
+
+			{/* Aurora ribbons */}
+			<div className="aurora aurora-a" />
+			<div className="aurora aurora-b" />
+
+			{/* Parallax starfield */}
+			<div className="star-layer star-layer-sm" />
+			<div className="star-layer star-layer-md star-twinkle" />
+			<div className="star-layer star-layer-lg" />
+
+			{/* Shooting stars */}
+			<div className="shooting-star shooting-star-1" />
+			<div className="shooting-star shooting-star-2" />
+			<div className="shooting-star shooting-star-3" />
+
+			{/* Rising particles */}
+			{PARTICLES.map((particle) => (
+				<span
+					key={particle.left}
+					className="particle"
+					style={{
+						left: particle.left,
+						top: particle.top,
+						height: particle.size,
+						width: particle.size,
+						animationDuration: `${particle.duration}s`,
+						animationDelay: `-${particle.delay}s`,
+					}}
+				/>
+			))}
+
+			{/* Pointer spotlight */}
+			<MouseLight />
+
+			{/* Grid + film grain on top */}
 			<div className="ambient-grid absolute inset-0" />
 			<div className="noise-overlay absolute inset-0" />
 		</div>

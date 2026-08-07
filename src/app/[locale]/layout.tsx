@@ -11,6 +11,7 @@ import {
 	AmbientBackground,
 	Cursor,
 	LoadingScreen,
+	RippleEffect,
 	ScrollProgress,
 	SmoothScroll,
 } from "@/components/layout/SiteChrome"
@@ -143,12 +144,15 @@ export default async function LocaleLayout({
 	   they are returned out of the guarded block rather than kept local to it. */
 	const { messages, resumeUrl, profile, socialLinks, structuredData } =
 		await guard("layout:LocaleLayout", async () => {
-			const [loadedMessages, profile, socialLinks] = await Promise.all([
-				getMessages({ locale }),
-				getProfile(),
-				getSocialLinks(),
-			])
+			const [loadedMessages, loadedProfile, loadedSocialLinks] =
+				await Promise.all([
+					getMessages({ locale }),
+					getProfile(),
+					getSocialLinks(),
+				])
 
+			const profile = loadedProfile
+			const socialLinks = loadedSocialLinks
 			const resume = (profile?.[resumeField(locale)] as string | null) ?? null
 			const shortBio = pick(profile, "shortBio", locale)
 
@@ -202,6 +206,7 @@ export default async function LocaleLayout({
 					<AmbientBackground />
 					<ScrollProgress />
 					<Cursor />
+					<RippleEffect />
 
 					<SmoothScroll>
 						<Navbar resumeUrl={resumeUrl} />

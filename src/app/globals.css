@@ -20,7 +20,12 @@
 		--border: rgba(255, 255, 255, 0.085);
 		--border-strong: rgba(255, 255, 255, 0.14);
 
-		--brand-gradient: linear-gradient(135deg, #3b82f6 0%, #22a6e8 50%, #06b6d4 100%);
+		--brand-gradient: linear-gradient(
+			135deg,
+			#3b82f6 0%,
+			#22a6e8 50%,
+			#06b6d4 100%
+		);
 		--ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 		--nav-height: 76px;
 	}
@@ -166,10 +171,19 @@
 	}
 
 	.ambient-grid {
-		background-image: var(--tw-gradient-stops, none), theme("backgroundImage.grid");
+		background-image:
+			var(--tw-gradient-stops, none), theme("backgroundImage.grid");
 		background-size: 72px 72px;
-		-webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-		mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+		-webkit-mask-image: radial-gradient(
+			ellipse 80% 60% at 50% 0%,
+			#000 40%,
+			transparent 100%
+		);
+		mask-image: radial-gradient(
+			ellipse 80% 60% at 50% 0%,
+			#000 40%,
+			transparent 100%
+		);
 	}
 
 	.noise-overlay {
@@ -200,6 +214,489 @@
 	}
 	.will-animate {
 		will-change: transform, opacity;
+	}
+}
+
+/* ==========================================================================
+   Cosmic ambient layer — stars, aurora, nebula, shooting stars, mouse light
+
+   Performance contract: every animation below drives ONLY `transform`,
+   `opacity` or `filter`. No layout-triggering properties (top/left/width) are
+   animated, so the compositor handles each layer on the GPU and the main
+   thread stays free. Layers are `will-change`-hinted and pointer-events:none.
+   ========================================================================== */
+@layer components {
+	/* ---------- Star layers ----------
+	   Each layer is 200% tall with a repeating dot pattern and scrolls upward
+	   by exactly 50%, so the tile wraps seamlessly and loops forever. Three
+	   layers at different speeds/sizes create real parallax depth. */
+	.star-layer {
+		position: absolute;
+		inset: 0;
+		height: 200%;
+		width: 100%;
+		background-repeat: repeat;
+		will-change: transform;
+		backface-visibility: hidden;
+	}
+
+	.star-layer-sm {
+		background-image:
+			radial-gradient(
+				1px 1px at 18% 12%,
+				rgba(255, 255, 255, 0.85),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 62% 28%,
+				rgba(255, 255, 255, 0.6),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 84% 8%,
+				rgba(186, 220, 255, 0.75),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 32% 54%,
+				rgba(255, 255, 255, 0.5),
+				transparent
+			),
+			radial-gradient(1px 1px at 8% 76%, rgba(255, 255, 255, 0.7), transparent),
+			radial-gradient(
+				1px 1px at 71% 66%,
+				rgba(160, 210, 255, 0.65),
+				transparent
+			),
+			radial-gradient(
+				1px 1px at 46% 88%,
+				rgba(255, 255, 255, 0.55),
+				transparent
+			),
+			radial-gradient(1px 1px at 93% 44%, rgba(255, 255, 255, 0.6), transparent);
+		background-size: 320px 320px;
+		animation: star-drift 140s linear infinite;
+	}
+
+	.star-layer-md {
+		background-image:
+			radial-gradient(
+				1.6px 1.6px at 25% 20%,
+				rgba(255, 255, 255, 0.9),
+				transparent
+			),
+			radial-gradient(
+				1.6px 1.6px at 78% 42%,
+				rgba(186, 220, 255, 0.8),
+				transparent
+			),
+			radial-gradient(
+				1.4px 1.4px at 52% 74%,
+				rgba(255, 255, 255, 0.7),
+				transparent
+			),
+			radial-gradient(
+				1.6px 1.6px at 12% 60%,
+				rgba(140, 200, 255, 0.72),
+				transparent
+			);
+		background-size: 480px 480px;
+		animation: star-drift 90s linear infinite;
+		opacity: 0.9;
+	}
+
+	.star-layer-lg {
+		background-image:
+			radial-gradient(
+				2.4px 2.4px at 40% 30%,
+				rgba(255, 255, 255, 1),
+				transparent
+			),
+			radial-gradient(
+				2.2px 2.2px at 88% 70%,
+				rgba(120, 190, 255, 0.9),
+				transparent
+			),
+			radial-gradient(
+				2px 2px at 15% 85%,
+				rgba(255, 255, 255, 0.85),
+				transparent
+			);
+		background-size: 760px 760px;
+		animation: star-drift 58s linear infinite;
+	}
+
+	/* Twinkle is a separate opacity pulse so it never fights the drift. */
+	.star-twinkle {
+		animation:
+			star-drift 110s linear infinite,
+			twinkle 5.5s ease-in-out infinite;
+	}
+
+	/* ---------- Aurora ribbons ---------- */
+	.aurora {
+		position: absolute;
+		border-radius: 9999px;
+		filter: blur(90px);
+		will-change: transform, opacity;
+		mix-blend-mode: screen;
+	}
+	.aurora-a {
+		top: -22%;
+		left: 50%;
+		height: 560px;
+		width: 900px;
+		margin-left: -450px;
+		background: conic-gradient(
+			from 160deg at 50% 50%,
+			rgba(59, 130, 246, 0.34),
+			rgba(6, 182, 212, 0.26),
+			rgba(99, 102, 241, 0.3),
+			rgba(59, 130, 246, 0.34)
+		);
+		animation: aurora-a 26s ease-in-out infinite;
+	}
+	.aurora-b {
+		top: 28%;
+		right: -16%;
+		height: 460px;
+		width: 620px;
+		background: radial-gradient(
+			ellipse at 40% 40%,
+			rgba(6, 182, 212, 0.28),
+			transparent 70%
+		);
+		animation: aurora-b 32s ease-in-out infinite;
+	}
+
+	/* ---------- Slow nebula ---------- */
+	.nebula {
+		position: absolute;
+		border-radius: 9999px;
+		filter: blur(120px);
+		will-change: transform;
+		mix-blend-mode: screen;
+	}
+	.nebula-a {
+		bottom: -18%;
+		left: -12%;
+		height: 520px;
+		width: 680px;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(37, 99, 235, 0.24),
+			transparent 68%
+		);
+		animation: nebula-drift 44s ease-in-out infinite;
+	}
+	.nebula-b {
+		top: 52%;
+		left: 24%;
+		height: 420px;
+		width: 520px;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(14, 165, 233, 0.16),
+			transparent 70%
+		);
+		animation: nebula-drift 60s ease-in-out infinite reverse;
+	}
+
+	/* ---------- Shooting stars ----------
+	   A hairline with a fading tail, flying diagonally. Long negative delays
+	   stagger them so they never appear in sync. */
+	.shooting-star {
+		position: absolute;
+		height: 1.5px;
+		width: 170px;
+		border-radius: 9999px;
+		background: linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(190, 225, 255, 0.9) 60%,
+			#ffffff 100%
+		);
+		opacity: 0;
+		will-change: transform, opacity;
+		animation: shooting-star 9s ease-in infinite;
+	}
+	.shooting-star::after {
+		content: "";
+		position: absolute;
+		right: -2px;
+		top: -1.5px;
+		height: 4.5px;
+		width: 4.5px;
+		border-radius: 9999px;
+		background: #ffffff;
+		box-shadow: 0 0 10px 2px rgba(160, 210, 255, 0.9);
+	}
+	.shooting-star-1 {
+		top: 12%;
+		left: -12%;
+		animation-delay: -1s;
+	}
+	.shooting-star-2 {
+		top: 34%;
+		left: -18%;
+		animation-duration: 13s;
+		animation-delay: -6s;
+	}
+	.shooting-star-3 {
+		top: 6%;
+		left: 14%;
+		animation-duration: 17s;
+		animation-delay: -11s;
+	}
+
+	/* ---------- Apple-style mouse spotlight ----------
+	   `--mx` / `--my` are written by a rAF loop in <MouseLight>. Using CSS vars
+	   inside a transform keeps the work on the compositor. */
+	.mouse-light {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 620px;
+		width: 620px;
+		margin: -310px 0 0 -310px;
+		border-radius: 9999px;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(59, 130, 246, 0.16) 0%,
+			rgba(6, 182, 212, 0.09) 38%,
+			transparent 68%
+		);
+		transform: translate3d(var(--mx, 50vw), var(--my, 40vh), 0);
+		will-change: transform;
+		opacity: 0;
+		transition: opacity 600ms ease-out;
+	}
+	.mouse-light[data-active="true"] {
+		opacity: 1;
+	}
+
+	/* ---------- Floating particles ---------- */
+	.particle {
+		position: absolute;
+		border-radius: 9999px;
+		background: rgba(140, 200, 255, 0.55);
+		will-change: transform, opacity;
+		animation: particle-rise linear infinite;
+	}
+
+	/* ---------- Gradient border + glow for the hero portrait ---------- */
+	.photo-frame {
+		position: relative;
+		border-radius: 28px;
+		background: linear-gradient(
+			145deg,
+			rgba(59, 130, 246, 0.55),
+			rgba(255, 255, 255, 0.08) 38%,
+			rgba(6, 182, 212, 0.45)
+		);
+		padding: 1.5px;
+		box-shadow:
+			0 24px 70px -20px rgba(6, 182, 212, 0.35),
+			0 10px 40px -12px rgba(59, 130, 246, 0.3);
+		transition:
+			box-shadow 500ms var(--ease-premium),
+			transform 500ms var(--ease-premium);
+	}
+	.photo-frame:hover {
+		box-shadow:
+			0 34px 90px -18px rgba(6, 182, 212, 0.5),
+			0 14px 50px -10px rgba(59, 130, 246, 0.42);
+	}
+	/* Rotating conic sheen riding the frame edge. */
+	.photo-frame::before {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		background: conic-gradient(
+			from 0deg,
+			transparent 0deg,
+			rgba(255, 255, 255, 0.55) 28deg,
+			transparent 70deg,
+			transparent 360deg
+		);
+		opacity: 0.5;
+		animation: frame-sheen 7s linear infinite;
+		pointer-events: none;
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+	}
+
+	/* ---------- Button light sweep + ripple ---------- */
+	.btn-sweep {
+		position: relative;
+		overflow: hidden;
+		isolation: isolate;
+	}
+	.btn-sweep::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		transform: translateX(-120%) skewX(-18deg);
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255, 255, 255, 0.32),
+			transparent
+		);
+		pointer-events: none;
+	}
+	.btn-sweep:hover::before {
+		animation: light-sweep 800ms var(--ease-premium);
+	}
+	.ripple {
+		position: absolute;
+		border-radius: 9999px;
+		background: rgba(255, 255, 255, 0.42);
+		transform: scale(0);
+		animation: ripple 620ms var(--ease-premium) forwards;
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	/* ---------- Navbar liquid pill ---------- */
+	.nav-pill {
+		background: linear-gradient(
+			135deg,
+			rgba(59, 130, 246, 0.22),
+			rgba(6, 182, 212, 0.16)
+		);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+	}
+}
+
+@keyframes star-drift {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		transform: translate3d(0, -50%, 0);
+	}
+}
+
+@keyframes twinkle {
+	0%,
+	100% {
+		opacity: 0.35;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+
+@keyframes aurora-a {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+		opacity: 0.75;
+	}
+	50% {
+		transform: translate3d(-40px, 26px, 0) rotate(16deg) scale(1.12);
+		opacity: 1;
+	}
+}
+
+@keyframes aurora-b {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) scale(1);
+		opacity: 0.6;
+	}
+	50% {
+		transform: translate3d(-56px, -34px, 0) scale(1.18);
+		opacity: 0.95;
+	}
+}
+
+@keyframes nebula-drift {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+	50% {
+		transform: translate3d(60px, -40px, 0) scale(1.14);
+	}
+}
+
+@keyframes shooting-star {
+	0% {
+		transform: translate3d(0, 0, 0) rotate(18deg);
+		opacity: 0;
+	}
+	4% {
+		opacity: 1;
+	}
+	18% {
+		transform: translate3d(120vw, 42vh, 0) rotate(18deg);
+		opacity: 0;
+	}
+	100% {
+		transform: translate3d(120vw, 42vh, 0) rotate(18deg);
+		opacity: 0;
+	}
+}
+
+@keyframes particle-rise {
+	0% {
+		transform: translate3d(0, 0, 0) scale(1);
+		opacity: 0;
+	}
+	12% {
+		opacity: 0.8;
+	}
+	88% {
+		opacity: 0.5;
+	}
+	100% {
+		transform: translate3d(18px, -320px, 0) scale(0.5);
+		opacity: 0;
+	}
+}
+
+@keyframes frame-sheen {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes light-sweep {
+	to {
+		transform: translateX(120%) skewX(-18deg);
+	}
+}
+
+@keyframes ripple {
+	to {
+		transform: scale(2.6);
+		opacity: 0;
+	}
+}
+
+/* Phones: drop the most expensive layers (large blurs) but keep the stars. */
+@media (max-width: 767px) {
+	.aurora-b,
+	.nebula-b,
+	.shooting-star-3,
+	.star-layer-lg,
+	.mouse-light {
+		display: none;
+	}
+	.aurora,
+	.nebula {
+		filter: blur(70px);
 	}
 }
 

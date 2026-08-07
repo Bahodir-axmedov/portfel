@@ -74,8 +74,15 @@ export function Hero({
 	const pointer = useMousePosition(parallaxEnabled)
 
 	// Mouse parallax: the photo and its glow drift in opposite directions.
+	// The photo additionally tilts in 3D. `perspective` must come first in the
+	// transform list, otherwise the rotation renders flat.
 	const photoShift = {
-		transform: `translate3d(${pointer.x * -18}px, ${pointer.y * -14}px, 0)`,
+		transform: [
+			"perspective(1200px)",
+			`translate3d(${pointer.x * -18}px, ${pointer.y * -14}px, 0)`,
+			`rotateX(${pointer.y * -7}deg)`,
+			`rotateY(${pointer.x * 9}deg)`,
+		].join(" "),
 	}
 	const glowShift = {
 		transform: `translate3d(${pointer.x * 26}px, ${pointer.y * 20}px, 0)`,
@@ -200,43 +207,42 @@ export function Hero({
 							style={glowShift}
 						/>
 
-						<div
-							className="relative overflow-hidden rounded-xl border border-line bg-white/[0.035] p-2.5 backdrop-blur-xl transition-transform duration-300 ease-premium"
-							style={photoShift}
-						>
-							<span
-								aria-hidden
-								className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
-							/>
-							<div className="relative aspect-[4/5] w-full overflow-hidden rounded-[22px]">
-								<Image
-									src={photo}
-									alt={fullName}
-									fill
-									priority
-									sizes="(max-width: 1024px) 84vw, 420px"
-									className="object-cover object-top"
-								/>
-								<div
+						<div className="photo-frame will-animate" style={photoShift}>
+							<div className="relative overflow-hidden rounded-[26px] border border-white/[0.08] bg-base/70 p-2.5 backdrop-blur-xl">
+								<span
 									aria-hidden
-									className="absolute inset-0 bg-gradient-to-t from-base via-base/10 to-transparent"
+									className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
 								/>
-							</div>
-
-							{highlights.length > 0 ? (
-								<div className="grid grid-cols-3 gap-2 px-1 pb-1 pt-3">
-									{highlights.map((item) => (
-										<div key={item.label} className="text-center">
-											<p className="gradient-text text-[19px] font-semibold tracking-tight">
-												{item.value}
-											</p>
-											<p className="mt-0.5 text-[11px] leading-tight text-ink-faint">
-												{item.label}
-											</p>
-										</div>
-									))}
+								<div className="relative aspect-[4/5] w-full overflow-hidden rounded-[22px]">
+									<Image
+										src={photo}
+										alt={fullName}
+										fill
+										priority
+										sizes="(max-width: 1024px) 84vw, 420px"
+										className="object-cover object-top"
+									/>
+									<div
+										aria-hidden
+										className="absolute inset-0 bg-gradient-to-t from-base via-base/10 to-transparent"
+									/>
 								</div>
-							) : null}
+
+								{highlights.length > 0 ? (
+									<div className="grid grid-cols-3 gap-2 px-1 pb-1 pt-3">
+										{highlights.map((item) => (
+											<div key={item.label} className="text-center">
+												<p className="gradient-text text-[19px] font-semibold tracking-tight">
+													{item.value}
+												</p>
+												<p className="mt-0.5 text-[11px] leading-tight text-ink-faint">
+													{item.label}
+												</p>
+											</div>
+										))}
+									</div>
+								) : null}
+							</div>
 						</div>
 					</motion.div>
 				</div>

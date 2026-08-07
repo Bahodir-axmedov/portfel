@@ -1,230 +1,340 @@
 {
-  "_comment": "Loyihalar. Har biri /projects/<slug> manzilida alohida sahifaga ega. isDraftInfo:true — ma'lumot AI tomonidan taklif qilingan, admin paneldan tasdiqlang yoki tuzating.",
+	"_comment": "Loyihalar. Har biri /projects/<slug> manzilida alohida sahifaga ega. isDraftInfo:true — ma'lumot AI tomonidan taklif qilingan, admin paneldan tasdiqlang yoki tuzating.",
 
-  "technologies": [
-    { "name": "Python", "icon": "SiPython", "color": "#3776AB", "category": "language", "order": 1 },
-    { "name": "FastAPI", "icon": "SiFastapi", "color": "#009688", "category": "backend", "order": 2 },
-    { "name": "aiogram", "icon": "SiTelegram", "color": "#2AABEE", "category": "backend", "order": 3 },
-    { "name": "aiogram 3", "icon": "SiTelegram", "color": "#2AABEE", "category": "backend", "order": 4 },
-    { "name": "Telegram Mini App", "icon": "SiTelegram", "color": "#2AABEE", "category": "platform", "order": 5 },
-    { "name": "SQLite", "icon": "SiSqlite", "color": "#003B57", "category": "database", "order": 6 },
-    { "name": "PostgreSQL", "icon": "SiPostgresql", "color": "#4169E1", "category": "database", "order": 7 },
-    { "name": "Git & GitHub", "icon": "SiGithub", "color": "#F5F5F7", "category": "devops", "order": 8 },
-    { "name": "Railway", "icon": "SiRailway", "color": "#B18CFE", "category": "devops", "order": 9 },
-    { "name": "React", "icon": "SiReact", "color": "#61DAFB", "category": "frontend", "order": 10 },
-    { "name": "Next.js", "icon": "SiNextdotjs", "color": "#F5F5F7", "category": "frontend", "order": 11 },
-    { "name": "TailwindCSS", "icon": "SiTailwindcss", "color": "#06B6D4", "category": "frontend", "order": 12 },
-    { "name": "Power BI", "icon": "BarChart3", "color": "#F2C811", "category": "data", "order": 13 },
-    { "name": "Docker", "icon": "SiDocker", "color": "#2496ED", "category": "devops", "order": 14 }
-  ],
+	"technologies": [
+		{
+			"name": "Python",
+			"icon": "SiPython",
+			"color": "#3776AB",
+			"category": "language",
+			"order": 1
+		},
+		{
+			"name": "FastAPI",
+			"icon": "SiFastapi",
+			"color": "#009688",
+			"category": "backend",
+			"order": 2
+		},
+		{
+			"name": "aiogram",
+			"icon": "SiTelegram",
+			"color": "#2AABEE",
+			"category": "backend",
+			"order": 3
+		},
+		{
+			"name": "aiogram 3",
+			"icon": "SiTelegram",
+			"color": "#2AABEE",
+			"category": "backend",
+			"order": 4
+		},
+		{
+			"name": "Telegram Mini App",
+			"icon": "SiTelegram",
+			"color": "#2AABEE",
+			"category": "platform",
+			"order": 5
+		},
+		{
+			"name": "SQLite",
+			"icon": "SiSqlite",
+			"color": "#003B57",
+			"category": "database",
+			"order": 6
+		},
+		{
+			"name": "PostgreSQL",
+			"icon": "SiPostgresql",
+			"color": "#4169E1",
+			"category": "database",
+			"order": 7
+		},
+		{
+			"name": "Git & GitHub",
+			"icon": "SiGithub",
+			"color": "#F5F5F7",
+			"category": "devops",
+			"order": 8
+		},
+		{
+			"name": "Railway",
+			"icon": "SiRailway",
+			"color": "#B18CFE",
+			"category": "devops",
+			"order": 9
+		},
+		{
+			"name": "React",
+			"icon": "SiReact",
+			"color": "#61DAFB",
+			"category": "frontend",
+			"order": 10
+		},
+		{
+			"name": "Next.js",
+			"icon": "SiNextdotjs",
+			"color": "#F5F5F7",
+			"category": "frontend",
+			"order": 11
+		},
+		{
+			"name": "TailwindCSS",
+			"icon": "SiTailwindcss",
+			"color": "#06B6D4",
+			"category": "frontend",
+			"order": 12
+		},
+		{
+			"name": "Power BI",
+			"icon": "BarChart3",
+			"color": "#F2C811",
+			"category": "data",
+			"order": 13
+		},
+		{
+			"name": "Docker",
+			"icon": "SiDocker",
+			"color": "#2496ED",
+			"category": "devops",
+			"order": 14
+		}
+	],
 
-  "projects": [
-    {
-      "slug": "energy-invest",
-      "title": "Energy Invest",
-      "tagline": "Investitsiya loyihalari uchun Telegram Mini App platformasi",
-      "taglineRu": "Платформа Telegram Mini App для инвестиционных проектов",
-      "taglineEn": "A Telegram Mini App platform for investment projects",
-      "summary": "Foydalanuvchilar investitsiya loyihalarini ko'rib chiqadigan, shaxsiy kabinet orqali kuzatib boradigan va administratorlar kontentni to'liq boshqaradigan Telegram platformasi.",
-      "summaryRu": "Telegram-платформа, где пользователи изучают инвестиционные проекты и отслеживают их в личном кабинете, а администраторы полностью управляют контентом.",
-      "summaryEn": "A Telegram platform where users browse investment projects, follow them from a personal cabinet, and admins manage all content.",
-      "description": "Energy Invest — investitsiya loyihalarini bir joyda taqdim etadigan Telegram Mini App platformasi. Foydalanuvchi bot ichidagi interaktiv menyu yoki Mini App interfeysi orqali loyihalar ro'yxatini ko'radi, batafsil ma'lumot oladi va shaxsiy kabinetida o'z faoliyatini kuzatib boradi. Administratorlar uchun alohida panel mavjud: loyihalarni qo'shish, tahrirlash, o'chirish va statistikani real vaqtda kuzatish mumkin. Backend FastAPI va aiogram asosida qurilgan, ma'lumotlar SQLite'da saqlanadi, deploy Railway orqali amalga oshiriladi.",
-      "descriptionRu": "Energy Invest — платформа Telegram Mini App, которая собирает инвестиционные проекты в одном месте. Пользователь через интерактивное меню бота или интерфейс Mini App просматривает список проектов, получает подробную информацию и отслеживает активность в личном кабинете. Для администраторов предусмотрена отдельная панель управления и статистика в реальном времени. Бэкенд построен на FastAPI и aiogram, данные хранятся в SQLite, деплой — на Railway.",
-      "descriptionEn": "Energy Invest is a Telegram Mini App platform that brings investment projects together in one place. Users browse the project list through an interactive bot menu or the Mini App interface, read detailed information and track their activity in a personal cabinet. Administrators get a dedicated panel to add, edit and remove projects and to monitor statistics in real time. The backend is built with FastAPI and aiogram, data is stored in SQLite, and deployment runs on Railway.",
-      "features": [
-        "Investitsiya loyihalarini ko'rish va boshqarish",
-        "Foydalanuvchi profili va shaxsiy kabinet",
-        "Admin panel orqali kontentni boshqarish",
-        "Statistikalar va analitik ma'lumotlarni ko'rsatish",
-        "Interaktiv menyu va avtomatlashtirilgan foydalanuvchi xizmati"
-      ],
-      "featuresRu": [
-        "Просмотр и управление инвестиционными проектами",
-        "Профиль пользователя и личный кабинет",
-        "Управление контентом через админ-панель",
-        "Отображение статистики и аналитики",
-        "Интерактивное меню и автоматизированное обслуживание пользователей"
-      ],
-      "featuresEn": [
-        "Browsing and managing investment projects",
-        "User profile and personal cabinet",
-        "Content management through an admin panel",
-        "Statistics and analytics dashboards",
-        "Interactive menu and automated user service"
-      ],
-      "architecture": "aiogram handler'lari va FastAPI endpoint'lari alohida qatlamlarga bo'lingan: bot qatlami (handlers, keyboards, states), servis qatlami (business logic) va data qatlami (SQLite + repository pattern). Mini App frontend FastAPI orqali xizmat qiladi va bir xil servis qatlamidan foydalanadi.",
-      "architectureRu": "Хэндлеры aiogram и эндпоинты FastAPI разделены на слои: слой бота (handlers, keyboards, states), сервисный слой (бизнес-логика) и слой данных (SQLite + repository). Frontend Mini App обслуживается через FastAPI и использует тот же сервисный слой.",
-      "architectureEn": "aiogram handlers and FastAPI endpoints are split into layers: a bot layer (handlers, keyboards, states), a service layer (business logic) and a data layer (SQLite + repository pattern). The Mini App frontend is served through FastAPI and reuses the same service layer.",
-      "roadmap": [
-        "To'lov tizimlari integratsiyasi",
-        "Ko'p tilli interfeys (UZ / RU / EN)",
-        "Kengaytirilgan analitika va eksport",
-        "PostgreSQL'ga o'tish va yuklamani kengaytirish"
-      ],
-      "roadmapRu": [
-        "Интеграция платёжных систем",
-        "Многоязычный интерфейс (UZ / RU / EN)",
-        "Расширенная аналитика и экспорт",
-        "Переход на PostgreSQL и масштабирование"
-      ],
-      "roadmapEn": [
-        "Payment system integration",
-        "Multilingual interface (UZ / RU / EN)",
-        "Extended analytics and export",
-        "Migration to PostgreSQL and scaling"
-      ],
-      "category": "fintech",
-      "status": "active",
-      "role": "Full Stack Developer",
-      "yearStart": 2025,
-      "yearEnd": 2026,
-      "coverImage": "/images/projects/energy-invest.png",
-      "technologies": ["Python", "FastAPI", "aiogram", "Telegram Mini App", "SQLite", "Git & GitHub", "Railway"],
-      "featured": true,
-      "pinned": true,
-      "published": true,
-      "order": 1
-    },
+	"projects": [
+		{
+			"slug": "energy-invest",
+			"title": "Energy Invest",
+			"tagline": "Investitsiya loyihalari uchun Telegram Mini App platformasi",
+			"taglineRu": "Платформа Telegram Mini App для инвестиционных проектов",
+			"taglineEn": "A Telegram Mini App platform for investment projects",
+			"summary": "Foydalanuvchilar investitsiya loyihalarini ko'rib chiqadigan, shaxsiy kabinet orqali kuzatib boradigan va administratorlar kontentni to'liq boshqaradigan Telegram platformasi.",
+			"summaryRu": "Telegram-платформа, где пользователи изучают инвестиционные проекты и отслеживают их в личном кабинете, а администраторы полностью управляют контентом.",
+			"summaryEn": "A Telegram platform where users browse investment projects, follow them from a personal cabinet, and admins manage all content.",
+			"description": "Energy Invest — investitsiya loyihalarini bir joyda taqdim etadigan Telegram Mini App platformasi. Foydalanuvchi bot ichidagi interaktiv menyu yoki Mini App interfeysi orqali loyihalar ro'yxatini ko'radi, batafsil ma'lumot oladi va shaxsiy kabinetida o'z faoliyatini kuzatib boradi. Administratorlar uchun alohida panel mavjud: loyihalarni qo'shish, tahrirlash, o'chirish va statistikani real vaqtda kuzatish mumkin. Backend FastAPI va aiogram asosida qurilgan, ma'lumotlar SQLite'da saqlanadi, deploy Railway orqali amalga oshiriladi.",
+			"descriptionRu": "Energy Invest — платформа Telegram Mini App, которая собирает инвестиционные проекты в одном месте. Пользователь через интерактивное меню бота или интерфейс Mini App просматривает список проектов, получает подробную информацию и отслеживает активность в личном кабинете. Для администраторов предусмотрена отдельная панель управления и статистика в реальном времени. Бэкенд построен на FastAPI и aiogram, данные хранятся в SQLite, деплой — на Railway.",
+			"descriptionEn": "Energy Invest is a Telegram Mini App platform that brings investment projects together in one place. Users browse the project list through an interactive bot menu or the Mini App interface, read detailed information and track their activity in a personal cabinet. Administrators get a dedicated panel to add, edit and remove projects and to monitor statistics in real time. The backend is built with FastAPI and aiogram, data is stored in SQLite, and deployment runs on Railway.",
+			"features": [
+				"Investitsiya loyihalarini ko'rish va boshqarish",
+				"Foydalanuvchi profili va shaxsiy kabinet",
+				"Admin panel orqali kontentni boshqarish",
+				"Statistikalar va analitik ma'lumotlarni ko'rsatish",
+				"Interaktiv menyu va avtomatlashtirilgan foydalanuvchi xizmati"
+			],
+			"featuresRu": [
+				"Просмотр и управление инвестиционными проектами",
+				"Профиль пользователя и личный кабинет",
+				"Управление контентом через админ-панель",
+				"Отображение статистики и аналитики",
+				"Интерактивное меню и автоматизированное обслуживание пользователей"
+			],
+			"featuresEn": [
+				"Browsing and managing investment projects",
+				"User profile and personal cabinet",
+				"Content management through an admin panel",
+				"Statistics and analytics dashboards",
+				"Interactive menu and automated user service"
+			],
+			"architecture": "aiogram handler'lari va FastAPI endpoint'lari alohida qatlamlarga bo'lingan: bot qatlami (handlers, keyboards, states), servis qatlami (business logic) va data qatlami (SQLite + repository pattern). Mini App frontend FastAPI orqali xizmat qiladi va bir xil servis qatlamidan foydalanadi.",
+			"architectureRu": "Хэндлеры aiogram и эндпоинты FastAPI разделены на слои: слой бота (handlers, keyboards, states), сервисный слой (бизнес-логика) и слой данных (SQLite + repository). Frontend Mini App обслуживается через FastAPI и использует тот же сервисный слой.",
+			"architectureEn": "aiogram handlers and FastAPI endpoints are split into layers: a bot layer (handlers, keyboards, states), a service layer (business logic) and a data layer (SQLite + repository pattern). The Mini App frontend is served through FastAPI and reuses the same service layer.",
+			"roadmap": [
+				"To'lov tizimlari integratsiyasi",
+				"Ko'p tilli interfeys (UZ / RU / EN)",
+				"Kengaytirilgan analitika va eksport",
+				"PostgreSQL'ga o'tish va yuklamani kengaytirish"
+			],
+			"roadmapRu": [
+				"Интеграция платёжных систем",
+				"Многоязычный интерфейс (UZ / RU / EN)",
+				"Расширенная аналитика и экспорт",
+				"Переход на PostgreSQL и масштабирование"
+			],
+			"roadmapEn": [
+				"Payment system integration",
+				"Multilingual interface (UZ / RU / EN)",
+				"Extended analytics and export",
+				"Migration to PostgreSQL and scaling"
+			],
+			"category": "fintech",
+			"status": "active",
+			"role": "Full Stack Developer",
+			"yearStart": 2025,
+			"yearEnd": 2026,
+			"coverImage": "/images/projects/energy-invest.png",
+			"technologies": [
+				"Python",
+				"FastAPI",
+				"aiogram",
+				"Telegram Mini App",
+				"SQLite",
+				"Git & GitHub",
+				"Railway"
+			],
+			"featured": true,
+			"pinned": true,
+			"published": true,
+			"order": 1
+		},
 
-    {
-      "slug": "bunker-bot",
-      "title": "Bunker Bot",
-      "tagline": "Multiplayer «Bunker» o'yini uchun to'liq avtomatlashtirilgan Telegram bot",
-      "taglineRu": "Полностью автоматизированный Telegram-бот для мультиплеерной игры «Бункер»",
-      "taglineEn": "A fully automated Telegram bot for the multiplayer game ‘Bunker’",
-      "summary": "1000+ foydalanuvchi o'ynagan mashhur «Bunker» o'yinini Telegram guruhlarida to'liq avtomatik boshqaradigan bot: rollar, kartalar, ovoz berish va statistika.",
-      "summaryRu": "Бот, который полностью автоматизирует популярную игру «Бункер» в Telegram-группах: роли, карты, голосование и статистика. Более 1000 игроков.",
-      "summaryEn": "A bot that fully automates the popular ‘Bunker’ game inside Telegram groups: roles, cards, voting and statistics. Played by 1000+ users.",
-      "description": "Bunker Bot — apokalipsis mavzusidagi mashhur «Bunker» stol o'yinini Telegram guruhlarida o'ynash imkonini beruvchi bot. Bot o'yin sessiyasini boshidan oxirigacha boshqaradi: o'yinchilarni yig'adi, har biriga tasodifiy rol va kartalar taqsimlaydi, raundlarni boshqaradi, kunlik ovoz berishni o'tkazadi va natijalarni e'lon qiladi. Administratorlar uchun o'yin sozlamalari, kartalar bazasi va statistikani boshqarish paneli mavjud. Bot aiogram 3 asosida yozilgan, ma'lumotlar SQLite'da saqlanadi va Railway'da 24/7 ishlaydi.",
-      "descriptionRu": "Bunker Bot позволяет играть в известную настольную игру «Бункер» прямо в Telegram-группах. Бот ведёт игровую сессию от начала до конца: собирает игроков, раздаёт случайные роли и карты, управляет раундами, проводит голосование и объявляет результаты. Для администраторов есть панель настроек, база карт и статистика. Написан на aiogram 3, данные хранятся в SQLite, работает 24/7 на Railway.",
-      "descriptionEn": "Bunker Bot lets players enjoy the well-known post-apocalyptic board game ‘Bunker’ directly inside Telegram groups. The bot runs the entire session: it gathers players, deals random roles and cards, drives the rounds, runs the daily voting phase and announces results. Admins get a panel for game settings, the card database and statistics. It is built with aiogram 3, stores data in SQLite and runs 24/7 on Railway.",
-      "features": [
-        "Multiplayer Bunker o'yinlarini avtomatik boshqarish",
-        "Rollar va kartalarni avtomatik taqsimlash",
-        "Kunlik ovoz berish (Voting) tizimi",
-        "Admin panel va o'yin sozlamalarini boshqarish",
-        "O'yin statistikasi va foydalanuvchi ma'lumotlarini saqlash"
-      ],
-      "featuresRu": [
-        "Автоматическое ведение мультиплеерных игр «Бункер»",
-        "Автоматическая раздача ролей и карт",
-        "Система ежедневного голосования",
-        "Админ-панель и управление настройками игры",
-        "Статистика игр и хранение данных пользователей"
-      ],
-      "featuresEn": [
-        "Automatic hosting of multiplayer Bunker games",
-        "Automatic role and card distribution",
-        "Daily voting system",
-        "Admin panel and game settings management",
-        "Game statistics and user data storage"
-      ],
-      "architecture": "O'yin holati FSM (finite state machine) orqali boshqariladi. Har bir guruh uchun alohida sessiya obyekti yaratiladi, raund logikasi servis qatlamida, kartalar va statistika esa SQLite'da saqlanadi. Uzoq davom etadigan vazifalar asinxron task'lar sifatida bajariladi.",
-      "architectureRu": "Состояние игры управляется через FSM. Для каждой группы создаётся отдельная сессия, логика раундов живёт в сервисном слое, а карты и статистика хранятся в SQLite. Длительные операции выполняются асинхронно.",
-      "architectureEn": "Game state is driven by a finite state machine. Each group gets its own session object, round logic lives in the service layer, and cards plus statistics are stored in SQLite. Long-running steps execute as asynchronous tasks.",
-      "roadmap": [
-        "Yangi kartalar to'plamlari va stsenariylar",
-        "Reyting va liderlar jadvali",
-        "Ko'p tilli o'yin interfeysi",
-        "Web dashboard orqali statistika"
-      ],
-      "roadmapRu": [
-        "Новые наборы карт и сценарии",
-        "Рейтинг и таблица лидеров",
-        "Многоязычный игровой интерфейс",
-        "Статистика через веб-дашборд"
-      ],
-      "roadmapEn": [
-        "New card sets and scenarios",
-        "Rating and leaderboard",
-        "Multilingual game interface",
-        "Statistics via a web dashboard"
-      ],
-      "category": "telegram_bot",
-      "status": "active",
-      "role": "Backend Developer",
-      "yearStart": 2026,
-      "yearEnd": null,
-      "coverImage": "/images/projects/bunker-bot.png",
-      "demoUrl": "https://t.me/Bunkergam3_bot",
-      "botUsername": "@Bunkergam3_bot",
-      "users": 1000,
-      "technologies": ["Python", "aiogram 3", "SQLite", "Git & GitHub", "Railway"],
-      "featured": true,
-      "pinned": true,
-      "published": true,
-      "order": 2,
-      "images": [
-        { "url": "/images/projects/bunker-bot.png", "alt": "Bunker Game banner", "type": "cover", "order": 1 }
-      ]
-    },
+		{
+			"slug": "bunker-bot",
+			"title": "Bunker Bot",
+			"tagline": "Multiplayer «Bunker» o'yini uchun to'liq avtomatlashtirilgan Telegram bot",
+			"taglineRu": "Полностью автоматизированный Telegram-бот для мультиплеерной игры «Бункер»",
+			"taglineEn": "A fully automated Telegram bot for the multiplayer game ‘Bunker’",
+			"summary": "1000+ foydalanuvchi o'ynagan mashhur «Bunker» o'yinini Telegram guruhlarida to'liq avtomatik boshqaradigan bot: rollar, kartalar, ovoz berish va statistika.",
+			"summaryRu": "Бот, который полностью автоматизирует популярную игру «Бункер» в Telegram-группах: роли, карты, голосование и статистика. Более 1000 игроков.",
+			"summaryEn": "A bot that fully automates the popular ‘Bunker’ game inside Telegram groups: roles, cards, voting and statistics. Played by 1000+ users.",
+			"description": "Bunker Bot — apokalipsis mavzusidagi mashhur «Bunker» stol o'yinini Telegram guruhlarida o'ynash imkonini beruvchi bot. Bot o'yin sessiyasini boshidan oxirigacha boshqaradi: o'yinchilarni yig'adi, har biriga tasodifiy rol va kartalar taqsimlaydi, raundlarni boshqaradi, kunlik ovoz berishni o'tkazadi va natijalarni e'lon qiladi. Administratorlar uchun o'yin sozlamalari, kartalar bazasi va statistikani boshqarish paneli mavjud. Bot aiogram 3 asosida yozilgan, ma'lumotlar SQLite'da saqlanadi va Railway'da 24/7 ishlaydi.",
+			"descriptionRu": "Bunker Bot позволяет играть в известную настольную игру «Бункер» прямо в Telegram-группах. Бот ведёт игровую сессию от начала до конца: собирает игроков, раздаёт случайные роли и карты, управляет раундами, проводит голосование и объявляет результаты. Для администраторов есть панель настроек, база карт и статистика. Написан на aiogram 3, данные хранятся в SQLite, работает 24/7 на Railway.",
+			"descriptionEn": "Bunker Bot lets players enjoy the well-known post-apocalyptic board game ‘Bunker’ directly inside Telegram groups. The bot runs the entire session: it gathers players, deals random roles and cards, drives the rounds, runs the daily voting phase and announces results. Admins get a panel for game settings, the card database and statistics. It is built with aiogram 3, stores data in SQLite and runs 24/7 on Railway.",
+			"features": [
+				"Multiplayer Bunker o'yinlarini avtomatik boshqarish",
+				"Rollar va kartalarni avtomatik taqsimlash",
+				"Kunlik ovoz berish (Voting) tizimi",
+				"Admin panel va o'yin sozlamalarini boshqarish",
+				"O'yin statistikasi va foydalanuvchi ma'lumotlarini saqlash"
+			],
+			"featuresRu": [
+				"Автоматическое ведение мультиплеерных игр «Бункер»",
+				"Автоматическая раздача ролей и карт",
+				"Система ежедневного голосования",
+				"Админ-панель и управление настройками игры",
+				"Статистика игр и хранение данных пользователей"
+			],
+			"featuresEn": [
+				"Automatic hosting of multiplayer Bunker games",
+				"Automatic role and card distribution",
+				"Daily voting system",
+				"Admin panel and game settings management",
+				"Game statistics and user data storage"
+			],
+			"architecture": "O'yin holati FSM (finite state machine) orqali boshqariladi. Har bir guruh uchun alohida sessiya obyekti yaratiladi, raund logikasi servis qatlamida, kartalar va statistika esa SQLite'da saqlanadi. Uzoq davom etadigan vazifalar asinxron task'lar sifatida bajariladi.",
+			"architectureRu": "Состояние игры управляется через FSM. Для каждой группы создаётся отдельная сессия, логика раундов живёт в сервисном слое, а карты и статистика хранятся в SQLite. Длительные операции выполняются асинхронно.",
+			"architectureEn": "Game state is driven by a finite state machine. Each group gets its own session object, round logic lives in the service layer, and cards plus statistics are stored in SQLite. Long-running steps execute as asynchronous tasks.",
+			"roadmap": [
+				"Yangi kartalar to'plamlari va stsenariylar",
+				"Reyting va liderlar jadvali",
+				"Ko'p tilli o'yin interfeysi",
+				"Web dashboard orqali statistika"
+			],
+			"roadmapRu": [
+				"Новые наборы карт и сценарии",
+				"Рейтинг и таблица лидеров",
+				"Многоязычный игровой интерфейс",
+				"Статистика через веб-дашборд"
+			],
+			"roadmapEn": [
+				"New card sets and scenarios",
+				"Rating and leaderboard",
+				"Multilingual game interface",
+				"Statistics via a web dashboard"
+			],
+			"category": "telegram_bot",
+			"status": "active",
+			"role": "Backend Developer",
+			"yearStart": 2026,
+			"yearEnd": null,
+			"coverImage": "/images/projects/bunker-bot.png",
+			"demoUrl": "https://t.me/Bunkergam3_bot",
+			"botUsername": "@Bunkergam3_bot",
+			"users": 1000,
+			"technologies": [
+				"Python",
+				"aiogram 3",
+				"SQLite",
+				"Git & GitHub",
+				"Railway"
+			],
+			"featured": true,
+			"pinned": true,
+			"published": true,
+			"order": 2,
+			"images": [
+				{
+					"url": "/images/projects/bunker-bot.png",
+					"alt": "Bunker Game banner",
+					"type": "cover",
+					"order": 1
+				}
+			]
+		},
 
-    {
-      "slug": "bondtrader",
-      "title": "BondTrader",
-      "tagline": "Obligatsiyalar bozorini kuzatish va tahlil qilish platformasi",
-      "taglineRu": "Платформа для мониторинга и анализа рынка облигаций",
-      "taglineEn": "A platform for monitoring and analysing the bond market",
-      "summary": "Obligatsiyalar bo'yicha ma'lumotlarni yig'adigan, daromadlilikni hisoblaydigan va portfelni kuzatishga yordam beradigan platforma. Hozirda demo versiyada ishlamoqda.",
-      "summaryRu": "Платформа, которая собирает данные по облигациям, рассчитывает доходность и помогает отслеживать портфель. Сейчас работает в демо-версии.",
-      "summaryEn": "A platform that aggregates bond data, calculates yields and helps track a portfolio. Currently running as a demo version.",
-      "description": "BondTrader — obligatsiyalar bozori bilan ishlaydigan investorlar uchun mo'ljallangan platforma. Tizim turli manbalardan obligatsiyalar bo'yicha ma'lumotlarni yig'adi, ularni normallashtiradi va foydalanuvchiga qulay ko'rinishda taqdim etadi: daromadlilik (YTM), kupon jadvali, muddat va risk ko'rsatkichlari. Foydalanuvchi o'z portfelini kuzatib boradi va muhim voqealar haqida bildirishnoma oladi. Loyiha hozirda demo versiyada ishlab turibdi va faol rivojlantirilmoqda.\n\nEslatma: bu bo'lim dastlab AI tomonidan tayyorlangan taklif asosida to'ldirilgan — admin panel orqali istalgan vaqtda aniqlashtiring.",
-      "descriptionRu": "BondTrader — платформа для инвесторов, работающих с рын��ом облигаций. Система собирает данные из разных источников, нормализует их и показывает в удобном виде: доходность (YTM), купонный график, срок и показатели риска. Пользователь отслеживает свой портфель и получает уведомления о важных событиях. Проект работает в демо-версии и активно развивается.\n\nПримечание: раздел изначально заполнен по предложению AI — уточните его в админ-панели.",
-      "descriptionEn": "BondTrader is a platform for investors working with the bond market. It collects bond data from different sources, normalises it and presents it clearly: yield to maturity, coupon schedule, duration and risk indicators. Users track their portfolio and receive notifications about important events. The project currently runs as a demo and is under active development.\n\nNote: this section was initially drafted by AI — refine it any time from the admin panel.",
-      "features": [
-        "Obligatsiyalar ro'yxati va real vaqtdagi narx ma'lumotlari",
-        "Daromadlilik (YTM), kupon va muddat kalkulyatori",
-        "Shaxsiy portfelni kuzatish va foyda/zarar hisobi",
-        "Filtr, saralash va taqqoslash paneli",
-        "Muhim voqealar bo'yicha bildirishnomalar"
-      ],
-      "featuresRu": [
-        "Список облигаций и актуальные ценовые данные",
-        "Калькулятор доходности (YTM), купонов и сроков",
-        "Отслеживание портфеля и расчёт прибыли/убытка",
-        "Фильтры, сортировка и сравнение",
-        "Уведомления о важных событиях"
-      ],
-      "featuresEn": [
-        "Bond listings with up-to-date pricing data",
-        "Yield (YTM), coupon and maturity calculator",
-        "Personal portfolio tracking with profit/loss",
-        "Filtering, sorting and comparison panel",
-        "Notifications about important events"
-      ],
-      "architecture": "Ma'lumot yig'uvchi servis (collector) tashqi manbalardan ma'lumotni oladi va normallashtiradi; FastAPI REST API hisob-kitoblarni bajaradi; frontend Next.js orqali server-side render qilinadi. Ma'lumotlar PostgreSQL'da saqlanadi.",
-      "architectureRu": "Сервис-коллектор забирает данные из внешних источников и нормализует их; REST API на FastAPI выполняет расчёты; фронтенд рендерится на Next.js. Данные хранятся в PostgreSQL.",
-      "architectureEn": "A collector service pulls and normalises data from external sources; a FastAPI REST API performs the calculations; the frontend is server-rendered with Next.js. Data is stored in PostgreSQL.",
-      "roadmap": [
-        "Demo'dan to'liq versiyaga o'tish",
-        "Telegram bot orqali bildirishnomalar",
-        "Portfel analitikasi va eksport (Excel / PDF)",
-        "Ko'p foydalanuvchili rejim va rollar"
-      ],
-      "roadmapRu": [
-        "Переход от демо к полной версии",
-        "Уведомления через Telegram-бота",
-        "Аналитика портфеля и экспорт (Excel / PDF)",
-        "Многопользовательский режим и роли"
-      ],
-      "roadmapEn": [
-        "Move from demo to full release",
-        "Telegram bot notifications",
-        "Portfolio analytics and export (Excel / PDF)",
-        "Multi-user mode with roles"
-      ],
-      "category": "fintech",
-      "status": "demo",
-      "role": "Full Stack Developer",
-      "yearStart": 2026,
-      "yearEnd": null,
-      "coverImage": "/images/projects/bondtrader.png",
-      "technologies": ["Python", "FastAPI", "PostgreSQL", "Next.js", "TailwindCSS", "Railway"],
-      "featured": true,
-      "pinned": false,
-      "published": true,
-      "isDraftInfo": true,
-      "order": 3
-    }
-  ]
+		{
+			"slug": "bondtrader",
+			"title": "BondTrader",
+			"tagline": "Obligatsiyalar bozorini kuzatish va tahlil qilish platformasi",
+			"taglineRu": "Платформа для мониторинга и анализа рынка облигаций",
+			"taglineEn": "A platform for monitoring and analysing the bond market",
+			"summary": "Obligatsiyalar bo'yicha ma'lumotlarni yig'adigan, daromadlilikni hisoblaydigan va portfelni kuzatishga yordam beradigan platforma. Hozirda demo versiyada ishlamoqda.",
+			"summaryRu": "Платформа, которая собирает данные по облигациям, рассчитывает доходность и помогает отслеживать портфель. Сейчас работает в демо-версии.",
+			"summaryEn": "A platform that aggregates bond data, calculates yields and helps track a portfolio. Currently running as a demo version.",
+			"description": "BondTrader — obligatsiyalar bozori bilan ishlaydigan investorlar uchun mo'ljallangan platforma. Tizim turli manbalardan obligatsiyalar bo'yicha ma'lumotlarni yig'adi, ularni normallashtiradi va foydalanuvchiga qulay ko'rinishda taqdim etadi: daromadlilik (YTM), kupon jadvali, muddat va risk ko'rsatkichlari. Foydalanuvchi o'z portfelini kuzatib boradi va muhim voqealar haqida bildirishnoma oladi. Loyiha hozirda demo versiyada ishlab turibdi va faol rivojlantirilmoqda.\n\nEslatma: bu bo'lim dastlab AI tomonidan tayyorlangan taklif asosida to'ldirilgan — admin panel orqali istalgan vaqtda aniqlashtiring.",
+			"descriptionRu": "BondTrader — платформа для инвесторов, работающих с рын��ом облигаций. Система собирает данные из разных источников, нормализует их и показывает в удобном виде: доходность (YTM), купонный график, срок и показатели риска. Пользователь отслеживает свой портфель и получает уведомления о важных событиях. Проект работает в демо-версии и активно развивается.\n\nПримечание: раздел изначально заполнен по предложению AI — уточните его в админ-панели.",
+			"descriptionEn": "BondTrader is a platform for investors working with the bond market. It collects bond data from different sources, normalises it and presents it clearly: yield to maturity, coupon schedule, duration and risk indicators. Users track their portfolio and receive notifications about important events. The project currently runs as a demo and is under active development.\n\nNote: this section was initially drafted by AI — refine it any time from the admin panel.",
+			"features": [
+				"Obligatsiyalar ro'yxati va real vaqtdagi narx ma'lumotlari",
+				"Daromadlilik (YTM), kupon va muddat kalkulyatori",
+				"Shaxsiy portfelni kuzatish va foyda/zarar hisobi",
+				"Filtr, saralash va taqqoslash paneli",
+				"Muhim voqealar bo'yicha bildirishnomalar"
+			],
+			"featuresRu": [
+				"Список облигаций и актуальные ценовые данные",
+				"Калькулятор доходности (YTM), купонов и сроков",
+				"Отслеживание портфеля и расчёт прибыли/убытка",
+				"Фильтры, сортировка и сравнение",
+				"Уведомления о важных событиях"
+			],
+			"featuresEn": [
+				"Bond listings with up-to-date pricing data",
+				"Yield (YTM), coupon and maturity calculator",
+				"Personal portfolio tracking with profit/loss",
+				"Filtering, sorting and comparison panel",
+				"Notifications about important events"
+			],
+			"architecture": "Ma'lumot yig'uvchi servis (collector) tashqi manbalardan ma'lumotni oladi va normallashtiradi; FastAPI REST API hisob-kitoblarni bajaradi; frontend Next.js orqali server-side render qilinadi. Ma'lumotlar PostgreSQL'da saqlanadi.",
+			"architectureRu": "Сервис-коллектор забирает данные из внешних источников и нормализует их; REST API на FastAPI выполняет расчёты; фронтенд рендерится на Next.js. Данные хранятся в PostgreSQL.",
+			"architectureEn": "A collector service pulls and normalises data from external sources; a FastAPI REST API performs the calculations; the frontend is server-rendered with Next.js. Data is stored in PostgreSQL.",
+			"roadmap": [
+				"Demo'dan to'liq versiyaga o'tish",
+				"Telegram bot orqali bildirishnomalar",
+				"Portfel analitikasi va eksport (Excel / PDF)",
+				"Ko'p foydalanuvchili rejim va rollar"
+			],
+			"roadmapRu": [
+				"Переход от демо к полной версии",
+				"Уведомления через Telegram-бота",
+				"Аналитика портфеля и экспорт (Excel / PDF)",
+				"Многопользовательский режим и роли"
+			],
+			"roadmapEn": [
+				"Move from demo to full release",
+				"Telegram bot notifications",
+				"Portfolio analytics and export (Excel / PDF)",
+				"Multi-user mode with roles"
+			],
+			"category": "fintech",
+			"status": "demo",
+			"role": "Full Stack Developer",
+			"yearStart": 2026,
+			"yearEnd": null,
+			"coverImage": "/images/projects/bondtrader.png",
+			"technologies": [
+				"Python",
+				"FastAPI",
+				"PostgreSQL",
+				"Next.js",
+				"TailwindCSS",
+				"Railway"
+			],
+			"featured": true,
+			"pinned": false,
+			"published": true,
+			"isDraftInfo": true,
+			"order": 3
+		}
+	]
 }

@@ -1,218 +1,218 @@
 {
-  "_comment": "Ish tajribasi, ta'lim, timeline. Sertifikatlar va yutuqlar hozircha bo'sh — admin paneldan qo'shiladi.",
+	"_comment": "Ish tajribasi, ta'lim, timeline. Sertifikatlar va yutuqlar hozircha bo'sh — admin paneldan qo'shiladi.",
 
-  "experiences": [
-    {
-      "company": "Maab Innovation",
-      "role": "Business Intelligence (BI) Developer",
-      "roleRu": "Business Intelligence (BI) разработчик",
-      "roleEn": "Business Intelligence (BI) Developer",
-      "employment": "full_time",
-      "location": "Toshkent, O'zbekiston",
-      "locationType": "onsite",
-      "startDate": "2025-08-01",
-      "endDate": null,
-      "current": true,
-      "description": "Biznes ma'lumotlarini tahlil qilish, interaktiv dashboardlar yaratish va boshqaruv qarorlari uchun hisobotlar tayyorlash.",
-      "descriptionRu": "Анализ бизнес-данных, создание интерактивных дашбордов и подготовка отчётов для управленческих решений.",
-      "descriptionEn": "Analysing business data, building interactive dashboards and preparing reports that support management decisions.",
-      "highlights": [
-        "Power BI'da interaktiv dashboardlar va KPI hisobotlarini ishlab chiqdim.",
-        "MS SQL Server ma'lumotlar bazasidan hisobotlar uchun query va view'lar yozdim.",
-        "Qo'lda tayyorlanadigan hisobotlarni avtomatlashtirib, vaqtni sezilarli qisqartirdim.",
-        "Ma'lumotlar modelini (data model) qayta tuzib, hisobot tezligini oshirdim."
-      ],
-      "highlightsRu": [
-        "Разработал интерактивные дашборды и KPI-отчёты в Power BI.",
-        "Написал запросы и представления в MS SQL Server для отчётности.",
-        "Автоматизировал ручные отчёты и существенно сократил время подготовки.",
-        "Переработал модель данных и повысил скорость отчётов."
-      ],
-      "highlightsEn": [
-        "Built interactive dashboards and KPI reports in Power BI.",
-        "Wrote MS SQL Server queries and views powering the reporting layer.",
-        "Automated manual reports and significantly reduced preparation time.",
-        "Reworked the data model to improve report performance."
-      ],
-      "stack": ["Power BI", "MS SQL Server", "SQL", "DAX", "Excel"],
-      "order": 1
-    }
-  ],
+	"experiences": [
+		{
+			"company": "Maab Innovation",
+			"role": "Business Intelligence (BI) Developer",
+			"roleRu": "Business Intelligence (BI) разработчик",
+			"roleEn": "Business Intelligence (BI) Developer",
+			"employment": "full_time",
+			"location": "Toshkent, O'zbekiston",
+			"locationType": "onsite",
+			"startDate": "2025-08-01",
+			"endDate": null,
+			"current": true,
+			"description": "Biznes ma'lumotlarini tahlil qilish, interaktiv dashboardlar yaratish va boshqaruv qarorlari uchun hisobotlar tayyorlash.",
+			"descriptionRu": "Анализ бизнес-данных, создание интерактивных дашбордов и подготовка отчётов для управленческих решений.",
+			"descriptionEn": "Analysing business data, building interactive dashboards and preparing reports that support management decisions.",
+			"highlights": [
+				"Power BI'da interaktiv dashboardlar va KPI hisobotlarini ishlab chiqdim.",
+				"MS SQL Server ma'lumotlar bazasidan hisobotlar uchun query va view'lar yozdim.",
+				"Qo'lda tayyorlanadigan hisobotlarni avtomatlashtirib, vaqtni sezilarli qisqartirdim.",
+				"Ma'lumotlar modelini (data model) qayta tuzib, hisobot tezligini oshirdim."
+			],
+			"highlightsRu": [
+				"Разработал интерактивные дашборды и KPI-отчёты в Power BI.",
+				"Написал запросы и представления в MS SQL Server для отчётности.",
+				"Автоматизировал ручные отчёты и существенно сократил время подготовки.",
+				"Переработал модель данных и повысил скорость отчётов."
+			],
+			"highlightsEn": [
+				"Built interactive dashboards and KPI reports in Power BI.",
+				"Wrote MS SQL Server queries and views powering the reporting layer.",
+				"Automated manual reports and significantly reduced preparation time.",
+				"Reworked the data model to improve report performance."
+			],
+			"stack": ["Power BI", "MS SQL Server", "SQL", "DAX", "Excel"],
+			"order": 1
+		}
+	],
 
-  "education": [
-    {
-      "school": "Toshkent davlat iqtisodiyot universiteti",
-      "schoolRu": "Ташкентский государственный экономический университет",
-      "schoolEn": "Tashkent State University of Economics",
-      "degree": "Bakalavr",
-      "degreeRu": "Бакалавр",
-      "degreeEn": "Bachelor's degree",
-      "field": "Raqamli iqtisodiyot — Sun'iy intellekt",
-      "fieldRu": "Цифровая экономика — Искусственный интеллект",
-      "fieldEn": "Digital Economy — Artificial Intelligence",
-      "startYear": 2024,
-      "endYear": 2028,
-      "current": true,
-      "description": "Sun'iy intellekt, ma'lumotlar tahlili va raqamli iqtisodiyot yo'nalishlari bo'yicha tahsil.",
-      "descriptionRu": "Обучение по направлениям искусственного интеллекта, анализа данных и цифровой экономики.",
-      "descriptionEn": "Studying artificial intelligence, data analysis and digital economy.",
-      "order": 1
-    }
-  ],
+	"education": [
+		{
+			"school": "Toshkent davlat iqtisodiyot universiteti",
+			"schoolRu": "Ташкентский государственный экономический университет",
+			"schoolEn": "Tashkent State University of Economics",
+			"degree": "Bakalavr",
+			"degreeRu": "Бакалавр",
+			"degreeEn": "Bachelor's degree",
+			"field": "Raqamli iqtisodiyot — Sun'iy intellekt",
+			"fieldRu": "Цифровая экономика — Искусственный интеллект",
+			"fieldEn": "Digital Economy — Artificial Intelligence",
+			"startYear": 2024,
+			"endYear": 2028,
+			"current": true,
+			"description": "Sun'iy intellekt, ma'lumotlar tahlili va raqamli iqtisodiyot yo'nalishlari bo'yicha tahsil.",
+			"descriptionRu": "Обучение по направлениям искусственного интеллекта, анализа данных и цифровой экономики.",
+			"descriptionEn": "Studying artificial intelligence, data analysis and digital economy.",
+			"order": 1
+		}
+	],
 
-  "certificates": [],
-  "achievements": [],
+	"certificates": [],
+	"achievements": [],
 
-  "timeline": [
-    {
-      "year": 2020,
-      "title": "Dasturlash yo'lining boshlanishi",
-      "titleRu": "Начало пути в программировании",
-      "titleEn": "The start of the programming journey",
-      "icon": "Rocket",
-      "type": "milestone",
-      "bullets": ["Dasturlashni mustaqil ravishda o'rganishni boshladim."],
-      "bulletsRu": ["Начал самостоятельно изучать программирование."],
-      "bulletsEn": ["Started learning programming on my own."],
-      "order": 1
-    },
-    {
-      "year": 2021,
-      "title": "Python va dasturlash asoslari",
-      "titleRu": "Python и основы программирования",
-      "titleEn": "Python and programming fundamentals",
-      "icon": "Code2",
-      "type": "learning",
-      "bullets": [
-        "Python va dasturlash asoslarini chuqur o'rgandim.",
-        "Birinchi kichik loyihalar ustida ishladim."
-      ],
-      "bulletsRu": [
-        "Углубленно изучил Python и основы программирования.",
-        "Работал над первыми небольшими проектами."
-      ],
-      "bulletsEn": [
-        "Studied Python and programming fundamentals in depth.",
-        "Worked on my first small projects."
-      ],
-      "order": 2
-    },
-    {
-      "year": 2022,
-      "title": "Telegram Bot API va ma'lumotlar bazalari",
-      "titleRu": "Telegram Bot API и базы данных",
-      "titleEn": "Telegram Bot API and databases",
-      "icon": "Bot",
-      "type": "learning",
-      "bullets": [
-        "Telegram Bot API bilan ishlashni boshladim.",
-        "Database va SQL texnologiyalarini o'rgandim."
-      ],
-      "bulletsRu": [
-        "Начал работать с Telegram Bot API.",
-        "Изучил базы данных и технологии SQL."
-      ],
-      "bulletsEn": [
-        "Started working with the Telegram Bot API.",
-        "Learned databases and SQL technologies."
-      ],
-      "order": 3
-    },
-    {
-      "year": 2023,
-      "title": "Business Intelligence va Data Analytics",
-      "titleRu": "Business Intelligence и аналитика данных",
-      "titleEn": "Business Intelligence and data analytics",
-      "icon": "BarChart3",
-      "type": "work",
-      "bullets": [
-        "Microsoft SQL Server va Power BI bilan ishladim.",
-        "Business Intelligence va Data Analytics bo'yicha tajriba orttirdim.",
-        "Web Development bo'yicha bilimlarni kengaytirdim."
-      ],
-      "bulletsRu": [
-        "Работал с Microsoft SQL Server и Power BI.",
-        "Получил опыт в Business Intelligence и аналитике данных.",
-        "Расширил знания в веб-разработке."
-      ],
-      "bulletsEn": [
-        "Worked with Microsoft SQL Server and Power BI.",
-        "Gained experience in Business Intelligence and data analytics.",
-        "Expanded my web development knowledge."
-      ],
-      "order": 4
-    },
-    {
-      "year": 2024,
-      "title": "Universitet va murakkab botlar",
-      "titleRu": "Университет и сложные боты",
-      "titleEn": "University and complex bots",
-      "icon": "GraduationCap",
-      "type": "education",
-      "bullets": [
-        "Toshkent davlat iqtisodiyot universitetiga o'qishga kirdim.",
-        "Artificial Intelligence yo'nalishida tahsilni boshladim.",
-        "Murakkab Telegram botlar yaratishni boshladim."
-      ],
-      "bulletsRu": [
-        "Поступил в Ташкентский государственный экономический университет.",
-        "Начал обучение по направлению «Искусственный интеллект».",
-        "Начал создавать сложные Telegram-боты."
-      ],
-      "bulletsEn": [
-        "Enrolled at Tashkent State University of Economics.",
-        "Started studying Artificial Intelligence.",
-        "Began building complex Telegram bots."
-      ],
-      "order": 5
-    },
-    {
-      "year": 2025,
-      "title": "Energy Invest, API va automation",
-      "titleRu": "Energy Invest, API и автоматизация",
-      "titleEn": "Energy Invest, APIs and automation",
-      "icon": "Zap",
-      "type": "project",
-      "bullets": [
-        "Energy Invest loyihasi ustida ishladim.",
-        "API va Automation tizimlari yaratdim.",
-        "Railway va GitHub bilan ishlashni yo'lga qo'ydim."
-      ],
-      "bulletsRu": [
-        "Работал над проектом Energy Invest.",
-        "Создавал API и системы автоматизации.",
-        "Наладил работу с Railway и GitHub."
-      ],
-      "bulletsEn": [
-        "Worked on the Energy Invest project.",
-        "Built APIs and automation systems.",
-        "Set up my Railway and GitHub workflow."
-      ],
-      "order": 6
-    },
-    {
-      "year": 2026,
-      "title": "Bunker Bot, BondTrader va shaxsiy brend",
-      "titleRu": "Bunker Bot, BondTrader и личный бренд",
-      "titleEn": "Bunker Bot, BondTrader and personal brand",
-      "icon": "Sparkles",
-      "type": "project",
-      "bullets": [
-        "Bunker Bot loyihasini ishlab chiqishni boshladim.",
-        "BondTrader platformasi ustida ishladim.",
-        "Shaxsiy portfolio va professional brend yaratish ustida ishlayapman."
-      ],
-      "bulletsRu": [
-        "Начал разработку проекта Bunker Bot.",
-        "Работал над платформой BondTrader.",
-        "Работаю над личным портфолио и профессиональным брендом."
-      ],
-      "bulletsEn": [
-        "Started developing the Bunker Bot project.",
-        "Worked on the BondTrader platform.",
-        "Building my personal portfolio and professional brand."
-      ],
-      "order": 7
-    }
-  ]
+	"timeline": [
+		{
+			"year": 2020,
+			"title": "Dasturlash yo'lining boshlanishi",
+			"titleRu": "Начало пути в программировании",
+			"titleEn": "The start of the programming journey",
+			"icon": "Rocket",
+			"type": "milestone",
+			"bullets": ["Dasturlashni mustaqil ravishda o'rganishni boshladim."],
+			"bulletsRu": ["Начал самостоятельно изучать программирование."],
+			"bulletsEn": ["Started learning programming on my own."],
+			"order": 1
+		},
+		{
+			"year": 2021,
+			"title": "Python va dasturlash asoslari",
+			"titleRu": "Python и основы программирования",
+			"titleEn": "Python and programming fundamentals",
+			"icon": "Code2",
+			"type": "learning",
+			"bullets": [
+				"Python va dasturlash asoslarini chuqur o'rgandim.",
+				"Birinchi kichik loyihalar ustida ishladim."
+			],
+			"bulletsRu": [
+				"Углубленно изучил Python и основы программирования.",
+				"Работал над первыми небольшими проектами."
+			],
+			"bulletsEn": [
+				"Studied Python and programming fundamentals in depth.",
+				"Worked on my first small projects."
+			],
+			"order": 2
+		},
+		{
+			"year": 2022,
+			"title": "Telegram Bot API va ma'lumotlar bazalari",
+			"titleRu": "Telegram Bot API и базы данных",
+			"titleEn": "Telegram Bot API and databases",
+			"icon": "Bot",
+			"type": "learning",
+			"bullets": [
+				"Telegram Bot API bilan ishlashni boshladim.",
+				"Database va SQL texnologiyalarini o'rgandim."
+			],
+			"bulletsRu": [
+				"Начал работать с Telegram Bot API.",
+				"Изучил базы данных и технологии SQL."
+			],
+			"bulletsEn": [
+				"Started working with the Telegram Bot API.",
+				"Learned databases and SQL technologies."
+			],
+			"order": 3
+		},
+		{
+			"year": 2023,
+			"title": "Business Intelligence va Data Analytics",
+			"titleRu": "Business Intelligence и аналитика данных",
+			"titleEn": "Business Intelligence and data analytics",
+			"icon": "BarChart3",
+			"type": "work",
+			"bullets": [
+				"Microsoft SQL Server va Power BI bilan ishladim.",
+				"Business Intelligence va Data Analytics bo'yicha tajriba orttirdim.",
+				"Web Development bo'yicha bilimlarni kengaytirdim."
+			],
+			"bulletsRu": [
+				"Работал с Microsoft SQL Server и Power BI.",
+				"Получил опыт в Business Intelligence и аналитике данных.",
+				"Расширил знания в веб-разработке."
+			],
+			"bulletsEn": [
+				"Worked with Microsoft SQL Server and Power BI.",
+				"Gained experience in Business Intelligence and data analytics.",
+				"Expanded my web development knowledge."
+			],
+			"order": 4
+		},
+		{
+			"year": 2024,
+			"title": "Universitet va murakkab botlar",
+			"titleRu": "Университет и сложные боты",
+			"titleEn": "University and complex bots",
+			"icon": "GraduationCap",
+			"type": "education",
+			"bullets": [
+				"Toshkent davlat iqtisodiyot universitetiga o'qishga kirdim.",
+				"Artificial Intelligence yo'nalishida tahsilni boshladim.",
+				"Murakkab Telegram botlar yaratishni boshladim."
+			],
+			"bulletsRu": [
+				"Поступил в Ташкентский государственный экономический университет.",
+				"Начал обучение по направлению «Искусственный интеллект».",
+				"Начал создавать сложные Telegram-боты."
+			],
+			"bulletsEn": [
+				"Enrolled at Tashkent State University of Economics.",
+				"Started studying Artificial Intelligence.",
+				"Began building complex Telegram bots."
+			],
+			"order": 5
+		},
+		{
+			"year": 2025,
+			"title": "Energy Invest, API va automation",
+			"titleRu": "Energy Invest, API и автоматизация",
+			"titleEn": "Energy Invest, APIs and automation",
+			"icon": "Zap",
+			"type": "project",
+			"bullets": [
+				"Energy Invest loyihasi ustida ishladim.",
+				"API va Automation tizimlari yaratdim.",
+				"Railway va GitHub bilan ishlashni yo'lga qo'ydim."
+			],
+			"bulletsRu": [
+				"Работал над проектом Energy Invest.",
+				"Создавал API и системы автоматизации.",
+				"Наладил работу с Railway и GitHub."
+			],
+			"bulletsEn": [
+				"Worked on the Energy Invest project.",
+				"Built APIs and automation systems.",
+				"Set up my Railway and GitHub workflow."
+			],
+			"order": 6
+		},
+		{
+			"year": 2026,
+			"title": "Bunker Bot, BondTrader va shaxsiy brend",
+			"titleRu": "Bunker Bot, BondTrader и личный бренд",
+			"titleEn": "Bunker Bot, BondTrader and personal brand",
+			"icon": "Sparkles",
+			"type": "project",
+			"bullets": [
+				"Bunker Bot loyihasini ishlab chiqishni boshladim.",
+				"BondTrader platformasi ustida ishladim.",
+				"Shaxsiy portfolio va professional brend yaratish ustida ishlayapman."
+			],
+			"bulletsRu": [
+				"Начал разработку проекта Bunker Bot.",
+				"Работал над платформой BondTrader.",
+				"Работаю над личным портфолио и профессиональным брендом."
+			],
+			"bulletsEn": [
+				"Started developing the Bunker Bot project.",
+				"Worked on the BondTrader platform.",
+				"Building my personal portfolio and professional brand."
+			],
+			"order": 7
+		}
+	]
 }

@@ -1,105 +1,378 @@
 {
-  "_comment": "Statistika, ijtimoiy tarmoqlar, QR kodlar, testimonials, SEO va umumiy sozlamalar.",
+	"_comment": "Statistika, ijtimoiy tarmoqlar, QR kodlar, testimonials, SEO va umumiy sozlamalar.",
 
-  "stats": [
-    { "key": "projects", "label": "Jami loyihalar", "labelRu": "Всего проектов", "labelEn": "Total projects", "value": 20, "suffix": "+", "icon": "FolderKanban", "order": 1 },
-    { "key": "bot_users", "label": "Bot foydalanuvchilari", "labelRu": "Пользователи ботов", "labelEn": "Bot users", "value": 1000, "suffix": "+", "icon": "Users", "order": 2 },
-    { "key": "clients", "label": "Mijozlar", "labelRu": "Клиенты", "labelEn": "Clients", "value": 10, "suffix": "+", "icon": "Handshake", "order": 3 },
-    { "key": "experience", "label": "Yillik tajriba", "labelRu": "Лет опыта", "labelEn": "Years of experience", "value": 6, "suffix": "+", "icon": "CalendarClock", "computed": "yearsSince:2020", "order": 4 },
-    { "key": "technologies", "label": "Texnologiyalar", "labelRu": "Технологий", "labelEn": "Technologies", "value": 11, "suffix": "+", "icon": "Layers", "order": 5 }
-  ],
+	"stats": [
+		{
+			"key": "projects",
+			"label": "Jami loyihalar",
+			"labelRu": "Всего проектов",
+			"labelEn": "Total projects",
+			"value": 20,
+			"suffix": "+",
+			"icon": "FolderKanban",
+			"order": 1
+		},
+		{
+			"key": "bot_users",
+			"label": "Bot foydalanuvchilari",
+			"labelRu": "Пользователи ботов",
+			"labelEn": "Bot users",
+			"value": 1000,
+			"suffix": "+",
+			"icon": "Users",
+			"order": 2
+		},
+		{
+			"key": "clients",
+			"label": "Mijozlar",
+			"labelRu": "Клиенты",
+			"labelEn": "Clients",
+			"value": 10,
+			"suffix": "+",
+			"icon": "Handshake",
+			"order": 3
+		},
+		{
+			"key": "experience",
+			"label": "Yillik tajriba",
+			"labelRu": "Лет опыта",
+			"labelEn": "Years of experience",
+			"value": 6,
+			"suffix": "+",
+			"icon": "CalendarClock",
+			"computed": "yearsSince:2020",
+			"order": 4
+		},
+		{
+			"key": "technologies",
+			"label": "Texnologiyalar",
+			"labelRu": "Технологий",
+			"labelEn": "Technologies",
+			"value": 11,
+			"suffix": "+",
+			"icon": "Layers",
+			"order": 5
+		}
+	],
 
-  "socialLinks": [
-    { "platform": "telegram", "label": "Telegram", "url": "https://t.me/Th0masc", "handle": "@Th0masc", "icon": "SiTelegram", "showInHero": true, "order": 1 },
-    { "platform": "github", "label": "GitHub", "url": "https://github.com/Bahodir-axmedov", "handle": "Bahodir-axmedov", "icon": "SiGithub", "showInHero": true, "order": 2 },
-    { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/bahodir-axmedov-a52911342", "handle": "bahodir-axmedov", "icon": "Linkedin", "showInHero": true, "order": 3 },
-    { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/axmedov1122__/", "handle": "@axmedov1122__", "icon": "SiInstagram", "showInHero": true, "order": 4 },
-    { "platform": "youtube", "label": "YouTube", "url": "https://www.youtube.com/@B_Axmedov", "handle": "@B_Axmedov", "icon": "SiYoutube", "showInHero": false, "order": 5 },
-    { "platform": "facebook", "label": "Facebook", "url": "https://www.facebook.com/share/196CkGDWr4/", "handle": "Bahodir Axmedov", "icon": "SiFacebook", "showInHero": false, "order": 6 }
-  ],
+	"socialLinks": [
+		{
+			"platform": "telegram",
+			"label": "Telegram",
+			"url": "https://t.me/Th0masc",
+			"handle": "@Th0masc",
+			"icon": "SiTelegram",
+			"showInHero": true,
+			"order": 1
+		},
+		{
+			"platform": "github",
+			"label": "GitHub",
+			"url": "https://github.com/Bahodir-axmedov",
+			"handle": "Bahodir-axmedov",
+			"icon": "SiGithub",
+			"showInHero": true,
+			"order": 2
+		},
+		{
+			"platform": "linkedin",
+			"label": "LinkedIn",
+			"url": "https://www.linkedin.com/in/bahodir-axmedov-a52911342",
+			"handle": "bahodir-axmedov",
+			"icon": "Linkedin",
+			"showInHero": true,
+			"order": 3
+		},
+		{
+			"platform": "instagram",
+			"label": "Instagram",
+			"url": "https://www.instagram.com/axmedov1122__/",
+			"handle": "@axmedov1122__",
+			"icon": "SiInstagram",
+			"showInHero": true,
+			"order": 4
+		},
+		{
+			"platform": "youtube",
+			"label": "YouTube",
+			"url": "https://www.youtube.com/@B_Axmedov",
+			"handle": "@B_Axmedov",
+			"icon": "SiYoutube",
+			"showInHero": true,
+			"order": 5
+		},
+		{
+			"platform": "facebook",
+			"label": "Facebook",
+			"url": "https://www.facebook.com/share/196CkGDWr4/",
+			"handle": "Bahodir Axmedov",
+			"icon": "SiFacebook",
+			"showInHero": true,
+			"order": 6
+		}
+	],
 
-  "qrCodes": [
-    { "key": "website", "label": "Website", "labelRu": "Сайт", "labelEn": "Website", "value": "https://bahodir.dev", "icon": "Globe", "order": 1 },
-    { "key": "telegram", "label": "Telegram", "labelRu": "Telegram", "labelEn": "Telegram", "value": "https://t.me/Th0masc", "icon": "Send", "order": 2 },
-    { "key": "github", "label": "GitHub", "labelRu": "GitHub", "labelEn": "GitHub", "value": "https://github.com/Bahodir-axmedov", "icon": "Github", "order": 3 },
-    { "key": "linkedin", "label": "LinkedIn", "labelRu": "LinkedIn", "labelEn": "LinkedIn", "value": "https://www.linkedin.com/in/bahodir-axmedov-a52911342", "icon": "Linkedin", "order": 4 },
-    { "key": "instagram", "label": "Instagram", "labelRu": "Instagram", "labelEn": "Instagram", "value": "https://www.instagram.com/axmedov1122__/", "icon": "Instagram", "order": 5 },
-    { "key": "email", "label": "Email", "labelRu": "Почта", "labelEn": "Email", "value": "mailto:Axmedovbahodir1122@gmail.com", "icon": "Mail", "order": 6 },
-    { "key": "phone", "label": "Telefon", "labelRu": "Телефон", "labelEn": "Phone", "value": "tel:+998701225052", "icon": "Phone", "order": 7 },
-    { "key": "whatsapp", "label": "WhatsApp", "labelRu": "WhatsApp", "labelEn": "WhatsApp", "value": "https://wa.me/998701225052", "icon": "MessageCircle", "order": 8 },
-    { "key": "resume", "label": "Rezyume", "labelRu": "Резюме", "labelEn": "Resume", "value": "https://bahodir.dev/resume/bahodir-axmedov-cv-en.pdf", "icon": "FileText", "order": 9 },
-    { "key": "vcard", "label": "Kontakt (vCard)", "labelRu": "Контакт (vCard)", "labelEn": "Contact (vCard)", "value": "https://bahodir.dev/api/vcard", "icon": "Contact", "order": 10 }
-  ],
+	"qrCodes": [
+		{
+			"key": "website",
+			"label": "Website",
+			"labelRu": "Сайт",
+			"labelEn": "Website",
+			"value": "https://bahodir.dev",
+			"icon": "Globe",
+			"order": 1
+		},
+		{
+			"key": "telegram",
+			"label": "Telegram",
+			"labelRu": "Telegram",
+			"labelEn": "Telegram",
+			"value": "https://t.me/Th0masc",
+			"icon": "Send",
+			"order": 2
+		},
+		{
+			"key": "github",
+			"label": "GitHub",
+			"labelRu": "GitHub",
+			"labelEn": "GitHub",
+			"value": "https://github.com/Bahodir-axmedov",
+			"icon": "Github",
+			"order": 3
+		},
+		{
+			"key": "linkedin",
+			"label": "LinkedIn",
+			"labelRu": "LinkedIn",
+			"labelEn": "LinkedIn",
+			"value": "https://www.linkedin.com/in/bahodir-axmedov-a52911342",
+			"icon": "Linkedin",
+			"order": 4
+		},
+		{
+			"key": "instagram",
+			"label": "Instagram",
+			"labelRu": "Instagram",
+			"labelEn": "Instagram",
+			"value": "https://www.instagram.com/axmedov1122__/",
+			"icon": "Instagram",
+			"order": 5
+		},
+		{
+			"key": "email",
+			"label": "Email",
+			"labelRu": "Почта",
+			"labelEn": "Email",
+			"value": "mailto:Axmedovbahodir1122@gmail.com",
+			"icon": "Mail",
+			"order": 6
+		},
+		{
+			"key": "phone",
+			"label": "Telefon",
+			"labelRu": "Телефон",
+			"labelEn": "Phone",
+			"value": "tel:+998701225052",
+			"icon": "Phone",
+			"order": 7
+		},
+		{
+			"key": "whatsapp",
+			"label": "WhatsApp",
+			"labelRu": "WhatsApp",
+			"labelEn": "WhatsApp",
+			"value": "https://wa.me/998701225052",
+			"icon": "MessageCircle",
+			"order": 8
+		},
+		{
+			"key": "resume",
+			"label": "Rezyume",
+			"labelRu": "Резюме",
+			"labelEn": "Resume",
+			"value": "https://bahodir.dev/resume/bahodir-axmedov-cv-en.pdf",
+			"icon": "FileText",
+			"order": 9
+		},
+		{
+			"key": "vcard",
+			"label": "Kontakt (vCard)",
+			"labelRu": "Контакт (vCard)",
+			"labelEn": "Contact (vCard)",
+			"value": "https://bahodir.dev/api/vcard",
+			"icon": "Contact",
+			"order": 10
+		}
+	],
 
-  "testimonials": [
-    {
-      "author": "Mijoz ismi",
-      "role": "Loyiha rahbari",
-      "company": "Kompaniya nomi",
-      "quote": "Bu — namunaviy sharh. Haqiqiy mijoz sharhlarini admin panel orqali qo'shing va bu yozuvni o'chiring.",
-      "quoteRu": "Это пример отзыва. Добавьте реальные отзывы через админ-панель и удалите эту запись.",
-      "quoteEn": "This is a sample testimonial. Add real client feedback from the admin panel and delete this entry.",
-      "rating": 5,
-      "isPlaceholder": true,
-      "published": true,
-      "order": 1
-    },
-    {
-      "author": "Client name",
-      "role": "Product Owner",
-      "company": "Company",
-      "quote": "Namunaviy sharh — loyiha o'z vaqtida va sifatli topshirildi. Admin paneldan haqiqiy sharh bilan almashtiring.",
-      "quoteRu": "Пример отзыва — проект сдан вовремя и качественно. Замените реальным отзывом в админ-панели.",
-      "quoteEn": "Sample testimonial — the project was delivered on time and with great quality. Replace it with a real one from the admin panel.",
-      "rating": 5,
-      "isPlaceholder": true,
-      "published": true,
-      "order": 2
-    }
-  ],
+	"testimonials": [
+		{
+			"author": "Mijoz ismi",
+			"role": "Loyiha rahbari",
+			"company": "Kompaniya nomi",
+			"quote": "Bu — namunaviy sharh. Haqiqiy mijoz sharhlarini admin panel orqali qo'shing va bu yozuvni o'chiring.",
+			"quoteRu": "Это пример отзыва. Добавьте реальные отзывы через админ-панель и удалите эту запись.",
+			"quoteEn": "This is a sample testimonial. Add real client feedback from the admin panel and delete this entry.",
+			"rating": 5,
+			"isPlaceholder": true,
+			"published": true,
+			"order": 1
+		},
+		{
+			"author": "Client name",
+			"role": "Product Owner",
+			"company": "Company",
+			"quote": "Namunaviy sharh — loyiha o'z vaqtida va sifatli topshirildi. Admin paneldan haqiqiy sharh bilan almashtiring.",
+			"quoteRu": "Пример отзыва — проект сдан вовремя и качественно. Замените реальным отзывом в админ-панели.",
+			"quoteEn": "Sample testimonial — the project was delivered on time and with great quality. Replace it with a real one from the admin panel.",
+			"rating": 5,
+			"isPlaceholder": true,
+			"published": true,
+			"order": 2
+		}
+	],
 
-  "gallery": [],
+	"gallery": [],
 
-  "seo": [
-    {
-      "route": "/",
-      "title": "Bahodir Axmedov — Software Developer",
-      "titleRu": "Баходир Ахмедов — Software Developer",
-      "titleEn": "Bahodir Axmedov — Software Developer",
-      "description": "Telegram botlar, web ilovalar va avtomatlashtirish tizimlarini ishlab chiqadigan Software Developer. Portfolio, loyihalar va aloqa.",
-      "descriptionRu": "Software Developer, создающий Telegram-ботов, веб-приложения и системы автоматизации. Портфолио, проекты и контакты.",
-      "descriptionEn": "Software Developer building Telegram bots, web applications and automation systems. Portfolio, projects and contact.",
-      "keywords": ["Bahodir Axmedov", "Software Developer", "Telegram Bot Developer", "Full Stack Developer", "Uzbekistan developer", "aiogram", "Next.js", "Power BI"]
-    },
-    {
-      "route": "/projects",
-      "title": "Loyihalar — Bahodir Axmedov",
-      "titleRu": "Проекты — Баходир Ахмедов",
-      "titleEn": "Projects — Bahodir Axmedov",
-      "description": "Telegram botlar, fintech platformalar va avtomatlashtirish loyihalari to'plami.",
-      "descriptionRu": "Коллекция Telegram-ботов, fintech-платформ и проектов автоматизации.",
-      "descriptionEn": "A collection of Telegram bots, fintech platforms and automation projects.",
-      "keywords": ["portfolio projects", "Telegram bot", "fintech", "automation"]
-    }
-  ],
+	"seo": [
+		{
+			"route": "/",
+			"title": "Bahodir Axmedov — Software Developer",
+			"titleRu": "Баходир Ахмедов — Software Developer",
+			"titleEn": "Bahodir Axmedov — Software Developer",
+			"description": "Telegram botlar, web ilovalar va avtomatlashtirish tizimlarini ishlab chiqadigan Software Developer. Portfolio, loyihalar va aloqa.",
+			"descriptionRu": "Software Developer, создающий Telegram-ботов, веб-приложения и системы автоматизации. Портфолио, проекты и контакты.",
+			"descriptionEn": "Software Developer building Telegram bots, web applications and automation systems. Portfolio, projects and contact.",
+			"keywords": [
+				"Bahodir Axmedov",
+				"Software Developer",
+				"Telegram Bot Developer",
+				"Full Stack Developer",
+				"Uzbekistan developer",
+				"aiogram",
+				"Next.js",
+				"Power BI"
+			]
+		},
+		{
+			"route": "/projects",
+			"title": "Loyihalar — Bahodir Axmedov",
+			"titleRu": "Проекты — Баходир Ахмедов",
+			"titleEn": "Projects — Bahodir Axmedov",
+			"description": "Telegram botlar, fintech platformalar va avtomatlashtirish loyihalari to'plami.",
+			"descriptionRu": "Коллекция Telegram-ботов, fintech-платформ и проектов автоматизации.",
+			"descriptionEn": "A collection of Telegram bots, fintech platforms and automation projects.",
+			"keywords": [
+				"portfolio projects",
+				"Telegram bot",
+				"fintech",
+				"automation"
+			]
+		}
+	],
 
-  "settings": [
-    { "key": "site.name", "value": "Bahodir.dev", "group": "general", "type": "text" },
-    { "key": "site.tagline", "value": "Software Developer", "group": "general", "type": "text" },
-    { "key": "site.defaultLocale", "value": "uz", "group": "general", "type": "text" },
-    { "key": "site.themeDefault", "value": "dark", "group": "appearance", "type": "text" },
-    { "key": "site.accentFrom", "value": "#3B82F6", "group": "appearance", "type": "color" },
-    { "key": "site.accentTo", "value": "#06B6D4", "group": "appearance", "type": "color" },
-    { "key": "animation.level", "value": "8", "group": "appearance", "type": "number" },
-    { "key": "animation.loadingScreen", "value": "true", "group": "appearance", "type": "boolean" },
-    { "key": "animation.customCursor", "value": "true", "group": "appearance", "type": "boolean" },
-    { "key": "animation.smoothScroll", "value": "true", "group": "appearance", "type": "boolean" },
-    { "key": "sections.gallery", "value": "false", "group": "sections", "type": "boolean" },
-    { "key": "sections.testimonials", "value": "true", "group": "sections", "type": "boolean" },
-    { "key": "sections.certificates", "value": "false", "group": "sections", "type": "boolean" },
-    { "key": "sections.achievements", "value": "false", "group": "sections", "type": "boolean" },
-    { "key": "sections.blog", "value": "false", "group": "sections", "type": "boolean" },
-    { "key": "contact.telegramNotify", "value": "false", "group": "contact", "type": "boolean" },
-    { "key": "analytics.enabled", "value": "true", "group": "analytics", "type": "boolean" }
-  ]
+	"settings": [
+		{
+			"key": "site.name",
+			"value": "Bahodir.dev",
+			"group": "general",
+			"type": "text"
+		},
+		{
+			"key": "site.tagline",
+			"value": "Software Developer",
+			"group": "general",
+			"type": "text"
+		},
+		{
+			"key": "site.defaultLocale",
+			"value": "uz",
+			"group": "general",
+			"type": "text"
+		},
+		{
+			"key": "site.themeDefault",
+			"value": "dark",
+			"group": "appearance",
+			"type": "text"
+		},
+		{
+			"key": "site.accentFrom",
+			"value": "#3B82F6",
+			"group": "appearance",
+			"type": "color"
+		},
+		{
+			"key": "site.accentTo",
+			"value": "#06B6D4",
+			"group": "appearance",
+			"type": "color"
+		},
+		{
+			"key": "animation.level",
+			"value": "8",
+			"group": "appearance",
+			"type": "number"
+		},
+		{
+			"key": "animation.loadingScreen",
+			"value": "true",
+			"group": "appearance",
+			"type": "boolean"
+		},
+		{
+			"key": "animation.customCursor",
+			"value": "true",
+			"group": "appearance",
+			"type": "boolean"
+		},
+		{
+			"key": "animation.smoothScroll",
+			"value": "true",
+			"group": "appearance",
+			"type": "boolean"
+		},
+		{
+			"key": "sections.gallery",
+			"value": "false",
+			"group": "sections",
+			"type": "boolean"
+		},
+		{
+			"key": "sections.testimonials",
+			"value": "true",
+			"group": "sections",
+			"type": "boolean"
+		},
+		{
+			"key": "sections.certificates",
+			"value": "false",
+			"group": "sections",
+			"type": "boolean"
+		},
+		{
+			"key": "sections.achievements",
+			"value": "false",
+			"group": "sections",
+			"type": "boolean"
+		},
+		{
+			"key": "sections.blog",
+			"value": "false",
+			"group": "sections",
+			"type": "boolean"
+		},
+		{
+			"key": "contact.telegramNotify",
+			"value": "false",
+			"group": "contact",
+			"type": "boolean"
+		},
+		{
+			"key": "analytics.enabled",
+			"value": "true",
+			"group": "analytics",
+			"type": "boolean"
+		}
+	]
 }

@@ -18,8 +18,14 @@ export type ButtonVariant =
 	"primary" | "secondary" | "ghost" | "outline" | "danger"
 export type ButtonSize = "sm" | "md" | "lg" | "icon"
 
+/**
+ * `btn-sweep` (globals.css) adds the diagonal light sweep on hover and is the
+ * hook the global <RippleEffect> listener uses to place click ripples. Both
+ * effects are pure CSS + one delegated listener, so this file stays a server
+ * component and `buttonClass` remains callable from server sections.
+ */
 const BUTTON_BASE =
-	"relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium tracking-tight transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-base disabled:pointer-events-none disabled:opacity-50"
+	"btn-sweep relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium tracking-tight transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-base disabled:pointer-events-none disabled:opacity-50"
 
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
 	primary:

@@ -61,19 +61,33 @@ export function Navbar({ resumeUrl }: { resumeUrl?: string | null }) {
 							<a
 								href={`#${item.id}`}
 								className={cn(
-									"relative inline-flex h-9 items-center rounded-full px-3.5 text-[13.5px] font-medium tracking-tight transition-colors duration-300",
+									"group/nav relative inline-flex h-9 items-center rounded-full px-3.5 text-[13.5px] font-medium tracking-tight transition-colors duration-300",
 									active === item.id
 										? "text-ink"
 										: "text-ink-muted hover:text-ink",
 								)}
 							>
+								{/* Liquid pill: a single shared element that morphs
+								    between links via `layoutId`. The spring (rather
+								    than a fixed duration) is what gives it the fluid,
+								    slightly overshooting travel. */}
 								{active === item.id ? (
 									<motion.span
 										layoutId="nav-pill"
-										className="absolute inset-0 -z-10 rounded-full border border-line bg-white/[0.05]"
-										transition={{ duration: 0.4, ease: EASE }}
+										className="nav-pill absolute inset-0 -z-10 rounded-full"
+										transition={{
+											type: "spring",
+											stiffness: 380,
+											damping: 32,
+											mass: 0.9,
+										}}
 									/>
 								) : null}
+								{/* Hover halo for inactive links. */}
+								<span
+									aria-hidden
+									className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-white/[0.06] opacity-0 transition-opacity duration-300 group-hover/nav:opacity-100"
+								/>
 								{t(item.key)}
 							</a>
 						</li>
