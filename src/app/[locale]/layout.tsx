@@ -139,9 +139,10 @@ export default async function LocaleLayout({
 	if (!isLocale(raw)) notFound()
 	const locale: Locale = raw
 
-	const { messages, resumeUrl, description, structuredData } = await guard(
-		"layout:LocaleLayout",
-		async () => {
+	/* `profile` and `socialLinks` are consumed by <Footer /> further down, so
+	   they are returned out of the guarded block rather than kept local to it. */
+	const { messages, resumeUrl, profile, socialLinks, structuredData } =
+		await guard("layout:LocaleLayout", async () => {
 			const [loadedMessages, profile, socialLinks] = await Promise.all([
 				getMessages({ locale }),
 				getProfile(),
@@ -154,7 +155,8 @@ export default async function LocaleLayout({
 			return {
 				messages: loadedMessages,
 				resumeUrl: resume,
-				description: shortBio,
+				profile,
+				socialLinks,
 				structuredData: [
 					personSchema({
 						name: profile?.fullName ?? SITE_NAME,
@@ -170,8 +172,7 @@ export default async function LocaleLayout({
 					websiteSchema(SITE_NAME, shortBio),
 				],
 			}
-		},
-	)
+		})
 
 	return (
 		<html

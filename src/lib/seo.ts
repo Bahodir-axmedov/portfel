@@ -10,13 +10,49 @@ import { AUTHOR_NAME, DEFAULT_OG_IMAGE, SITE_NAME } from "@/constants"
  */
 
 const PROTOCOL = "https:" + "//"
-const FALLBACK_HOST = "bahodir-dev.up.railway.app"
+const FALLBACK_HOST = "axmedov-b.up.railway.app"
 const SCHEMA_CONTEXT = PROTOCOL + "schema.org"
+const FALLBACK_ORIGIN = PROTOCOL + FALLBACK_HOST
 
-/** Canonical origin without a trailing slash. */
-export const SITE_URL = (
-	process.env.NEXT_PUBLIC_SITE_URL || PROTOCOL + FALLBACK_HOST
-).replace(/\/+$/, "")
+/**
+ * Normalises NEXT_PUBLIC_SITE_URL into a valid absolute origin.
+ *
+ * `buildMetadata` passes this value to `new URL(...)`. A host written without
+ * a scheme ("example.up.railway.app") makes that constructor throw
+ * `TypeError: Invalid URL` inside `generateMetadata`, which React reports only
+ * as an opaque "Server Components render" digest — the whole route 500s and
+ * the real cause never reaches the log. Because the variable is inlined at
+ * build time, the failure is identical on every request and every locale.
+ *
+ * Three defences, in order:
+ *  1. a missing scheme is added rather than rejected;
+ *  2. the result is validated with `new URL` here, once, at module load;
+ *  3. anything still unparseable falls back to the known production origin.
+ *
+ * The value is therefore always safe for `new URL`, and a misconfigured
+ * environment variable degrades to a wrong canonical host instead of an
+ * unrenderable site.
+ */
+function resolveSiteUrl(): string {
+	const raw = (process.env.NEXT_PUBLIC_SITE_URL ?? "").trim()
+	if (!raw) return FALLBACK_ORIGIN
+
+	const withScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(raw)
+		? raw
+		: PROTOCOL + raw.replace(/^\/+/, "")
+	const trimmed = withScheme.replace(/\/+$/, "")
+
+	try {
+		const parsed = new URL(trimmed)
+		if (!parsed.hostname) return FALLBACK_ORIGIN
+		return parsed.origin
+	} catch {
+		return FALLBACK_ORIGIN
+	}
+}
+
+/** Canonical origin without a trailing slash. Always parseable by `new URL`. */
+export const SITE_URL = resolveSiteUrl()
 
 /** Joins a path onto the canonical origin. */
 export function absolute(path = "/"): string {
