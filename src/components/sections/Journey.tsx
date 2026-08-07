@@ -4,6 +4,7 @@ import { Award, Briefcase, GraduationCap, Route, Trophy } from "lucide-react"
 import { Icon } from "@/components/ui/Icon"
 import { GlassCard } from "@/components/ui/interactive"
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/ui/motion"
+import { TimelineRail } from "@/components/sections/TimelineRail"
 import {
 	Badge,
 	Container,
