@@ -15,6 +15,11 @@ import {
 	ScrollProgress,
 	SmoothScroll,
 } from "@/components/layout/SiteChrome"
+import {
+	MobileDock,
+	ScrollHint,
+	SocialRail,
+} from "@/components/layout/SideRails"
 import { SITE_NAME } from "@/constants"
 import { GA_ID, gaEnabled } from "@/lib/analytics"
 import { pick } from "@/lib/i18n-content"
@@ -208,9 +213,22 @@ export default async function LocaleLayout({
 					<Cursor />
 					<RippleEffect />
 
+					{/* Fixed navigation furniture. Rendered outside <SmoothScroll> so
+					    Lenis never applies its transform to fixed elements — doing so
+					    makes them drift during momentum scrolling. */}
+					<SocialRail
+						socials={socialLinks}
+						email={(profile?.email as string) ?? ""}
+						phone={(profile?.phone as string) ?? ""}
+					/>
+					<ScrollHint />
+					<MobileDock />
+
 					<SmoothScroll>
 						<Navbar resumeUrl={resumeUrl} />
-						<main id="main" className="relative">
+						{/* pb-24 on phones clears the fixed MobileDock so the footer's
+						    last row is never trapped underneath it. */}
+						<main id="main" className="relative pb-24 lg:pb-0">
 							{children}
 						</main>
 						<Footer

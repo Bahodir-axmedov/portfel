@@ -230,11 +230,7 @@ export async function Journey({
 								icon={<Route className="h-4 w-4" strokeWidth={1.7} />}
 								label={t("journey")}
 							/>
-							<div className="relative mt-6 pl-8">
-								<span
-									aria-hidden
-									className="absolute bottom-3 left-[10px] top-2 w-px bg-gradient-to-b from-brand-500/70 via-accent-500/35 to-transparent"
-								/>
+							<TimelineRail>
 								<StaggerGroup step={0.06} className="space-y-7">
 									{timeline.map((event) => {
 										const bullets = pickArray(event, "bullets", locale)
@@ -275,7 +271,7 @@ export async function Journey({
 										)
 									})}
 								</StaggerGroup>
-							</div>
+							</TimelineRail>
 						</div>
 					) : null}
 				</div>

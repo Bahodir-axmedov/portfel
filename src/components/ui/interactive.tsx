@@ -11,6 +11,7 @@ import {
 	type CSSProperties,
 	type MouseEvent as ReactMouseEvent,
 	type ReactNode,
+	useId,
 	useRef,
 	useState,
 } from "react"
@@ -310,6 +311,112 @@ export function ProgressBar({
 				transition={transition}
 			/>
 			{showValue ? <span className="sr-only">{safe}%</span> : null}
+		</div>
+	)
+}
+
+/* ------------------------------------------------------------------ *
+ * CircularProgress — skill dials
+ * ------------------------------------------------------------------ */
+
+/**
+ * A circular skill dial.
+ *
+ * Implementation notes that are easy to get wrong:
+ *
+ * - The arc is drawn with `strokeDasharray`/`strokeDashoffset` rather than an
+ *   SVG arc path. A dash offset is a single animatable number, so the sweep
+ *   runs on one interpolated property instead of a recalculated `d` attribute.
+ * - The circle is rotated -90deg so the arc starts at twelve o'clock. SVG
+ *   angles start at three o'clock, which reads as broken for a progress dial.
+ * - The gradient id comes from `useId`. Two dials on one page sharing a literal
+ *   id would make the second one silently inherit the first one's gradient,
+ *   and `useId` is stable across the server and client render so it cannot
+ *   cause a hydration mismatch.
+ * - `pathLength={1}` normalises the circumference to 1, so the dash maths is
+ *   just the fraction and never has to reference the radius.
+ */
+export function CircularProgress({
+	value,
+	size = 92,
+	strokeWidth = 6,
+	delay = 0,
+	label,
+	className,
+	children,
+}: {
+	value: number
+	size?: number
+	strokeWidth?: number
+	delay?: number
+	label?: string
+	className?: string
+	children?: ReactNode
+}) {
+	const ref = useRef<HTMLDivElement>(null)
+	const inView = useInView(ref, { once: true, margin: "-10% 0px" })
+	const animate = useAnimationEnabled()
+	const gradientId = useId()
+	const safe = Math.max(0, Math.min(100, value))
+	const fraction = safe / 100
+
+	const radius = (size - strokeWidth) / 2
+	const center = size / 2
+
+	return (
+		<div
+			ref={ref}
+			className={cn("relative inline-grid place-items-center", className)}
+			style={{ width: size, height: size }}
+			role="progressbar"
+			aria-valuenow={safe}
+			aria-valuemin={0}
+			aria-valuemax={100}
+			aria-label={label}
+		>
+			<svg
+				width={size}
+				height={size}
+				viewBox={`0 0 ${size} ${size}`}
+				className="-rotate-90"
+				aria-hidden
+			>
+				<defs>
+					<linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+						<stop offset="0%" stopColor="#3B82F6" />
+						<stop offset="50%" stopColor="#8B5CF6" />
+						<stop offset="100%" stopColor="#06B6D4" />
+					</linearGradient>
+				</defs>
+
+				<circle
+					cx={center}
+					cy={center}
+					r={radius}
+					fill="none"
+					stroke="rgba(255,255,255,0.07)"
+					strokeWidth={strokeWidth}
+				/>
+
+				<motion.circle
+					cx={center}
+					cy={center}
+					r={radius}
+					fill="none"
+					stroke={`url(#${gradientId})`}
+					strokeWidth={strokeWidth}
+					strokeLinecap="round"
+					pathLength={1}
+					strokeDasharray="1 1"
+					initial={{ strokeDashoffset: animate ? 1 : 1 - fraction }}
+					animate={{
+						strokeDashoffset: inView || !animate ? 1 - fraction : 1,
+					}}
+					transition={{ duration: 1.2, ease: EASE, delay }}
+				/>
+			</svg>
+
+			<div className="absolute inset-0 grid place-items-center">{children}</div>
 		</div>
 	)
 }

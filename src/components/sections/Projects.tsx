@@ -4,6 +4,8 @@ import { ArrowRight, ArrowUpRight, Github, Pin, Users } from "lucide-react"
 import { Link } from "@/i18n/navigation"
 import { GlassCard, TiltCard } from "@/components/ui/interactive"
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/ui/motion"
+import { ProjectsFilter } from "@/components/sections/ProjectsFilter"
+import { PROJECT_CATEGORIES } from "@/constants"
 import {
 	Badge,
 	buttonClass,
@@ -46,6 +48,19 @@ function statusLabel(
 	return t.has(key) ? t(key as "status.active") : status
 }
 
+/**
+ * Same guard as `statusLabel`, for the category filter chips. `category` is
+ * admin-editable free text, so a value outside `PROJECT_CATEGORIES` is possible
+ * and must not throw.
+ */
+function categoryLabel(
+	t: { (key: "category.web"): string; has: (key: string) => boolean },
+	category: string,
+): string {
+	const key = `category.${category}`
+	return t.has(key) ? t(key as "category.web") : category
+}
+
 const STATUS_TONE: Record<string, "success" | "brand" | "warning" | "muted"> = {
 	active: "success",
 	completed: "brand",
@@ -65,6 +80,34 @@ export async function Projects({
 }) {
 	const t = await getTranslations("projects")
 	const visible = limit ? projects.slice(0, limit) : projects
+
+	/* Filtering is only offered on the full listing. On the home page the section
+	   is capped at a handful of pinned projects, where a filter row would mostly
+	   render empty categories and add a control that does nothing useful. */
+	const filterable = !limit && visible.length > 3
+
+	/* Cards are rendered here, on the server, and passed to the client filter as
+	   finished elements. See the note in `ProjectsFilter` for why. Ordering is
+	   taken from `PROJECT_CATEGORIES` rather than from the data so the chip row
+	   keeps a stable, deliberate order instead of following insertion order. */
+	const presentCategories = filterable
+		? PROJECT_CATEGORIES.filter((category) =>
+				visible.some((project) => project.category === category),
+			).map((category) => ({
+				id: category as string,
+				label: categoryLabel(t, category),
+			}))
+		: []
+
+	const filterItems = filterable
+		? await Promise.all(
+				visible.map(async (project) => ({
+					id: project.id,
+					category: project.category,
+					node: await ProjectCard({ project, locale }),
+				})),
+			)
+		: []
 
 	return (
 		<Section id="projects">
@@ -91,6 +134,15 @@ export async function Projects({
 				{visible.length === 0 ? (
 					<div className="mt-12">
 						<EmptyState title={t("empty")} />
+					</div>
+				) : filterable ? (
+					<div className="mt-12">
+						<ProjectsFilter
+							items={filterItems}
+							categories={presentCategories}
+							allLabel={t("filterAll")}
+							emptyLabel={t("empty")}
+						/>
 					</div>
 				) : (
 					<StaggerGroup
@@ -153,6 +205,31 @@ export async function ProjectCard({
 								{t("pinned")}
 							</Badge>
 						) : null}
+					</div>
+
+					{/* Category chip, top-right of the cover. */}
+					<div className="absolute right-3.5 top-3.5">
+						<span className="rounded-full border border-line bg-base/70 px-2.5 py-1 text-[10.5px] font-medium uppercase tracking-[0.08em] text-ink-muted backdrop-blur-xl">
+							{categoryLabel(t, project.category)}
+						</span>
+					</div>
+
+					{/* Hover preview.
+
+					    Deliberately `pointer-events-none` and `aria-hidden`: it is a
+					    visual affordance for the link that already exists in the card
+					    footer, not a second control. Making it focusable would add a
+					    duplicate tab stop and a duplicate screen-reader announcement for
+					    every card, which is a real accessibility regression in exchange
+					    for no new capability. */}
+					<div
+						aria-hidden
+						className="pointer-events-none absolute inset-0 grid place-items-center bg-base/45 opacity-0 backdrop-blur-[3px] transition-opacity duration-500 ease-premium group-hover:opacity-100"
+					>
+						<span className="inline-flex translate-y-2 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[12.5px] font-medium tracking-tight text-ink shadow-glow transition-transform duration-500 ease-premium group-hover:translate-y-0">
+							{t("viewProject")}
+							<ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+						</span>
 					</div>
 				</div>
 

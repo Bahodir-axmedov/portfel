@@ -372,9 +372,11 @@ export function AmbientBackground() {
 			<div className="nebula nebula-a" />
 			<div className="nebula nebula-b" />
 
-			{/* Aurora ribbons */}
+			{/* Aurora ribbons — blue overhead, cyan right, violet lower-left, so
+			    the three light sources form a triangle rather than a band. */}
 			<div className="aurora aurora-a" />
 			<div className="aurora aurora-b" />
+			<div className="aurora aurora-c" />
 
 			{/* Parallax starfield */}
 			<div className="star-layer star-layer-sm" />
@@ -385,6 +387,11 @@ export function AmbientBackground() {
 			<div className="shooting-star shooting-star-1" />
 			<div className="shooting-star shooting-star-2" />
 			<div className="shooting-star shooting-star-3" />
+
+			{/* Meteors — longer, slower and dimmer than the shooting stars, which
+			    gives the sky a second depth plane instead of one repeating streak. */}
+			<div className="meteor meteor-1" />
+			<div className="meteor meteor-2" />
 
 			{/* Rising particles */}
 			{PARTICLES.map((particle) => (

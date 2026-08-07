@@ -46,6 +46,21 @@ const config: Config = {
 					700: "#1D4ED8",
 					DEFAULT: "#3B82F6",
 				},
+				// Violet is the third brand stop. It exists so the palette reads
+				// blue -> violet -> cyan instead of a flat two-stop ramp: a single
+				// hue interpolation between #3B82F6 and #06B6D4 passes through a
+				// muddy teal, while routing through violet keeps every midpoint
+				// saturated. Used by aurora, nebula, neon rings and the tri-stop
+				// gradients below.
+				violet: {
+					100: "#EDE9FE",
+					200: "#DDD6FE",
+					300: "#C4B5FD",
+					400: "#A78BFA",
+					500: "#8B5CF6",
+					600: "#7C3AED",
+					DEFAULT: "#8B5CF6",
+				},
 				accent: {
 					100: "#CFFAFE",
 					200: "#A5F3FC",
@@ -97,8 +112,17 @@ const config: Config = {
 				xl: "28px",
 			},
 			backgroundImage: {
+				// Tri-stop: blue -> violet -> cyan. The violet stop sits at 48%
+				// rather than 50% so the cyan half reads slightly wider, which
+				// keeps white text legible over the right end of CTA buttons.
 				"brand-gradient":
-					"linear-gradient(135deg,#3B82F6 0%,#22A6E8 50%,#06B6D4 100%)",
+					"linear-gradient(135deg,#3B82F6 0%,#8B5CF6 48%,#06B6D4 100%)",
+				// 300% wide so `animate-gradient-pan` has room to travel without
+				// the seam becoming visible.
+				"brand-gradient-pan":
+					"linear-gradient(110deg,#3B82F6 0%,#8B5CF6 25%,#06B6D4 50%,#8B5CF6 75%,#3B82F6 100%)",
+				"mesh-hero":
+					"radial-gradient(60% 55% at 18% 12%,rgba(59,130,246,0.20),transparent 62%),radial-gradient(50% 50% at 82% 22%,rgba(139,92,246,0.17),transparent 60%),radial-gradient(55% 60% at 60% 92%,rgba(6,182,212,0.14),transparent 62%)",
 				"brand-gradient-soft":
 					"linear-gradient(150deg,rgba(59,130,246,0.20) 0%,rgba(6,182,212,0.12) 100%)",
 				"glass-edge":
@@ -109,6 +133,15 @@ const config: Config = {
 			boxShadow: {
 				glow: "0 6px 24px rgba(59,130,246,0.32)",
 				"glow-lg": "0 10px 34px rgba(59,130,246,0.45)",
+				"glow-violet": "0 6px 26px rgba(139,92,246,0.35)",
+				"glow-cyan": "0 6px 26px rgba(6,182,212,0.32)",
+				// Neomorphism: one light source top-left, one shadow bottom-right,
+				// plus an inset hairline. On a near-black surface the "light" lobe
+				// has to be a white alpha rather than a lighter grey, otherwise it
+				// reads as grey smudge instead of a lit edge.
+				neo: "-6px -6px 16px rgba(255,255,255,0.028), 8px 10px 24px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05)",
+				"neo-pressed":
+					"inset -4px -4px 10px rgba(255,255,255,0.022), inset 5px 6px 14px rgba(0,0,0,0.55)",
 				card: "0 24px 60px rgba(0,0,0,0.5)",
 				"inset-hairline": "inset 0 1px 0 rgba(255,255,255,0.04)",
 			},
@@ -133,6 +166,22 @@ const config: Config = {
 					from: { strokeDashoffset: "180" },
 					to: { strokeDashoffset: "0" },
 				},
+				// Slow conic sweep for gradient rings around the portrait and the
+				// circular skill dials.
+				"spin-slow": {
+					from: { transform: "rotate(0deg)" },
+					to: { transform: "rotate(360deg)" },
+				},
+				// Floating badges: a second float track offset in both phase and
+				// amplitude so stacked badges never bob in lockstep.
+				"float-soft": {
+					"0%,100%": { transform: "translateY(0)" },
+					"50%": { transform: "translateY(-7px)" },
+				},
+				"pulse-ring": {
+					"0%": { transform: "scale(0.92)", opacity: "0.7" },
+					"70%,100%": { transform: "scale(1.55)", opacity: "0" },
+				},
 			},
 			animation: {
 				"gradient-pan": "gradient-pan 8s ease-in-out infinite",
@@ -140,6 +189,9 @@ const config: Config = {
 				caret: "caret 1s step-end infinite",
 				shimmer: "shimmer 2.2s infinite",
 				"draw-logo": "draw-logo 1.4s cubic-bezier(0.16,1,0.3,1) forwards",
+				"spin-slow": "spin-slow 9s linear infinite",
+				"float-soft": "float-soft 4.5s ease-in-out infinite",
+				"pulse-ring": "pulse-ring 2.4s cubic-bezier(0.16,1,0.3,1) infinite",
 			},
 		},
 	},

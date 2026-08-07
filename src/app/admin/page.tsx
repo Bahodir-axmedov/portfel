@@ -1,5 +1,10 @@
 import Link from "next/link"
 import { AdminShell } from "@/components/admin/AdminShell"
+import {
+	AnimatedBarList,
+	StatValue,
+	TrafficChart,
+} from "@/components/admin/AdminCharts"
 import { Icon } from "@/components/ui/Icon"
 import { getAnalyticsSummary, pruneOldPageViews } from "@/lib/analytics"
 import { delegateFor, hasPublishedField } from "@/lib/admin-data"
@@ -59,15 +64,25 @@ function StatCard({
 	trend?: number
 }) {
 	return (
-		<div className="card-surface rounded-lg p-5">
-			<div className="flex items-start justify-between gap-3">
+		<div className="card-surface group relative overflow-hidden rounded-lg p-5 transition-colors duration-300 hover:border-line-strong">
+			{/* Hover sheen. `-inset-px` so the gradient reaches under the 1px
+			    border instead of stopping short of it and leaving a dark hairline. */}
+			<span
+				aria-hidden
+				className="pointer-events-none absolute -inset-px rounded-lg bg-gradient-to-br from-brand-500/[0.09] via-transparent to-accent-500/[0.07] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+			/>
+			<div className="relative flex items-start justify-between gap-3">
 				<p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
 					{label}
 				</p>
-				<Icon name={icon} className="h-4 w-4 text-brand-300" />
+				<span className="grid h-8 w-8 place-items-center rounded-md border border-line bg-white/[0.03] transition-colors duration-300 group-hover:border-brand-500/40">
+					<Icon name={icon} className="h-4 w-4 text-brand-300" />
+				</span>
 			</div>
-			<p className="mt-3 text-3xl font-semibold tabular-nums">{value}</p>
-			<div className="mt-1.5 flex items-center gap-2">
+			<p className="relative mt-3 text-3xl font-semibold tabular-nums">
+				{typeof value === "number" ? <StatValue value={value} /> : value}
+			</p>
+			<div className="relative mt-1.5 flex items-center gap-2">
 				{hint ? <p className="text-xs text-ink-faint">{hint}</p> : null}
 				{trend !== undefined && trend !== 0 ? (
 					<span
@@ -104,36 +119,6 @@ function Panel({
 			</div>
 			{children}
 		</section>
-	)
-}
-
-function BarList({
-	items,
-}: {
-	items: Array<{ label: string; value: number }>
-}) {
-	if (items.length === 0) {
-		return <p className="text-xs text-ink-faint">Ma&apos;lumot yo&apos;q.</p>
-	}
-	const max = Math.max(...items.map((item) => item.value), 1)
-
-	return (
-		<ul className="space-y-2">
-			{items.map((item) => (
-				<li key={item.label} className="space-y-1">
-					<div className="flex items-baseline justify-between gap-3 text-xs">
-						<span className="truncate text-ink-muted">{item.label}</span>
-						<span className="tabular-nums text-ink-faint">{item.value}</span>
-					</div>
-					<div className="h-1.5 overflow-hidden rounded-full bg-base-raised">
-						<div
-							className="h-full rounded-full bg-brand-gradient"
-							style={{ width: `${Math.round((item.value / max) * 100)}%` }}
-						/>
-					</div>
-				</li>
-			))}
-		</ul>
 	)
 }
 
@@ -254,31 +239,13 @@ export default async function AdminDashboard() {
 						</span>
 					}
 				>
-					<div className="flex h-32 items-end gap-[3px]">
-						{analytics.daily.map((day) => (
-							<div
-								key={day.date}
-								title={`${day.date}: ${day.views}`}
-								className="group flex-1 rounded-t bg-brand-gradient transition hover:opacity-80"
-								style={{
-									height: `${Math.max(3, Math.round((day.views / maxDaily) * 100))}%`,
-									opacity: day.views === 0 ? 0.18 : 1,
-								}}
-							/>
-						))}
-					</div>
-					<div className="mt-2 flex justify-between font-mono text-[10px] text-ink-faint">
-						<span>{analytics.daily[0]?.date ?? ""}</span>
-						<span>
-							{analytics.daily[analytics.daily.length - 1]?.date ?? ""}
-						</span>
-					</div>
+					<TrafficChart data={analytics.daily} />
 				</Panel>
 
 				{/* ---------- breakdowns ---------- */}
 				<div className="grid gap-4 lg:grid-cols-3">
 					<Panel title="Eng ko'p ochilgan sahifalar">
-						<BarList
+						<AnimatedBarList
 							items={analytics.topPaths.map((item) => ({
 								label: item.path,
 								value: item.views,
@@ -286,7 +253,7 @@ export default async function AdminDashboard() {
 						/>
 					</Panel>
 					<Panel title="Til bo'yicha">
-						<BarList
+						<AnimatedBarList
 							items={analytics.byLocale.map((item) => ({
 								label: item.locale.toUpperCase(),
 								value: item.views,
@@ -294,7 +261,7 @@ export default async function AdminDashboard() {
 						/>
 					</Panel>
 					<Panel title="Havola manbalari">
-						<BarList
+						<AnimatedBarList
 							items={analytics.topReferrers.map((item) => ({
 								label: item.referrer,
 								value: item.views,

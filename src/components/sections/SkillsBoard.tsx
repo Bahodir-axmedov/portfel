@@ -4,7 +4,11 @@ import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import { Icon } from "@/components/ui/Icon"
-import { GlassCard, ProgressBar } from "@/components/ui/interactive"
+import {
+	CircularProgress,
+	GlassCard,
+	ProgressBar,
+} from "@/components/ui/interactive"
 import { EASE } from "@/components/ui/motion"
 import { cn } from "@/lib/utils"
 
@@ -69,6 +73,22 @@ export function SkillsBoard({
 		[filter, skills],
 	)
 
+	/* The dial strip is a summary, not a second copy of the grid: it surfaces the
+	   six strongest skills in the active filter. It is deliberately derived from
+	   `visible` rather than `skills`, so switching a category re-ranks the dials
+	   and the sweep animation replays -- that motion is the point of the strip.
+	   Below six entries the strip would just restate the grid, so it is hidden. */
+	const dials = useMemo(
+		() =>
+			visible.length >= 6
+				? visible
+						.slice()
+						.sort((a, b) => b.level - a.level)
+						.slice(0, 6)
+				: [],
+		[visible],
+	)
+
 	const languageMetrics: Array<{ key: string; label: string }> = [
 		{ key: "speaking", label: t("speaking") },
 		{ key: "writing", label: t("writing") },
@@ -94,6 +114,52 @@ export function SkillsBoard({
 							label={category.label}
 						/>
 					))}
+				</div>
+			) : null}
+
+			{/* ---------------- Top skill dials ---------------- */}
+			{dials.length > 0 ? (
+				<div className="flex flex-col gap-5">
+					<h3 className="text-[15px] font-semibold tracking-tight text-ink">
+						{t("topTitle")}
+					</h3>
+					<div className="grid grid-cols-3 gap-4 sm:gap-5 md:grid-cols-6">
+						{dials.map((skill, index) => (
+							<motion.div
+								key={skill.id}
+								layout
+								variants={cardVariants}
+								initial="hidden"
+								animate="visible"
+								transition={{ delay: Math.min(index * 0.05, 0.3) }}
+								className="group flex flex-col items-center gap-2.5"
+							>
+								<div className="neon-rim rounded-full">
+									<CircularProgress
+										value={skill.level}
+										size={88}
+										strokeWidth={5}
+										delay={Math.min(index * 0.07, 0.4)}
+										label={`${skill.name} ${skill.level}%`}
+									>
+										<span className="flex flex-col items-center gap-0.5">
+											<Icon
+												name={skill.icon}
+												className="h-[18px] w-[18px] text-brand-400 transition-transform duration-300 group-hover:scale-110"
+												strokeWidth={1.7}
+											/>
+											<span className="text-[12px] font-semibold tabular-nums text-ink">
+												{skill.level}%
+											</span>
+										</span>
+									</CircularProgress>
+								</div>
+								<span className="text-center text-[12px] leading-tight text-ink-muted">
+									{skill.name}
+								</span>
+							</motion.div>
+						))}
+					</div>
 				</div>
 			) : null}
 

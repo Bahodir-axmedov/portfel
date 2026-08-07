@@ -104,12 +104,31 @@ export default async function HomePage({
 			icon: social.icon,
 		}))
 
-	/* The three headline numbers next to the hero come straight from the same
-	   editable stats that power the statistics band further down the page. */
-	const highlights = data.stats.slice(0, 3).map((stat) => ({
+	/* The headline numbers next to the hero come straight from the same editable
+	   stats that power the statistics band further down the page. Four are taken
+	   rather than three so the strip fills a 2x2 grid with no orphan cell; the
+	   Hero picks its column count from the array length, so a shorter stats table
+	   still renders correctly. */
+	const highlights = data.stats.slice(0, 4).map((stat) => ({
 		label: pick(stat, "label", locale),
 		value: `${stat.value}${stat.suffix ?? ""}`,
 	}))
+
+	/* Floating chips around the portrait. Sorted by proficiency and capped at
+	   four, so they always advertise the strongest part of the real skill set
+	   instead of a hand-written marketing list. `icon` is nullable in the schema,
+	   and only skills that actually carry one are eligible: a chip that fell back
+	   to the generic sparkle glyph would look like filler. */
+	const heroBadges = data.skills
+		.filter((skill) => Boolean(skill.icon))
+		.slice()
+		.sort((a, b) => b.level - a.level)
+		.slice(0, 4)
+		.map((skill) => ({
+			id: skill.id,
+			label: skill.name,
+			icon: skill.icon as string,
+		}))
 
 	const [
 		aboutNode,
@@ -176,6 +195,7 @@ export default async function HomePage({
 					resumeUrl={resumeFor(profile, locale)}
 					socials={heroSocials}
 					highlights={highlights}
+					badges={heroBadges}
 				/>
 			</SectionBoundary>
 

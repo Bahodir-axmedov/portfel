@@ -350,8 +350,9 @@
 		background: conic-gradient(
 			from 160deg at 50% 50%,
 			rgba(59, 130, 246, 0.34),
+			rgba(139, 92, 246, 0.3),
 			rgba(6, 182, 212, 0.26),
-			rgba(99, 102, 241, 0.3),
+			rgba(124, 58, 237, 0.28),
 			rgba(59, 130, 246, 0.34)
 		);
 		animation: aurora-a 26s ease-in-out infinite;
@@ -367,6 +368,21 @@
 			transparent 70%
 		);
 		animation: aurora-b 32s ease-in-out infinite;
+	}
+	/* Third ribbon, violet. Placed low-left so the three ribbons form a
+	   triangle rather than a horizontal band — a band reads as a stock
+	   "gradient blob" template, a triangle reads as deliberate lighting. */
+	.aurora-c {
+		bottom: 4%;
+		left: -10%;
+		height: 400px;
+		width: 560px;
+		background: radial-gradient(
+			ellipse at 55% 45%,
+			rgba(139, 92, 246, 0.26),
+			transparent 68%
+		);
+		animation: aurora-b 38s ease-in-out infinite reverse;
 	}
 
 	/* ---------- Slow nebula ---------- */
@@ -396,10 +412,127 @@
 		width: 520px;
 		background: radial-gradient(
 			circle at 50% 50%,
-			rgba(14, 165, 233, 0.16),
+			rgba(139, 92, 246, 0.18),
 			transparent 70%
 		);
 		animation: nebula-drift 60s ease-in-out infinite reverse;
+	}
+
+	/* ---------- Meteors ----------
+	   Distinct from `.shooting-star`: a meteor is longer, slower, dimmer and
+	   travels a shallower angle. Running both gives the sky two depth planes
+	   instead of one repeating streak. */
+	.meteor {
+		position: absolute;
+		height: 1px;
+		width: 220px;
+		transform-origin: right center;
+		rotate: 24deg;
+		background: linear-gradient(
+			270deg,
+			rgba(190, 215, 255, 0.85),
+			rgba(139, 92, 246, 0.35) 40%,
+			transparent
+		);
+		opacity: 0;
+		will-change: transform, opacity;
+		animation: meteor 11s linear infinite;
+	}
+	.meteor-1 {
+		top: 6%;
+		left: 72%;
+		animation-delay: -2s;
+	}
+	.meteor-2 {
+		top: 34%;
+		left: 92%;
+		animation-duration: 15s;
+		animation-delay: -9s;
+	}
+
+	/* ---------- Neomorphism surfaces ----------
+	   Used for the floating social rail, the mobile dock and skill dials. The
+	   pressed variant is applied on :active only, never on hover, so the
+	   affordance matches a real physical button. */
+	.neo-surface {
+		background: linear-gradient(
+			145deg,
+			rgba(255, 255, 255, 0.05),
+			rgba(255, 255, 255, 0.012)
+		);
+		box-shadow:
+			-6px -6px 16px rgba(255, 255, 255, 0.028),
+			8px 10px 24px rgba(0, 0, 0, 0.55),
+			inset 0 1px 0 rgba(255, 255, 255, 0.05);
+	}
+	.neo-surface:active {
+		box-shadow:
+			inset -4px -4px 10px rgba(255, 255, 255, 0.022),
+			inset 5px 6px 14px rgba(0, 0, 0, 0.55);
+	}
+
+	/* ---------- Neon rim ----------
+	   A conic gradient ring drawn with an xor mask so only the 1px rim paints.
+	   Cheaper than an SVG stroke and it inherits border-radius automatically. */
+	.neon-rim {
+		position: relative;
+		isolation: isolate;
+	}
+	.neon-rim::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: conic-gradient(
+			from var(--rim-from, 0deg),
+			rgba(59, 130, 246, 0.9),
+			rgba(139, 92, 246, 0.9),
+			rgba(6, 182, 212, 0.9),
+			rgba(59, 130, 246, 0.9)
+		);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		opacity: 0;
+		transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+		pointer-events: none;
+	}
+	.neon-rim:hover::before,
+	.neon-rim:focus-visible::before {
+		opacity: 1;
+	}
+
+	/* ---------- Floating rails ----------
+	   The rail is fixed, so its hover glow must not trigger layout. The glow is
+	   a sibling pseudo-element scaled with transform, never width/height. */
+	.rail-item::after {
+		content: "";
+		position: absolute;
+		inset: -6px;
+		border-radius: 9999px;
+		background: radial-gradient(
+			circle,
+			rgba(59, 130, 246, 0.35),
+			transparent 70%
+		);
+		opacity: 0;
+		transform: scale(0.6);
+		transition:
+			opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+		pointer-events: none;
+		z-index: -1;
+	}
+	.rail-item:hover::after,
+	.rail-item:focus-visible::after {
+		opacity: 1;
+		transform: scale(1);
 	}
 
 	/* ---------- Shooting stars ----------
@@ -649,6 +782,27 @@
 	}
 }
 
+/* Meteor: enters from off-screen right, exits bottom-left. `translate3d`
+   only, so it composites on the GPU and never triggers layout. The long
+   invisible tail (58%..100%) is the gap between passes. */
+@keyframes meteor {
+	0% {
+		transform: translate3d(0, 0, 0);
+		opacity: 0;
+	}
+	6% {
+		opacity: 0.9;
+	}
+	52% {
+		opacity: 0;
+	}
+	58%,
+	100% {
+		transform: translate3d(-130vw, 58vh, 0);
+		opacity: 0;
+	}
+}
+
 @keyframes particle-rise {
 	0% {
 		transform: translate3d(0, 0, 0) scale(1);
@@ -688,6 +842,8 @@
 /* Phones: drop the most expensive layers (large blurs) but keep the stars. */
 @media (max-width: 767px) {
 	.aurora-b,
+	.aurora-c,
+	.meteor-2,
 	.nebula-b,
 	.shooting-star-3,
 	.star-layer-lg,

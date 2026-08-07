@@ -17,6 +17,32 @@ export type HeroSocial = {
 	icon: string
 }
 
+/**
+ * A technology chip that floats around the portrait. Sourced from the real
+ * skills table rather than an invented list, so the badges stay truthful when
+ * the skill set is edited from the admin panel.
+ */
+export type HeroBadge = {
+	id: string
+	label: string
+	icon: string
+}
+
+/**
+ * Fixed anchor points for the floating badges, in portrait-box percentages.
+ *
+ * These are hand-placed rather than distributed programmatically: the portrait
+ * is a 4:5 crop with the subject's head top-centre, so the two upper badges sit
+ * wide to avoid the face and the two lower badges tuck against the stat strip.
+ * `delay` staggers the float cycle so no two chips bob in sync.
+ */
+const BADGE_SLOTS = [
+	{ top: "14%", left: "-9%", delay: "0s" },
+	{ top: "32%", right: "-8%", delay: "0.9s" },
+	{ top: "58%", left: "-11%", delay: "1.7s" },
+	{ top: "72%", right: "-7%", delay: "2.4s" },
+] as const
+
 export type HeroProps = {
 	fullName: string
 	headline: string
@@ -28,6 +54,7 @@ export type HeroProps = {
 	resumeUrl?: string | null
 	socials: HeroSocial[]
 	highlights: Array<{ label: string; value: string }>
+	badges?: HeroBadge[]
 }
 
 const containerVariants = {
@@ -68,6 +95,7 @@ export function Hero({
 	resumeUrl,
 	socials,
 	highlights,
+	badges = [],
 }: HeroProps) {
 	const t = useTranslations("hero")
 	const parallaxEnabled = useHeavyAnimationEnabled()
@@ -87,6 +115,21 @@ export function Hero({
 	const glowShift = {
 		transform: `translate3d(${pointer.x * 26}px, ${pointer.y * 20}px, 0)`,
 	}
+	// Badges drift with the pointer too, but at roughly half the portrait's
+	// amplitude and in the opposite direction. The opposing, weaker motion is
+	// what sells the depth: matching motion would read as one flat plane.
+	const badgeShift = {
+		transform: `translate3d(${pointer.x * 10}px, ${pointer.y * 8}px, 0)`,
+	}
+
+	// Only the first four badges are placed; BADGE_SLOTS has four anchors and an
+	// unplaced badge would stack at the origin.
+	const placedBadges = badges.slice(0, BADGE_SLOTS.length)
+
+	// 3 stats read best as thirds, 4 as a 2x2 on narrow columns. Choosing the
+	// class here avoids a lone orphan cell on the second row.
+	const statColumns =
+		highlights.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3"
 
 	return (
 		<section
@@ -207,6 +250,16 @@ export function Hero({
 							style={glowShift}
 						/>
 
+						{/* Rotating conic ring. Sits behind the frame and is masked to a
+						    hairline, so it reads as a lit rim rather than a coloured disc.
+						    Driven by `animate-spin-slow` (transform only). */}
+						<div
+							aria-hidden
+							className="pointer-events-none absolute -inset-3 overflow-hidden rounded-[40px]"
+						>
+							<div className="absolute left-1/2 top-1/2 h-[140%] w-[140%] -translate-x-1/2 -translate-y-1/2 animate-spin-slow bg-[conic-gradient(from_0deg,transparent_0deg,rgba(59,130,246,0.55)_60deg,rgba(139,92,246,0.5)_140deg,rgba(6,182,212,0.55)_220deg,transparent_320deg)] opacity-40 blur-[2px]" />
+						</div>
+
 						<div className="photo-frame will-animate" style={photoShift}>
 							<div className="relative overflow-hidden rounded-[26px] border border-white/[0.08] bg-base/70 p-2.5 backdrop-blur-xl">
 								<span
@@ -229,7 +282,7 @@ export function Hero({
 								</div>
 
 								{highlights.length > 0 ? (
-									<div className="grid grid-cols-3 gap-2 px-1 pb-1 pt-3">
+									<div className={`grid ${statColumns} gap-2 px-1 pb-1 pt-3`}>
 										{highlights.map((item) => (
 											<div key={item.label} className="text-center">
 												<p className="gradient-text text-[19px] font-semibold tracking-tight">
@@ -244,6 +297,43 @@ export function Hero({
 								) : null}
 							</div>
 						</div>
+
+						{/* Floating technology badges. Hidden below `sm` because at phone
+						    width the negative offsets would push them off-canvas and force
+						    a horizontal scrollbar. */}
+						{placedBadges.length > 0 ? (
+							<div
+								aria-hidden
+								className="pointer-events-none absolute inset-0 hidden sm:block"
+								style={badgeShift}
+							>
+								{placedBadges.map((badge, index) => {
+									const slot = BADGE_SLOTS[index]
+									return (
+										<motion.span
+											key={badge.id}
+											initial={{ opacity: 0, scale: 0.7 }}
+											animate={{ opacity: 1, scale: 1 }}
+											transition={{
+												duration: 0.55,
+												ease: EASE,
+												delay: 0.8 + index * 0.12,
+											}}
+											className="neo-surface absolute inline-flex animate-float-soft items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[11.5px] font-medium text-ink-muted backdrop-blur-xl"
+											style={{
+												top: slot.top,
+												left: "left" in slot ? slot.left : undefined,
+												right: "right" in slot ? slot.right : undefined,
+												animationDelay: slot.delay,
+											}}
+										>
+											<Icon name={badge.icon} className="h-3.5 w-3.5" />
+											{badge.label}
+										</motion.span>
+									)
+								})}
+							</div>
+						) : null}
 					</motion.div>
 				</div>
 
