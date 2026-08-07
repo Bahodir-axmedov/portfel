@@ -47,32 +47,84 @@ function resumeField(locale: Locale) {
 	return "resumeUz"
 }
 
+/**
+ * `generateMetadata` and the layout body are the two pieces of the `/[locale]`
+ * route that run *outside* the page tree, so neither the `section()` helper in
+ * `page.tsx` nor the `SectionBoundary` components around it can observe a
+ * failure here. React reports both as the same opaque "Server Components
+ * render" error, which is why the production digest stayed byte-identical
+ * across deploys that rewrote the page.
+ *
+ * `guard` restores the original error: it prints the real name, message, cause
+ * chain and stack to stderr and then re-throws, leaving behaviour unchanged on
+ * a successful render.
+ */
+async function guard<T>(label: string, run: () => Promise<T>): Promise<T> {
+	try {
+		return await run()
+	} catch (error) {
+		const bar = "=".repeat(72)
+		const lines = ["", bar, `[${label}] FAILED`, bar]
+
+		let current: unknown = error
+		let depth = 0
+		while (current instanceof Error && depth < 5) {
+			const pad = "  ".repeat(depth)
+			lines.push(`${pad}name    : ${current.name}`)
+			lines.push(`${pad}message : ${current.message}`)
+			const code = (current as Error & { code?: unknown }).code
+			if (code !== undefined) lines.push(`${pad}code    : ${String(code)}`)
+			if (current.stack) {
+				lines.push(`${pad}stack   :`)
+				for (const entry of current.stack.split("\n").slice(0, 16)) {
+					lines.push(`${pad}  ${entry.trim()}`)
+				}
+			}
+			current = current.cause
+			depth += 1
+			if (current !== undefined)
+				lines.push(`${"  ".repeat(depth - 1)}cause   :`)
+		}
+
+		if (!(error instanceof Error)) lines.push(`thrown  : ${String(error)}`)
+
+		lines.push(bar, "")
+		process.stderr.write(`${lines.join("\n")}\n`)
+		throw error
+	}
+}
+
 export async function generateMetadata({
 	params,
 }: {
 	params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-	const { locale: raw } = await params
-	const locale: Locale = isLocale(raw) ? raw : "uz"
+	return guard("layout:generateMetadata", async () => {
+		const { locale: raw } = await params
+		const locale: Locale = isLocale(raw) ? raw : "uz"
 
-	const [profile, seo] = await Promise.all([getProfile(), getSeoForRoute("/")])
+		const [profile, seo] = await Promise.all([
+			getProfile(),
+			getSeoForRoute("/"),
+		])
 
-	const jobTitle = pick(profile, "jobTitle", locale)
-	const fallbackTitle = profile?.fullName
-		? `${profile.fullName} — ${jobTitle}`
-		: SITE_NAME
+		const jobTitle = pick(profile, "jobTitle", locale)
+		const fallbackTitle = profile?.fullName
+			? `${profile.fullName} — ${jobTitle}`
+			: SITE_NAME
 
-	return buildMetadata({
-		locale,
-		path: "/",
-		title: pick(seo, "title", locale) || fallbackTitle,
-		description:
-			pick(seo, "description", locale) || pick(profile, "shortBio", locale),
-		keywords: parseArray(seo?.keywords),
-		image:
-			seo?.ogImage ?? (profile?.ogImage as string | null | undefined) ?? null,
-		noIndex: seo?.noIndex ?? false,
-		type: "profile",
+		return buildMetadata({
+			locale,
+			path: "/",
+			title: pick(seo, "title", locale) || fallbackTitle,
+			description:
+				pick(seo, "description", locale) || pick(profile, "shortBio", locale),
+			keywords: parseArray(seo?.keywords),
+			image:
+				seo?.ogImage ?? (profile?.ogImage as string | null | undefined) ?? null,
+			noIndex: seo?.noIndex ?? false,
+			type: "profile",
+		})
 	})
 }
 
@@ -87,29 +139,39 @@ export default async function LocaleLayout({
 	if (!isLocale(raw)) notFound()
 	const locale: Locale = raw
 
-	const [messages, profile, socialLinks] = await Promise.all([
-		getMessages({ locale }),
-		getProfile(),
-		getSocialLinks(),
-	])
+	const { messages, resumeUrl, description, structuredData } = await guard(
+		"layout:LocaleLayout",
+		async () => {
+			const [loadedMessages, profile, socialLinks] = await Promise.all([
+				getMessages({ locale }),
+				getProfile(),
+				getSocialLinks(),
+			])
 
-	const resumeUrl = (profile?.[resumeField(locale)] as string | null) ?? null
-	const description = pick(profile, "shortBio", locale)
+			const resume = (profile?.[resumeField(locale)] as string | null) ?? null
+			const shortBio = pick(profile, "shortBio", locale)
 
-	const structuredData = [
-		personSchema({
-			name: profile?.fullName ?? SITE_NAME,
-			jobTitle: pick(profile, "jobTitle", locale),
-			description,
-			image: profile?.avatarUrl ?? null,
-			email: profile?.email ?? null,
-			telephone: profile?.phone ?? null,
-			locality: pick(profile, "location", locale),
-			sameAs: socialLinks.map((social) => social.url),
-			knowsAbout: parseArray(profile?.interests),
-		}),
-		websiteSchema(SITE_NAME, description),
-	]
+			return {
+				messages: loadedMessages,
+				resumeUrl: resume,
+				description: shortBio,
+				structuredData: [
+					personSchema({
+						name: profile?.fullName ?? SITE_NAME,
+						jobTitle: pick(profile, "jobTitle", locale),
+						description: shortBio,
+						image: profile?.avatarUrl ?? null,
+						email: profile?.email ?? null,
+						telephone: profile?.phone ?? null,
+						locality: pick(profile, "location", locale),
+						sameAs: socialLinks.map((social) => social.url),
+						knowsAbout: parseArray(profile?.interests),
+					}),
+					websiteSchema(SITE_NAME, shortBio),
+				],
+			}
+		},
+	)
 
 	return (
 		<html
