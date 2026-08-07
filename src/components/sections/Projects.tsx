@@ -32,6 +32,20 @@ export type ProjectRow = Record<string, unknown> & {
 	technologies?: Array<{ id: string; name: string }>
 }
 
+/**
+ * `status` is free-form text in the database and is editable from the admin
+ * panel, so it is not guaranteed to match a translation key. next-intl throws
+ * on a missing message, and a throw inside a Server Component aborts the whole
+ * render, so the lookup is guarded and falls back to the raw value.
+ */
+function statusLabel(
+	t: { (key: "status.active"): string; has: (key: string) => boolean },
+	status: string,
+): string {
+	const key = `status.${status}`
+	return t.has(key) ? t(key as "status.active") : status
+}
+
 const STATUS_TONE: Record<string, "success" | "brand" | "warning" | "muted"> = {
 	active: "success",
 	completed: "brand",
@@ -131,7 +145,7 @@ export async function ProjectCard({
 
 					<div className="absolute left-3.5 top-3.5 flex flex-wrap items-center gap-2">
 						<Badge tone={STATUS_TONE[project.status] ?? "muted"}>
-							{t(`status.${project.status}` as "status.active")}
+							{statusLabel(t, project.status)}
 						</Badge>
 						{project.pinned ? (
 							<Badge tone="brand">

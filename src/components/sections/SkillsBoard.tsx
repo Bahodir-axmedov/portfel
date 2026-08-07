@@ -31,6 +31,21 @@ export type LanguageItem = {
 
 export type CategoryOption = { id: string; label: string }
 
+/**
+ * `level` is free-form text in the database and is editable from the admin
+ * panel, so it is not guaranteed to match a translation key. next-intl throws
+ * on a missing message, and this component is server-rendered during the SSR
+ * pass, so an unguarded lookup aborts the whole document render. The lookup is
+ * guarded and falls back to the raw value.
+ */
+function levelLabel(
+	t: { (key: "levels.native"): string; has: (key: string) => boolean },
+	level: string,
+): string {
+	const key = `levels.${level}`
+	return t.has(key) ? t(key as "levels.native") : level
+}
+
 const cardVariants = {
 	hidden: { opacity: 0, y: 14 },
 	visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
@@ -154,7 +169,7 @@ export function SkillsBoard({
 										{language.name}
 									</span>
 									<span className="rounded-full border border-line bg-white/[0.03] px-2.5 py-1 text-[11px] text-ink-faint">
-										{t(`levels.${language.level}` as "levels.native")}
+										{levelLabel(t, language.level)}
 									</span>
 								</div>
 
