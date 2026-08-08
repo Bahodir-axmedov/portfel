@@ -188,7 +188,18 @@
 		"qrTitle": "QR kodlar",
 		"qrSubtitle": "Telefoningiz kamerasi bilan skanerlang.",
 		"downloadQr": "QR yuklab olish",
-		"saveContact": "Kontaktni saqlash"
+		"saveContact": "Kontaktni saqlash",
+		"mapTitle": "Joylashuv",
+		"mapHint": "Toshkent, O'zbekiston — masofadan ishlashga ochiq",
+		"openMap": "Xaritada ochish",
+		"hoursTitle": "Ish vaqtlari",
+		"hoursWeekdays": "Dushanba — Juma",
+		"hoursSaturday": "Shanba",
+		"hoursSunday": "Yakshanba",
+		"hoursClosed": "Dam olish",
+		"hoursNote": "Vaqtlar Toshkent vaqti bo'yicha",
+		"responseTitle": "Javob vaqti",
+		"responseValue": "Odatda 24 soat ichida"
 	},
 	"footer": {
 		"tagline": "Kelajakni birga quramiz.",

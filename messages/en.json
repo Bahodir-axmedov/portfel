@@ -188,7 +188,18 @@
 		"qrTitle": "QR codes",
 		"qrSubtitle": "Scan with your phone camera.",
 		"downloadQr": "Download QR",
-		"saveContact": "Save contact"
+		"saveContact": "Save contact",
+		"mapTitle": "Location",
+		"mapHint": "Tashkent, Uzbekistan — open to remote work",
+		"openMap": "Open in Maps",
+		"hoursTitle": "Working hours",
+		"hoursWeekdays": "Monday — Friday",
+		"hoursSaturday": "Saturday",
+		"hoursSunday": "Sunday",
+		"hoursClosed": "Closed",
+		"hoursNote": "All times in Tashkent time",
+		"responseTitle": "Response time",
+		"responseValue": "Usually within 24 hours"
 	},
 	"footer": {
 		"tagline": "Let's build the future together.",

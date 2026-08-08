@@ -188,7 +188,18 @@
 		"qrTitle": "QR-коды",
 		"qrSubtitle": "Отсканируйте камерой телефона.",
 		"downloadQr": "Скачать QR",
-		"saveContact": "Сохранить контакт"
+		"saveContact": "Сохранить контакт",
+		"mapTitle": "Локация",
+		"mapHint": "Ташкент, Узбекистан — открыт к удалённой работе",
+		"openMap": "Открыть на карте",
+		"hoursTitle": "Рабочие часы",
+		"hoursWeekdays": "Понедельник — Пятница",
+		"hoursSaturday": "Суббота",
+		"hoursSunday": "Воскресенье",
+		"hoursClosed": "Выходной",
+		"hoursNote": "Время указано по Ташкенту",
+		"responseTitle": "Время ответа",
+		"responseValue": "Обычно в течение 24 часов"
 	},
 	"footer": {
 		"tagline": "Построим будущее вместе.",

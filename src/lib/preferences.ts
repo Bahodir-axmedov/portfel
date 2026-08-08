@@ -189,7 +189,15 @@ export function mergePreferences(
 	return values
 }
 
-const LOCALE_VALUES = new Set(PREFERENCE_LOCALES.map((locale) => locale.value))
+/*
+ * Explicitly `Set<string>`: `PREFERENCE_LOCALES` is declared `as const`, so
+ * without the annotation TypeScript infers `Set<"uz" | "ru" | "en">` and every
+ * `.has(someString)` below becomes a compile error. The runtime values are
+ * unchanged; only the declared element type is widened.
+ */
+const LOCALE_VALUES = new Set<string>(
+	PREFERENCE_LOCALES.map((locale) => locale.value),
+)
 
 /**
  * Validates and canonicalises one incoming value.

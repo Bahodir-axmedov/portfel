@@ -28,6 +28,7 @@ import { normalizeQrValue, qrSvg, telegramLink } from "@/lib/qr"
 import { SITE_URL } from "@/lib/seo"
 import type { Locale } from "@/i18n/routing"
 import { ContactForm } from "./ContactForm"
+import { LocationCard } from "./LocationCard"
 
 type SocialRow = {
 	id: string
@@ -236,6 +237,8 @@ export async function Contact({
 						<ContactForm />
 					</Reveal>
 				</div>
+
+				<LocationCard location={location} timezone={timezone} mapUrl={mapUrl} />
 
 				{tiles.length > 0 ? (
 					<div className="mt-14">
