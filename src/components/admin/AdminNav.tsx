@@ -19,6 +19,11 @@ const primary = [
 	},
 	{ href: "/admin/messages", label: "Xabarlar", icon: "Mail" },
 	{ href: "/admin/activity", label: "Faoliyat jurnali", icon: "Activity" },
+	{
+		href: "/admin/preferences",
+		label: "Interfeys sozlamalari",
+		icon: "Sparkles",
+	},
 ]
 
 /**

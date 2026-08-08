@@ -66,6 +66,13 @@ export function CommandPalette() {
 				href: "/admin/backup",
 			},
 			{
+				id: "preferences",
+				label: "Interfeys sozlamalari",
+				hint: "Sahifa",
+				icon: "Sparkles",
+				href: "/admin/preferences",
+			},
+			{
 				id: "site",
 				label: "Saytni ochish",
 				hint: "Tashqi",

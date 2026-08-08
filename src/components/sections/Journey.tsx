@@ -17,6 +17,7 @@ import {
 	Section,
 	SectionHeading,
 } from "@/components/ui/primitives"
+import { TimelineRail } from "./TimelineRail"
 import { pick, pickArray } from "@/lib/i18n-content"
 import { parseArray } from "@/lib/utils"
 import type { Locale } from "@/i18n/routing"
